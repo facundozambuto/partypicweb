@@ -62,13 +62,13 @@ function post_data($recoveryEmail)
                    Usuario: '.$email.' <br/>
                    Contraseña: '.$contrasenia.' <br/>
                    ------------------------ <br/>
-                   Hacé click en el siguiente link para ingresar a tu cuenta: http://www.partypicapp.com/login.php</p>';
+                   Hacé click en el siguiente link para ingresar a tu cuenta: http://www.partypicok.com/login.php</p>';
       $message .= '</div>              ';
       $message .= '</div>';
       $message .= '</div>';
       $message .= '<div class="col-md-2 col-md-offset-1 text-center mt-100 mb-100">';
       $message .= '<div class="phone">';
-      $message .= '<img class="img-responsive img-rounded" src="http://www.partypicapp.com/images/logopartypic.png">';
+      $message .= '<img class="img-responsive img-rounded" src="http://www.partypicok.com/images/logopartypic.png">';
       $message .= '</div>';
       $message .= '</div>';
       $message .= '</div>';
@@ -395,7 +395,7 @@ function post_data($recoveryEmail)
       $message .= '</body>';
       $message .= '</html>';
 
-      $headers = "From: 'PartyPicApp Admin' <info@partypicapp.com> \r\n";
+      $headers = "From: 'PartyPicApp Admin' <info@partypicok.com> \r\n";
       $headers .= "MIME-Version: 1.0\r\n";
       $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
       mail($to, utf8_decode($subject), utf8_decode($message), $headers); 

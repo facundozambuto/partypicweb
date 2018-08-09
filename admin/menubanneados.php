@@ -2,7 +2,7 @@
     session_start();
     if($_SESSION["usuarioLogueado"] == null)
     {
-         header("Location:http://www.partypicapp.com/index.php");
+         header("Location:http://www.partypicok.com/index.php");
     }
     else
     {
@@ -12,7 +12,7 @@
        }
        else
        {
-          header("Location:http://www.partypicapp.com/admin/dashboardEncargado.php");
+          header("Location:http://www.partypicok.com/admin/dashboardEncargado.php");
        }
     }
 ?>

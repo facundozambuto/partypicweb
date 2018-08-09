@@ -2,7 +2,7 @@
     session_start();
     if($_SESSION["usuarioInvitado"] == null)
     {
-         header("Location:http://www.partypicapp.com/index.php");
+         header("Location:http://www.partypicok.com/index.php");
     }
     else
     {
@@ -12,7 +12,7 @@
        }
        else
        {
-          header("Location:http://www.partypicapp.com/index.php");
+          header("Location:http://www.partypicok.com/index.php");
        }
     }
 ?>
@@ -51,7 +51,7 @@
     <div id="page-content-wrapper" style="padding-top:40px">
 		<div class="container container-ppal" style="margin-top:40px; margin-bottom:40px">
 			<div class="row">
-			  <a id="btnDescargaAlbum" href="http://www.partypicapp.com/imagenes_eventos/DescargarAlbum.php" target="_blank" class="btn btn-md btn-primary pull-right"><span class="fa fa-download"></span> Descargar álbum</a>
+			  <a id="btnDescargaAlbum" href="http://www.partypicok.com/imagenes_eventos/DescargarAlbum.php" target="_blank" class="btn btn-md btn-primary pull-right"><span class="fa fa-download"></span> Descargar álbum</a>
 			</div>
 		</div>
 		

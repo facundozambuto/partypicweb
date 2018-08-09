@@ -145,7 +145,7 @@
       $("#modalEnviar").modal('show');
     }).end().find(".command-play-slider").on("click", function(e) {
       var id_evento = $(this).data("row-id");
-      var win = window.open("http://www.partypicapp.com/admin/verSliderEncargado.php?id_evento="+id_evento, '_blank');
+      var win = window.open("http://www.partypicok.com/admin/verSliderEncargado.php?id_evento="+id_evento, '_blank');
       win.focus();
     });
   });

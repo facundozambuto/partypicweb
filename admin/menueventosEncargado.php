@@ -2,13 +2,13 @@
     session_start();
     if($_SESSION["usuarioLogueado"] == null)
     {
-         header("Location:http://www.partypicapp.com/index.php");
+         header("Location:http://www.partypicok.com/index.php");
     }
     else
     {
        if($_SESSION["rol"] == "administrador")
        {
-            header("Location:http://www.partypicapp.com/admin/dashboard.php");
+            header("Location:http://www.partypicok.com/admin/dashboard.php");
        }
        else
        {

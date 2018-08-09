@@ -61,14 +61,14 @@ $(document).ready(function () {
     success: bindearImagenes,
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurri¨® un error. Comunicalo al desarrollador.");
+      $("#mensajeError").text("Ocurriï¿½ï¿½ un error. Comunicalo al desarrollador.");
     }     
     }); 
     
     function bindearImagenes(data) {
       if(data.length > 0) {
         $("#nombreEvento").html(data[0].nombre_evento);
-        $("#btnDescargaAlbum").attr('href', 'http://www.partypicapp.com/imagenes_eventos/DescargarAlbum.php?id_evento=' + data[0].id_evento);
+        $("#btnDescargaAlbum").attr('href', 'http://www.partypicok.com/imagenes_eventos/DescargarAlbum.php?id_evento=' + data[0].id_evento);
         for(i=0;i<data.length;i++) {
           var urlFoto = data[i].path.replace('/home/josefinaacevedo/public_html','..');
           getMeta(urlFoto, data[i]);
@@ -136,7 +136,7 @@ $(document).ready(function () {
       success:imagenOK,
       error: function(xhr,status,error) {   
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurri¨® un error. Comunicalo al desarrollador.");
+      $("#mensajeError").text("Ocurriï¿½ï¿½ un error. Comunicalo al desarrollador.");
       }
     });
 
@@ -189,7 +189,7 @@ $(document).ready(function () {
       success:bloquearOK,
       error: function(xhr,status,error) {   
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurri¨® un error. Comunicalo al desarrollador.");
+      $("#mensajeError").text("Ocurriï¿½ï¿½ un error. Comunicalo al desarrollador.");
       }
     });
 
@@ -238,7 +238,7 @@ function cargarSalonesAlSelect() {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurri¨® un error. Comunicalo al desarrollador.");
+      $("#mensajeError").text("Ocurriï¿½ï¿½ un error. Comunicalo al desarrollador.");
     } 
     
   }); 

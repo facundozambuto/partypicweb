@@ -491,7 +491,7 @@
 						<div class="section-heading m-bot-80 text-center">
 							<h2>Contacto</h2>
 							<p>Dejanos tus consultas, sugerencias o comentarios y te responderemos a la brevedad.</p>
-							<p>soporte@partypicapp.com | +54 341 6201040 | Skype: soporte.partypic</p>
+							<p>soporte@partypicok.com | +54 341 6201040 | Skype: soporte.partypic</p>
 						</div>
 					</div>
 					<!-- Heading End -->
@@ -684,9 +684,9 @@
 						<span class="et-icon icon-chat fader wow jello" data-wow-delay="0.5s" data-wow-duration="1s"></span>
 						<h1>¿Necesitás ayuda?</h1>
 						<p>Contactate con nuestro staff de atención al cliente los 365 días del año.</p>
-						<h4>soporte@partypicapp.com</h4>
+						<h4>soporte@partypicok.com</h4>
 						<h4>+54 341 6201040</h4>
-						<h4>Skype: soporte.partypicapp</h4>
+						<h4>Skype: soporte.partypicok</h4>
 					</div>
 				</div>
 				<!-- Footer Right End -->
