@@ -1,0 +1,171 @@
+/*Anchos de columnas */
+.IDColumn {
+    width: 3%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+th:hover {
+   background-color: black;
+   border: 2px solid black !important;
+}
+
+.NombreColumn {
+    width: 10%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.RolColumn {
+    width: 7%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.ActivoColumn {
+    width: 5%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.FechaColumn {
+    width: 10%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.EmailColumn {
+    width: 12%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.ContraseniaColumn {
+    width: 8%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.TelefonoColumn {
+    width: 7%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.DomicilioColumn {
+    width: 13%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.CuilColumn {
+    width: 10%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.CelularColumn {
+    width: 8%;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black !important;
+}
+
+.CommandColumn {
+  width: 7%;
+  text-align: center;
+  background-color: white;
+  border: 2px solid black !important;
+}
+
+.container-ppal {
+  width: 85%;
+}
+
+.container-ppal-2 {
+  width: 85%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.bootgrid-footer, .bootgrid-header {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.bootgrid-table th>.column-header-anchor>.text {
+  font-size: 15px;
+}
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+    vertical-align: middle;
+}
+
+.div-errores {
+  margin: 4em !important;
+}
+
+.mb-7x {
+  margin-bottom: 7px !important;
+}
+
+.command-delete {
+    margin-right: 3px;
+}
+
+table#grid-command-buttons > tbody {
+   border: 2px solid black !important;
+}
+
+table#grid-command-buttons > tbody > tr {
+   border: 2px solid black !important;
+}
+
+.actions.btn-group > button {
+	width:54px;
+}
+
+.bootgrid-header .actionBar .btn-group>.btn-group .dropdown-menu .dropdown-item  {
+   font-size:15px;
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+ background-color:#c9e1e8 !important;
+}
+
+.command-play-slider {
+  margin-left: 3px;
+}
+
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+
+ .btn-cerrar-sesion:hover{
+   background-color: #ef7b68;
+  }

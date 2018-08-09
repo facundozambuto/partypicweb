@@ -1,0 +1,156 @@
+.container-ppal {
+  width: 85%;
+}
+
+.container-ppal-2 {
+  width: 82%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.bootgrid-footer, .bootgrid-header {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.bootgrid-table th>.column-header-anchor>.text {
+  font-size: 15px;
+}
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+    vertical-align: middle;
+}
+
+.div-errores {
+  margin: 4em !important;
+}
+
+.mb-7x {
+  margin-bottom: 7px !important;
+}
+
+.command-delete {
+    margin-left: 5px;
+}
+
+.command-block {
+    margin-left: 5px;
+}
+
+table#grid-command-buttons > tbody {
+   border: 2px solid black !important;
+}
+
+table#grid-command-buttons > tbody > tr {
+   border: 2px solid black !important;
+}
+
+.actions.btn-group > button {
+	width:54px;
+}
+
+.bootgrid-header .actionBar .btn-group>.btn-group .dropdown-menu .dropdown-item  {
+   font-size:15px;
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+ background-color:#c9e1e8 !important;
+}
+
+.command-play-slider {
+  margin-left: 3px;
+}
+
+#gallery {
+  padding: 10px 0 0 10px;
+  background-color: white;
+  text-align: center;
+  margin: 0 auto;
+  border: 2px solid blue;
+}
+
+.gallery-item {
+  width: 200px;
+  height: 200px;
+  float:left;
+  margin: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 10px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+}
+  
+.modal {
+  text-align: center;
+  margin: 0 auto 20px auto;
+}
+
+.modal-open {
+  margin: 0 auto;
+  overflow: auto;
+} 
+
+#modal-image {
+  margin: 0 auto;
+  max-width:100%;
+  border-radius: 5px;
+}  
+
+.modal-image-caption {
+  text-transform: capitalize;
+}
+
+.media
+{
+
+}
+.media-heading {
+vertical-align:middle;
+}
+.dp
+{
+border:10px solid #eee;
+transition: all 0.2s ease-in-out;
+}
+.dp:hover
+{
+border:2px solid #eee;
+transform:rotate(360deg);
+-ms-transform:rotate(360deg);  
+-webkit-transform:rotate(360deg);  
+/*-webkit-font-smoothing:antialiased;*/
+}
+
+.img-profile {
+	width:20%;
+}
+
+.media-body-custom {
+	width:80%;
+	float: left;
+	margin-top: 2em;
+}
+
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+
+ .btn-cerrar-sesion:hover{
+   background-color: #ef7b68;
+  }
