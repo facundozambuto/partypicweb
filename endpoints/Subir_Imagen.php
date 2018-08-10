@@ -18,7 +18,7 @@
 		$server_ip = gethostbyname(gethostname());
 		//$upload_url = 'http://'.$server_ip.'/imagenes_eventos/'.$IdEvento.'/';
 		
-		$upload_url = "/home/josefinaacevedo/public_html/imagenes_eventos/" . $IdEvento.'/';
+		$upload_url = "/home/o4z5sdhblexk/public_html/imagenes_eventos/" . $IdEvento.'/';
 		$upload_path = '/imagenes_eventos/'.$IdEvento.'/';
 		
 		
