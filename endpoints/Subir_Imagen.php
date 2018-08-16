@@ -46,6 +46,7 @@
 			$database = "partypic";
 			$conn = new PDO("mysql:host=localhost;dbname={$database}", $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));               
 		  
+			$file_url = str_replace("/home/o4z5sdhblexk/public_html/", "", $file_url)
 			$query = "INSERT INTO imagenes SET path = '{$file_url}', id_evento = '{$IdEvento}', comentario = '{$Comentario}', id_profile = '{$IdPerfil}', nombre_profile = '{$NombrePerfil}', foto_profile_url = '{$ImagenPerfil}', create_date = NOW()";
 
 			$stmt = $conn->prepare($query);
