@@ -12,21 +12,19 @@ $(document).ready(function(){
 	getImagenesByIdEvento();
 });
 	
-function getImagenesByIdEvento() { 
+function getImagenesByIdEvento() {
 
-	var id_evento = gup("id_evento", document.URL);
-	var first_time = 'si';
-	var time_request = null;
+	var eventId = gup("eventId", document.URL);
+	var requestTime = null;
 
 	$.ajax({
-		url:'../endpoints/Get_ImagenesByIdEvento.php',
-		type: 'POST',
+		url:'http://local-api.partypic.com/api/images?eventId='+eventId+'&firstRequest='+true+'&requestTime='+requestTime,
+		type: 'GET',
 		dataType: 'json',
-		data: {id_evento:id_evento, first_time:first_time, time_request:time_request},
 		success: bindearImagenes,
 		error: function(xhr, status, error) {
 		  $("#modalError").modal('show');
-		  $("#mensajeError").text("Ocurri¨® un error. Comunicalo al desarrollador.");
+		  $("#mensajeError").text("Ocurriï¿½ï¿½ un error. Comunicalo al desarrollador.");
 		}
 	});
 }
@@ -36,7 +34,7 @@ function bindearImagenes(data) {
 	if(data.length) {
 	
 		for(i=0;i<data.length;i++) {
-			var urlFoto = data[i].path.replace('/home/josefinaacevedo/public_html','..');
+			var urlFoto = data[i].path;
 			getMeta(urlFoto, data[i]);
 		}
 		
@@ -81,10 +79,10 @@ function getMeta(urlFoto, data){
 			dataImg.height = this.height;
 			dataImg.width = this.width;
 			if(dataImg.height > dataImg.width) {
-				$("#contenedor-imagenes").append('<li style="display:none;" data-url-imagen="'+urlFoto+'" data-tipo="vertical" data-imagen="'+data.id_imagen+'" ><div style="height:100vh"></div><div class="contenedor-imagen" style="background-image: url('+urlFoto+'); background-size:cover; height:100vh; width:698px; left:35em;""></div><div class="ns-box ns-other ns-effect-thumbslider ns-type-notice ns-show"><div class="ns-box-inner"><div class="ns-thumb"><img style="width:120px; height:120px" onerror="if (this.src != \'../images/mobile-user.png\'){ this.src = \'../images/mobile-user.png\'; this.width = \'100\'; this.height = \'120\';}" src="'+data.foto_profile_url+'"/></div><div class="ns-content"><p><a href="#">'+data.nombre_profile+'</a></p><p>'+data.comentario+'</p></div></div></div></li>');
+				$("#contenedor-imagenes").append('<li style="display:none;" data-url-imagen="'+urlFoto+'" data-tipo="vertical" data-imagen="'+data.imageId+'" ><div style="height:100vh"></div><div class="contenedor-imagen" style="background-image: url('+urlFoto+'); background-size:cover; height:100vh; width:698px; left:35em;""></div><div class="ns-box ns-other ns-effect-thumbslider ns-type-notice ns-show"><div class="ns-box-inner"><div class="ns-thumb"><img style="width:120px; height:120px" onerror="if (this.src != \'../images/mobile-user.png\'){ this.src = \'../images/mobile-user.png\'; this.width = \'100\'; this.height = \'120\';}" src="'+data.profileImageUrl+'"/></div><div class="ns-content"><p><a href="#">'+data.profileName+'</a></p><p>'+data.comment+'</p></div></div></div></li>');
 			}
 			else {
-				$("#contenedor-imagenes").append('<li style="display:none" data-tipo="horizontal" data-imagen="'+data.id_imagen+'" ><div class="contenedor-imagen" style="background-image: url('+urlFoto+'); background-size:cover; height:100vh; width: 100%;"></div><div class="ns-box ns-other ns-effect-thumbslider ns-type-notice ns-show"><div class="ns-box-inner"><div class="ns-thumb"><img style="width:120px; height:120px" onerror="if (this.src != \'../images/mobile-user.png\') { this.src = \'../images/mobile-user.png\'; this.width = \'100\'; this.height = \'120\';}" src="'+data.foto_profile_url+'" style="width:120px" /></div><div class="ns-content"><p><a href="#">'+data.nombre_profile+'</a></p><p>'+data.comentario+'</p></div></div></div></li>');
+				$("#contenedor-imagenes").append('<li style="display:none" data-tipo="horizontal" data-imagen="'+data.imageId+'" ><div class="contenedor-imagen" style="background-image: url('+urlFoto+'); background-size:cover; height:100vh; width: 100%;"></div><div class="ns-box ns-other ns-effect-thumbslider ns-type-notice ns-show"><div class="ns-box-inner"><div class="ns-thumb"><img style="width:120px; height:120px" onerror="if (this.src != \'../images/mobile-user.png\') { this.src = \'../images/mobile-user.png\'; this.width = \'100\'; this.height = \'120\';}" src="'+data.profileImageUrl+'" style="width:120px" /></div><div class="ns-content"><p><a href="#">'+data.profileName+'</a></p><p>'+data.comment+'</p></div></div></div></li>');
 			}
 			
 			if(primerCarga){
