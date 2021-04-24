@@ -16,7 +16,7 @@
     
     $res = array();
     
-    if($first_time == 'test'){
+    if($first_time == 'test') {
     	$resp = new stdClass();  
     	$resp->id_imagen = 36;
     	$resp->path = "\/home\/josefinaacevedo\/public_html\/imagenes_eventos\/25\/36.jpg";
@@ -36,12 +36,18 @@
     
     if($first_time == 'si' || $first_time == null)
     {
-      $sql = "SELECT im.id_imagen, im.path, im.id_evento, im.comentario, im.id_profile, im.nombre_profile, im.foto_profile_url, ev.nombre_evento, im.delete_date FROM eventos ev INNER JOIN imagenes im ON ev.id_evento = im.id_evento WHERE im.id_evento = '".$id_evento."' AND im.id_profile NOT IN (SELECT id_profile FROM usuarios_banneados) AND im.delete_date IS NULL";  
+      $sql = "SELECT im.id_imagen, im.path, im.id_evento, im.comentario, im.id_profile, im.nombre_profile, im.foto_profile_url, ev.nombre_evento, im.delete_date 
+      FROM eventos ev INNER JOIN imagenes im ON ev.id_evento = im.id_evento 
+      WHERE im.id_evento = '".$id_evento."' AND im.id_profile 
+      NOT IN (SELECT id_profile FROM usuarios_banneados) AND im.delete_date IS NULL";  
       $paso_por_aca = "si, paso pero por otro lado" ;
     }
     else
     {
-      $sql = "SELECT im.id_imagen, im.path, im.id_evento, im.comentario, im.id_profile, im.nombre_profile, im.foto_profile_url, ev.nombre_evento, im.delete_date FROM eventos ev INNER JOIN imagenes im ON ev.id_evento = im.id_evento WHERE im.id_evento = '".$id_evento."' AND im.id_profile NOT IN (SELECT id_profile FROM usuarios_banneados) AND im.delete_date IS NULL AND im.create_date > '".$time_request."' ";
+      $sql = "SELECT im.id_imagen, im.path, im.id_evento, im.comentario, im.id_profile, im.nombre_profile, im.foto_profile_url, ev.nombre_evento, im.delete_date 
+      FROM eventos ev INNER JOIN imagenes im ON ev.id_evento = im.id_evento 
+      WHERE im.id_evento = '".$id_evento."' AND im.id_profile 
+      NOT IN (SELECT id_profile FROM usuarios_banneados) AND im.delete_date IS NULL AND im.create_date > '".$time_request."' ";
       $paso_por_aca = "si, paso" ;
     }
     

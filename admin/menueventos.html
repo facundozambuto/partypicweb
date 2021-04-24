@@ -1,24 +1,3 @@
-<?php
-    session_start();
-    if($_SESSION["usuarioLogueado"] == null)
-    {
-         header("Location:http://www.partypicapp.com/index.php");
-    }
-    else
-    {
-       if($_SESSION["rol"] == "administrador")
-       {
-            
-       }
-       else
-       {
-          header("Location:http://www.partypicapp.com/admin/dashboardEncargado.php");
-       }
-    }
-?>
-
-<!DOCTYPE html>
-
 <html class="no-js" lang="es"><!--<![endif]-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -70,15 +49,15 @@
         <table id="grid-command-buttons" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="../endpoints/BackMenuEventos.php">
           <thead style="border: 2px solid black;">
             <tr>
-              <th data-column-id="id_evento" data-formatter="IDColumn" data-type="numeric" data-header-css-class="IDColumn" data-identifier="true" data-sortable="true">ID</th>
-              <th data-column-id="codigo" data-formatter="CodigoColumn" data-header-css-class="CodigoColumn" data-sortable="true">Código</th>
-              <th data-column-id="nombre_evento" data-formatter="NombreEventoColumn" data-header-css-class="NombreEventoColumn" data-sortable="true">Nombre</th>
-              <th data-column-id="descripcion" data-formatter="DescripcionColumn" data-header-css-class="DescripcionColumn" data-identifier="true" data-sortable="true">Descripción</th>
-              <th data-column-id="fecha" data-formatter="FechaColumn" data-header-css-class="FechaColumn" data-sortable="true">Fecha</th>
-              <th data-column-id="nombre_salon" data-formatter="NombreSalonColumn" data-header-css-class="NombreSalonColumn" data-sortable="true">Salón</th>
-              <th data-column-id="codigo_qr" data-formatter="CodigoQRColumn" data-header-css-class="CodigoQRColumn" data-sortable="true">Código QR</th>
-              <th data-column-id="habilitado" data-formatter="HabilitadoColumn" data-header-css-class="HabilitadoColumn" data-sortable="true">Estado</th>
-              <th data-column-id="ver_fotos" data-formatter="VerFotosColumn" data-header-css-class="VerFotosColumn" data-sortable="true">Ver Imágenes</th>
+              <th data-column-id="eventId" data-formatter="IDColumn" data-type="numeric" data-header-css-class="IDColumn" data-identifier="true" data-sortable="true">ID</th>
+              <th data-column-id="code" data-formatter="CodigoColumn" data-header-css-class="CodigoColumn" data-sortable="true">Código</th>
+              <th data-column-id="name" data-formatter="NombreEventoColumn" data-header-css-class="NombreEventoColumn" data-sortable="true">Nombre</th>
+              <th data-column-id="description" data-formatter="DescripcionColumn" data-header-css-class="DescripcionColumn" data-identifier="true" data-sortable="true">Descripción</th>
+              <th data-column-id="date" data-formatter="FechaColumn" data-header-css-class="FechaColumn" data-sortable="true">Fecha</th>
+              <th data-column-id="venueName" data-formatter="NombreSalonColumn" data-header-css-class="NombreSalonColumn" data-sortable="true">Salón</th>
+              <th data-column-id="qrCode" data-formatter="CodigoQRColumn" data-header-css-class="CodigoQRColumn" data-sortable="true">Código QR</th>
+              <th data-column-id="isEnabled" data-formatter="HabilitadoColumn" data-header-css-class="HabilitadoColumn" data-sortable="true">Estado</th>
+              <th data-column-id="goToSlider" data-formatter="VerFotosColumn" data-header-css-class="VerFotosColumn" data-sortable="true">Ver Imágenes</th>
               <th data-column-id="commands" data-formatter="commands" data-header-css-class="CommandColumn" data-sortable="false">Opciones</th>
             </tr>
           </thead>
@@ -97,33 +76,33 @@
                     <div class="row">
                       <div class="col-xs-12 col-md-12 col-lg-12" style="margin-bottom:20px">    
                         <div class="form-group mb-7px">
-                          <label for="id_evento" class="required col-md-3 control-label">ID</label>
+                          <label for="eventId" class="required col-md-3 control-label">ID</label>
                           <div class="col-md-3">
-                              <input id="id_evento" disabled="disabled" type="text" class="form-control text-center"  name="id_evento" placeholder="ID">
+                              <input id="eventId" disabled="disabled" type="text" class="form-control text-center"  name="eventId" placeholder="ID">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="codigo" class="col-md-3 control-label">Código</label>
+                          <label for="code" class="col-md-3 control-label">Código</label>
                           <div class="col-md-9">
-                              <input id="codigo" disabled="disabled" type="text" class="form-control" name="codigo" placeholder="Código">
+                              <input id="code" disabled="disabled" type="text" class="form-control" name="code" placeholder="Código">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="nombre_evento" class="col-md-3 control-label">Nombre Evento</label>
+                          <label for="name" class="col-md-3 control-label">Nombre Evento</label>
                           <div class="col-md-9">
-                              <input id="nombre_evento" type="text" class="form-control" name="nombre_evento" placeholder="Nombre del Evento">
+                              <input id="name" type="text" class="form-control" name="name" placeholder="Nombre del Evento">
                           </div>
                         </div>      
                         <div class="form-group mb-7px">
-                          <label for="descripcion" class="required col-md-3 control-label">Descripción</label>
+                          <label for="description" class="required col-md-3 control-label">Descripción</label>
                           <div class="col-md-9">
-                              <input id="descripcion" type="text" class="form-control"  name="descripcion" placeholder="Descripción">
+                              <input id="description" type="text" class="form-control"  name="description" placeholder="Descripción">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="fecha" class="col-md-3 control-label">Fecha</label>
+                          <label for="date" class="col-md-3 control-label">Fecha</label>
                           <div class="col-md-9">
-                              <input id="fecha" type="text" class="form-control some_class" name="fecha" placeholder="Fecha">
+                              <input id="date" type="text" class="form-control some_class" name="date" placeholder="Fecha">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
@@ -134,18 +113,18 @@
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="habilitado" class="col-md-3 control-label">Estado</label>
+                          <label for="isEnabled" class="col-md-3 control-label">Estado</label>
                           <div class="col-md-4">
-                            <select id="habilitado" class="form-control" name="habilitado">
+                            <select id="isEnabled" class="form-control" name="isEnabled">
                               <option value="1">Habilitado</option>
                               <option value="0">No Habilitado</option>
                             </select>
                           </div>
                         </div>    
                         <div class="form-group mb-7px">
-                          <label for="codigo_qr" class="col-md-3 control-label">Código QR</label>
+                          <label for="qrCode" class="col-md-3 control-label">Código QR</label>
                           <div class="col-md-9">
-                              <img id="codigo_qr" src="" class="" name="codigo_qr" placeholder="Código QR">
+                              <img id="qrCode" src="" class="" name="qrCode" placeholder="Código QR">
                           </div>
                         </div>
                       </div>    
@@ -257,7 +236,7 @@
 			                  </tr>
 			                  <tr>
 			                    <td>Salón</td>
-			                    <td id="nombre_salon"></td>
+			                    <td id="venueName"></td>
 			                  </tr>
 			                  <tr>
 			                    <td>Dirección</td>

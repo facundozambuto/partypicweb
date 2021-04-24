@@ -41,14 +41,14 @@ if(window.location.href.indexOf("?id_salon=") > -1) {
   $.cookie('id_salon', id_salon);
 }
 else {
-  if(window.location.href.indexOf("?id_evento=") > -1) {
+  if(window.location.href.indexOf("?eventId=") > -1) {
     var url = "../admin/BackMenuEventosWithParameterEvent.php";
-    var id_evento= gup("id_evento", document.URL);
-    $.cookie('id_evento', id_evento);
+    var eventId=  gup("eventId", document.URL);
+    $.cookie('eventId', eventId);
   }
   else
   {
-    var url = "../endpoints/BackMenuEventos.php";
+    var url = "http://local-api.partypic.com/api/events";
   }
 }
 
@@ -62,33 +62,33 @@ var grid = $("#grid-command-buttons").bootgrid({
   url: url,
   formatters: {
       "IDColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.id_evento + "</div>";
+        return "<div class=\"text-center\">" + row.eventId + "</div>";
       },
       "commands": function(column, row) {
-        return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar evento\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id_evento + "\"><span class=\"fa fa-pencil\"></span></button> " + 
-              "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar evento\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_evento + "\"><span class=\"fa fa-trash-o\"></span></button><button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Reenviar evento por correo\" class=\"btn btn-xs btn-default command-send\" data-row-id=\"" + row.id_evento + "\"><span class=\"fa fa-envelope-o\"></span></button>" +
-              "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Ver presentación\" class=\"btn btn-xs btn-default command-play-slider\" data-row-id=\"" + row.id_evento + "\"><span class=\"fa fa-play-circle\"></span></button></div>";
+        return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar evento\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+              "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar evento\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-trash-o\"></span></button><button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Reenviar evento por correo\" class=\"btn btn-xs btn-default command-send\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-envelope-o\"></span></button>" +
+              "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Ver presentación\" class=\"btn btn-xs btn-default command-play-slider\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-play-circle\"></span></button></div>";
       },
       "DescripcionColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.descripcion + "</div>";
       },
       "CodigoColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.codigo + "</div>";
+        return "<div class=\"text-center\">" + row.code + "</div>";
       },
       "NombreEventoColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.nombre_evento + "</div>";
+        return "<div class=\"text-center\">" + row.name + "</div>";
       },
       "FechaColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.fecha + "</div>";
+        return "<div class=\"text-center\">" + row.date + "</div>";
       },
       "CodigoQRColumn": function(column, row) {
-        return "<div class=\"text-center\"><img src="+ row.codigo_qr +"></div>";
+        return "<div class=\"text-center\"><img src="+ row.qrCode +"></div>";
       },
       "NombreSalonColumn": function(column, row) {
-        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"verSalon("+ row.id_salon +")\" target=\"blank\">"+row.nombre_salon+"</a></div>";
+        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"verSalon("+ row.venueId +")\" target=\"blank\">"+row.venueName+"</a></div>";
       },
       "VerFotosColumn": function(column, row) {
-        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" href=\"/admin/verFotosEvento.php?id_evento="+ row.id_evento +"\" target=\"blank\">Ver Imágenes</a></div>";
+        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" href=\"/admin/verFotosEvento.php?eventId="+ row.eventId +"\" target=\"blank\">Ver Imágenes</a></div>";
       },
       "HabilitadoColumn": function(column, row) {
         if(row.habilitado == 1) {
@@ -104,16 +104,16 @@ var grid = $("#grid-command-buttons").bootgrid({
   changeRowColor();
 /* Executes after data is loaded and rendered */
   grid.find(".command-edit").on("click", function(e) {
-    $.removeCookie("id_evento");
-    var id_evento = $(this).data("row-id");
-    $.cookie("id_evento", id_evento);
+    $.removeCookie("eventId");
+    var eventId = $(this).data("row-id");
+    $.cookie("eventId", eventId);
     $("#modalEditar").modal('show');
 
     $.ajax({
       url:'../endpoints/Get_EventoEdit.php',
       type: 'POST',
       dataType: 'json',
-      data: {id_evento:id_evento},
+      data: { eventId: eventId},
       success: function(result) {
         $("#codigo").val(result[0].codigo);
         $("#nombre_evento").val(result[0].nombre_evento);
@@ -125,7 +125,7 @@ var grid = $("#grid-command-buttons").bootgrid({
         $("#id_salon").val(result[0].id_salon);
         $("#codigo_qr").attr('src', result[0].codigo_qr);
         $("#habilitado").val(result[0].habilitado);
-        $("#id_evento").val(result[0].id_evento);  
+        $("#eventId").val(result[0].eventId);  
       },
       error: function(xhr, status, error) {
         $("#modalError").modal('show');
@@ -133,37 +133,37 @@ var grid = $("#grid-command-buttons").bootgrid({
       } 
     }); 
   }).end().find(".command-delete").on("click", function(e) {
-    $.removeCookie("id_evento");
-    var id_evento = $(this).data("row-id");
-    $.cookie("id_evento", id_evento);
+    $.removeCookie("eventId");
+    var eventId = $(this).data("row-id");
+    $.cookie("eventId", eventId);
     $("#modalEliminar").modal('show');
   }).end().find(".command-send").on("click", function(e) {
-    $.removeCookie("id_evento");
-    var id_evento = $(this).data("row-id");
-    $.cookie("id_evento", id_evento);
+    $.removeCookie("eventId");
+    var eventId = $(this).data("row-id");
+    $.cookie("eventId", eventId);
     $("#modalEnviar").modal('show');
   }).end().find(".command-play-slider").on("click", function(e) {
-    var id_evento = $(this).data("row-id");
-    var win = window.open("http://www.partypicok.com/admin/verSlider.php?id_evento="+id_evento, '_blank');
+    var eventId = $(this).data("row-id");
+    var win = window.open("http://www.partypicok.com/admin/verSlider.php?eventId="+eventId, '_blank');
     win.focus();
   });
 });
 $("#loadingDivPadre").hide();
 
 $("#btnCancelSend").on("click", function() {
-  $.removeCookie("id_evento");
+  $.removeCookie("eventId");
 });
 
 $("#btnConfirmSend").on("click", function(){
   var base_url = "../endpoints/SendInstrucciones.php";
-  id_evento = parseFloat($.cookie("id_evento"));
+  eventId = parseFloat($.cookie("eventId"));
   nombre_evento = $.cookie("nombre_evento");
   codigo_qr = $.cookie("codigo_qr");
   $.ajax({
     url: base_url,
     dataType: "json",
     type:'POST',
-    data:{id_evento:id_evento},
+    data:{eventId:eventId},
     success:envioOK,
     error: function(xhr,status,error) {   
       $("#modalError").modal('show');
@@ -173,7 +173,7 @@ $("#btnConfirmSend").on("click", function(){
 
   function envioOK(data) {
     if(data.success) {
-      $.removeCookie("id_evento");
+      $.removeCookie("eventId");
       $('#modalEnviar').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       $("#modalSuccess").modal('show');
@@ -183,19 +183,19 @@ $("#btnConfirmSend").on("click", function(){
 });
 
 $("#btnCancelDelete").on("click", function() {
-  $.removeCookie("id_evento");
+  $.removeCookie("eventId");
 });
 
 $("#btnConfirmDelete").on("click", function(){
     
   var base_url = "../endpoints/DeleteEvento.php";
-  id_evento = parseFloat($.cookie("id_evento"));
+  eventId = parseFloat($.cookie("eventId"));
   $("#loadingDivPadre").show();
   $.ajax({
     url: base_url,
     dataType: "json",
     type:'POST',
-    data:{id_evento:id_evento},
+    data:{eventId:eventId},
     success:userOK,
     error: function(xhr,status,error) {   
       $("#modalError").modal('show');
@@ -206,7 +206,7 @@ $("#btnConfirmDelete").on("click", function(){
 
   function userOK(data) {
     if(data.success) {
-      $.removeCookie("id_evento");
+      $.removeCookie("eventId");
       $('#modalEliminar').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       $("#loadingDivPadre").hide();
@@ -262,7 +262,7 @@ $(document).ready(function() {
 
 function UpdateEvento() { 
   var base_url = "../endpoints/UpdateEvento.php";
-  var disabled = $("#id_evento").removeAttr('disabled');
+  var disabled = $("#eventId").removeAttr('disabled');
   var datos = $('#editForm').serialize();
   disabled.attr('disabled','disabled');
   $("#loadingDivPadre").show();
@@ -284,7 +284,7 @@ function UpdateEvento() {
 
 function registroOK(data) {
   if(data.success) {
-    $.removeCookie("id_evento");
+    $.removeCookie("eventId");
     $('#modalEditar').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
     $("#loadingDivPadre").hide();
@@ -375,13 +375,13 @@ function addEvento() {
 
 function registroOK2(data) {
   if(data.success) {
-    var id_evento = data.id;
+    var eventId = data.id;
     var base_url = "../endpoints/SendInstrucciones.php";
     $.ajax({
       url: base_url,
       dataType: "json",
       type:'POST',
-      data:{id_evento:id_evento},
+      data:{eventId:eventId},
       success:InsertYEnvioOK,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');

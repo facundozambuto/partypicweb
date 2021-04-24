@@ -1,21 +1,3 @@
-<?php
-    session_start();
-    if($_SESSION["usuarioLogueado"] == null)
-    {
-         header("Location:http://www.partypicok.com/index.php");
-    }
-    else
-    {
-       if($_SESSION["rol"] == "administrador")
-       {
-            
-       }
-       else
-       {
-          header("Location:http://www.partypicok.com/admin/dashboardEncargado.php");
-       }
-    }
-?>
 <!DOCTYPE html>
 
 <html class="no-js" lang="es"><!--<![endif]-->
@@ -49,37 +31,33 @@
   <body>
     <?php include_once('../admin/nav-superior-lateral.php') ?>
     <!-- Page Content -->
-    <div id="page-content-wrapper" style="padding-top:40px">
-		<div class="container container-ppal" style="margin-top:40px; margin-bottom:40px">
-			<div class="row">
-			  <div class="btn-group btn-breadcrumb pull-left">
-				<a href="../admin/dashboard.php" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-				<a href="../admin/dashboard.php" class="btn btn-primary">Menú Principal</a>
-				<a href="../admin/menueventos.php" class="btn btn-primary">Imágenes de Evento</a>
-				<!--<a href="#" class="btn btn-primary">Primary</a>-->
-			  </div>
-			  <a id="btnDescargaAlbum" href="http://www.partypicok.com/imagenes_eventos/DescargarAlbum.php" target="_blank" class="btn btn-md btn-primary pull-right"><span class="fa fa-download"></span> Descargar álbum</a>
-			</div>
-		</div>
-		
-	    <!--<div style="margin-left: auto; margin-right: auto; display: none" class="text-center" id="loading">
-           		<img alt="cargando" src="../images/ajax-loader.gif">
-             	</div>-->
-	    	<div class="animationload" id="loadingDivPadre">
-	       	   <img src="../images/animacionLogo.gif" style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic"/>
-	        </div>
-		<h2 class="text-center" id="nombreEvento" style="display:none"></h2>
-		<div id="contenedor-imagenes" class="container container-ppal-2" style="display:none">
-		  
-		  
-		</div>
-       		<div class="container text-center" id="contenedor-error" style="display:none" >
-	       		<div class="alert alert-dismissible alert-warning">
-			  <h4>Evento sin imágenes</h4>
-			  <p>Al parecer no se han subido imágenes aún. Por favor, esperá y volvé a intentar nuevamente en unos minutos.</p>
-			</div>
-		</div>
-       
+      <div id="page-content-wrapper" style="padding-top:40px">
+        <div class="container container-ppal" style="margin-top:40px; margin-bottom:40px">
+          <div class="row">
+            <div class="btn-group btn-breadcrumb pull-left">
+            <a href="../admin/dashboard.php" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+            <a href="../admin/dashboard.php" class="btn btn-primary">Menú Principal</a>
+            <a href="../admin/menueventos.php" class="btn btn-primary">Imágenes de Evento</a>
+            <!--<a href="#" class="btn btn-primary">Primary</a>-->
+            </div>
+            <a id="btnDescargaAlbum" href="http://www.partypicok.com/imagenes_eventos/DescargarAlbum.php" target="_blank" class="btn btn-md btn-primary pull-right"><span class="fa fa-download"></span> Descargar álbum</a>
+          </div>
+        </div>
+        <div class="animationload" id="loadingDivPadre">
+          <img src="../images/animacionLogo.gif" style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic"/>
+        </div>
+
+        <h2 class="text-center" id="nombreEvento" style="display:none"></h2>
+        <div id="contenedor-imagenes" class="container container-ppal-2" style="display:none">
+        </div>
+        
+        <div class="container text-center" id="contenedor-error" style="display:none" >
+          <div class="alert alert-dismissible alert-warning">
+            <h4>Evento sin imágenes</h4>
+            <p>Al parecer no se han subido imágenes aún. Por favor, esperá y volvé a intentar nuevamente en unos minutos.</p>
+          </div>
+        </div>
+          
         <div id="modalSuccess" class="modal fade bs-example-modal-lg">
           <div class="modal-dialog modal-lg">
             <div class="modal-content" style="background-color:#dff0d8">
@@ -106,38 +84,38 @@
             </div>
           </div>
         </div>
-		
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				  <div class="row">				  
-					  <nav id="navGaleria">
-					  </nav>
-					  <div class="col-lg-12">
-					        <div class="media">
-					            <div class="media-body-custom">
-					                <h4 class="media-heading" id="nombreUsuario"></h4>
-					                <hr style="margin:8px auto">
-					            </div>
-								<a class="pull-right img-profile" href="#">
-					                <img id="imagenUsuario" class="media-object dp img-circle" onerror="if (this.src != '../images/mobile-user.png') this.src = '../images/mobile-user.png';" src="" style="width: 100px;height:100px;">
-					            </a>
-					      	</div>
-					  </div>
-				  </div>
-				</div>
-				<div class="modal-body clearfix">
-				   <h4 class='modal-image-caption'></h4>
-				   <img id="modal-image" class="img-responsive" src=""><br/>
-				</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
 
-		<div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div class="row">				  
+                  <nav id="navGaleria">
+                  </nav>
+                  <div class="col-lg-12">
+                    <div class="media">
+                      <div class="media-body-custom">
+                          <h4 class="media-heading" id="nombreUsuario"></h4>
+                          <hr style="margin:8px auto">
+                      </div>
+                      <a class="pull-right img-profile" href="#">
+                        <img id="imagenUsuario" class="media-object dp img-circle" onerror="if (this.src != '../images/mobile-user.png') this.src = '../images/mobile-user.png';" src="" style="width: 100px;height:100px;">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-body clearfix">
+                <h4 class='modal-image-caption'></h4>
+                <img id="modal-image" class="img-responsive" src=""><br/>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -153,8 +131,8 @@
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div>
-		
-		<div id="modalBloquear" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        
+        <div id="modalBloquear" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -170,12 +148,12 @@
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div>
-      
+          
       </div>
-      <!-- /#page-content-wrapper -->
+          <!-- /#page-content-wrapper -->
     </div>
     <!-- /#wrapper -->
-    <script type="text/javascript" src="../admin/js/verFotosEvento.js"></script>
+  <script type="text/javascript" src="../admin/js/verFotosEvento.js"></script>
 	<script type="text/javascript" src="../admin/js/navegacionGaleria.js"></script>
   </body>
 </html>

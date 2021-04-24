@@ -37,22 +37,22 @@
         method: "GET",
         cache: false
     },
-    
+    crossDomain: true,
     ajax: true,
-    url: "../endpoints/BackMenuUsuarios.php",
+    url: "http://local-api.partypic.com/api/users/grid",
     formatters: {
         "IDColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.id_usuario + "</div>";
+          return "<div class=\"text-center\">" + row.userId + "</div>";
         },
         "commands": function(column, row) {
-          return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar usuario\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-pencil\"></span></button> " + 
-                "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar usuario\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-trash-o\"></span></button></div>";
+          return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar usuario\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.userId + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+                "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar usuario\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.userId + "\"><span class=\"fa fa-trash-o\"></span></button></div>";
         },
         "NombreColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.nombre_usuario + "</div>";
+          return "<div class=\"text-center\">" + row.name + "</div>";
         },
         "RolColumn": function(column, row) {
-         if(row.rol == "administrador"){
+         if(row.roleId == 1) {
          	row.rol = "Administrador";
          }
          else {
@@ -61,34 +61,33 @@
           return "<div class=\"text-center\">" + row.rol + "</div>";
         },
         "TelefonoColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.telefono_usuario + "</div>";
+          return "<div class=\"text-center\">" + row.mobilePhone + "</div>";
         },
         "FechaColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.fecha_alta + "</div>";
+          return "<div class=\"text-center\">" + row.createdDatetime + "</div>";
         },
         "EmailColumn": function(column, row) {
           return "<div class=\"text-center\">" + row.email +" </div>";
         },
         "ContraseniaColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.contrasenia + "</div>";
+          return "<div class=\"text-center\">" + row.password + "</div>";
         },
         "DomicilioColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.domicilio_usuario + "</div>";
+          return "<div class=\"text-center\">" + row.address + "</div>";
         },
         "CuilColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.cuil_usuario + "</div>";
+          return "<div class=\"text-center\">" + row.cuil + "</div>";
         },
         "CelularColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.celular_usuario + "</div>";
+          return "<div class=\"text-center\">" + row.mobilePhone + "</div>";
         },
         "ActivoColumn": function(column, row) {
-          if(row.activo == 1) {
-             return "<div data-status=\"activo\" class=\"text-center\">Activo</div>";
+          if (row.isActive == true) {
+            return "<div data-status=\"activo\" class=\"text-center\">Activo</div>";
           }
           else {
             return "<div data-status=\"no-activo\" class=\"text-center\">Inactivo</div>";
           }
-         
         }
     }
   }).on("loaded.rs.jquery.bootgrid", function() {
@@ -96,28 +95,26 @@
   /* Executes after data is loaded and rendered */
     grid.find(".command-edit").on("click", function(e) {
       $.removeCookie("id_usuario");
-      var id_usuario = $(this).data("row-id");
-      $.cookie("id_usuario", id_usuario);
+      var userId = $(this).data("row-id");
+      $.cookie("id_usuario", userId);
       $("#modalEditar").modal('show');
 
       $.ajax({
-        url:'../endpoints/Get_UsuarioEdit.php',
-        type: 'POST',
-        dataType: 'json',
-        data: {id_usuario:id_usuario},
+        url:'http://local-api.partypic.com/api/users/' + userId,
+        type: 'GET',
         success: function(result) {
-          $("#nombre_usuario").val(result[0].nombre_usuario);
-          $("#rol").val(result[0].rol);
-          $("#activo").val(result[0].activo);
-          var date = new Date(result[0].fecha_alta);
-          $("#fecha_alta").val((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
-          $("#email").val(result[0].email);
-          $("#contrasenia").val(result[0].contrasenia);
-          $("#domicilio_usuario").val(result[0].domicilio_usuario);
-          $("#telefono_usuario").val(result[0].telefono_usuario);
-          $("#celular_usuario").val(result[0].celular_usuario);
-          $("#cuil_usuario").val(result[0].cuil_usuario);
-          $("#id_usuario").val(result[0].id_usuario);  
+          $("#name").val(result.name);
+          $("#roleId").val(result.roleId);
+          $("#isActive").val(result.isActive);
+          var date = new Date(result.createdDatetime);
+          $("#createdDatetime").val((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+          $("#email").val(result.email);
+          $("#password").val(result.password);
+          $("#address").val(result.address);
+          $("#phone").val(result.phone);
+          $("#mobilePhone").val(result.mobilePhone);
+          $("#cuil").val(result.cuil);
+          $("#usedId").val(result.usedId);  
         },
         error: function(xhr, status, error) {
           $("#modalError").modal('show');
@@ -292,31 +289,34 @@
   $(document).ready(function() {
     $('#addForm').validate({
       rules: {
-        nombre_usuario2: {
+        name2: {
           required: true
         },
-        rol2: {
+        roleId2: {
           required: true
         },
         email2: {
           required: true,
           email: true
         },
-        contrasenia2: {
+        password2: {
           required: true,
           minlength: 8
         },
-        activo2: {
+        isActive2: {
           required: true
         },
-        telefono_usuario2: {
+        phone2: {
           digits: true
         },
-        celular_usuario2: {
+        mobilePhone2: {
           digits: true
         },
-        cuil_usuario2: {
+        cuil2: {
           digits: true
+        },
+        address2: {
+          required: true
         },
         spam: "required"
       },     
@@ -357,16 +357,30 @@
 
 
   function AddUsuario() {
-    var base_url = "../endpoints/AgregarUsuario.php";
-    var datos = $('#addForm').serialize();
+    var base_url = "http://local-api.partypic.com/api/users";
+    var datos = {
+        name: $("#name2").val(),
+        roleId: 1,
+        isActive: true,
+        email: $("#email2").val(),
+        password: $("#password2").val(),
+        cuil: $("#cuil2").val(),
+        address: $("#address2").val(),
+        phone: $("#phone2").val(),
+        mobilePhone: $("#mobilePhone2").val(),
+    }
     $("#loadingDivPadre").show();
     $.ajax({
       url: base_url,
       dataType: "json",
-      type:'POST',
-      data:datos,
-      success:registroOK2,
-      error: function(xhr,status,error) {  
+      type: 'POST',
+      data: JSON.stringify(datos),
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+      },
+      success: registroOK2,
+      error: function (xhr,status,error) {  
         $("#loadingDivPadre").hide(); 
         $("#modalError").modal('show');
         $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
@@ -377,7 +391,7 @@
   }
 
 function registroOK2(data) {
-  if(data.success) {
+  if (data.success) {
     $('#modalAgregar').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
     changeRowColor();

@@ -53,7 +53,9 @@
                 current: this.current,
                 rowCount: this.rowCount,
                 sort: this.sortDictionary,
-                searchPhrase: this.searchPhrase
+                searchPhrase: this.searchPhrase,
+                sortBy: Object.keys(this.sortDictionary)[0],
+                orderBy: Object.values(this.sortDictionary)[0]
             },
             post = this.options.post;
 
