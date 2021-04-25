@@ -75,7 +75,7 @@ $(document).ready(function () {
         }
         //$("#loading").fadeOut(4000);
          $("#loadingDivPadre").hide();
-        $("#contenedor-imagenes").fadeIn(4000);
+        $("#images-container").fadeIn(4000);
         $("#nombreEvento").show(4000);
       }
       else {
@@ -97,10 +97,10 @@ $(document).ready(function () {
         dataImg.height = this.height;
         dataImg.width = this.width;
         if(dataImg.height > dataImg.width) {
-          $("#contenedor-imagenes").append('<div data-profile-img-url="'+data.foto_profile_url+'" data-nombre-perfil="'+data.nombre_profile+'" data-id-profile="'+data.id_profile+'" data-id-imagen="'+data.id_imagen+'" class="gallery-item text-center" onclick="abrirGaleria(this)"><img width="auto" height="185" style="zoom:1.75" src="'+urlFoto+'" alt="'+data.comentario+'" title="'+data.comentario+'"/></div>');
+          $("#images-container").append('<div data-profile-img-url="'+data.foto_profile_url+'" data-nombre-perfil="'+data.nombre_profile+'" data-id-profile="'+data.id_profile+'" data-id-imagen="'+data.id_imagen+'" class="gallery-item text-center" onclick="abrirGaleria(this)"><img width="auto" height="185" style="zoom:1.75" src="'+urlFoto+'" alt="'+data.comentario+'" title="'+data.comentario+'"/></div>');
         }
         else {
-          $("#contenedor-imagenes").append('<div data-profile-img-url="'+data.foto_profile_url+'" data-nombre-perfil="'+data.nombre_profile+'" data-id-profile="'+data.id_profile+'" data-id-imagen="'+data.id_imagen+'" class="gallery-item text-center" onclick="abrirGaleria(this)"><img width="185" height="auto" style="zoom:1.75" src="'+urlFoto+'" alt="'+data.comentario+'" title="'+data.comentario+'"/></div>');
+          $("#images-container").append('<div data-profile-img-url="'+data.foto_profile_url+'" data-nombre-perfil="'+data.nombre_profile+'" data-id-profile="'+data.id_profile+'" data-id-imagen="'+data.id_imagen+'" class="gallery-item text-center" onclick="abrirGaleria(this)"><img width="185" height="auto" style="zoom:1.75" src="'+urlFoto+'" alt="'+data.comentario+'" title="'+data.comentario+'"/></div>');
         }
       },
       src  : urlFoto
@@ -144,7 +144,7 @@ $(document).ready(function () {
       if(data.success) {
       $.removeCookie("id_imagen");
       $('#modalEliminar').modal('hide');
-      $("#contenedor-imagenes").html("");
+      $("#images-container").html("");
       getImagenesByIdEvento();
       $("#modalSuccess").modal('show');
       }    
@@ -197,7 +197,7 @@ $(document).ready(function () {
       if(data.success) {
       $.removeCookie("id_imagen");
       $('#modalBloquear').modal('hide');
-      $("#contenedor-imagenes").html("");
+      $("#images-container").html("");
       getImagenesByIdEvento();
       $("#modalSuccess").modal('show');
       }    

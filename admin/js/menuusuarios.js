@@ -94,9 +94,9 @@
     changeRowColor();
   /* Executes after data is loaded and rendered */
     grid.find(".command-edit").on("click", function(e) {
-      $.removeCookie("id_usuario");
+      $.removeCookie("userId");
       var userId = $(this).data("row-id");
-      $.cookie("id_usuario", userId);
+      $.cookie("userId", userId);
       $("#modalEditar").modal('show');
 
       $.ajax({
@@ -105,7 +105,7 @@
         success: function(result) {
           $("#name").val(result.name);
           $("#roleId").val(result.roleId);
-          $("#isActive").val(result.isActive);
+          $("#isActive").val(result.isActive ? 1 : 0);
           var date = new Date(result.createdDatetime);
           $("#createdDatetime").val((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
           $("#email").val(result.email);
@@ -122,31 +122,28 @@
         } 
       }); 
     }).end().find(".command-delete").on("click", function(e) {
-      $.removeCookie("id_usuario");
-      var id_usuario = $(this).data("row-id");
-      $.cookie("id_usuario", id_usuario);
+      $.removeCookie("userId");
+      var userId = $(this).data("row-id");
+      $.cookie("userId", userId);
       $("#modalEliminar").modal('show');
     });
   });
   $("#loadingDivPadre").hide();
 
-  
-  
   $("#btnCancelDelete").on("click", function() {
-    $.removeCookie("id_usuario");
+    $.removeCookie("userId");
   });
 
   $("#btnConfirmDelete").on("click", function(){
-      
-    var base_url = "../endpoints/DeleteUsuario.php";
-    id_usuario = parseFloat($.cookie("id_usuario"));
+    
+    userId = parseFloat($.cookie("userId"));
+    var baseUrl = "http://local-api.partypic.com/api/users/" + userId;
     $("#loadingDivPadre").show();
 
     $.ajax({
-      url: base_url,
+      url: baseUrl,
       dataType: "json",
-      type:'POST',
-      data:{id_usuario:id_usuario},
+      type:'DELETE',
       success:userOK,
       error: function(xhr,status,error) {
         $("#loadingDivPadre").hide();   
@@ -157,7 +154,7 @@
 
     function userOK(data) {
       if(data.success) {
-        $.removeCookie("id_usuario");
+        $.removeCookie("userId");
         $('#modalEliminar').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         $("#loadingDivPadre").hide();
@@ -165,7 +162,7 @@
         changeRowColor();
       }
       else {
-        $.removeCookie("id_usuario");
+        $.removeCookie("userId");
         $('#modalEliminar').modal('hide');
         $("#loadingDivPadre").hide();
         $("#modalError").modal('show');
@@ -235,22 +232,38 @@
           },
       },  
 
-      submitHandler: UpdateEvento,
+      submitHandler: UpdateUser,
       errorLabelContainer: '#errors'
     });   
   }); 
 
-  function UpdateEvento() { 
-    var base_url = "../endpoints/UpdateUsuario.php";
-    var disabled = $("#id_usuario").removeAttr('disabled');
-    var datos = $('#editForm').serialize();
+  function UpdateUser() {
+    var userId = parseFloat($.cookie("userId"));
+    var baseUrl = "http://local-api.partypic.com/api/users/" + userId;
+    var disabled = $("#userId").removeAttr('disabled');
+    var datos = {
+        name: $("#name").val(),
+        roleId: parseInt($("#roleId").val()),
+        isActive: $("#isActive").val() === '1' ? true : false,
+        email: $("#email").val(),
+        password: $("#password").val(),
+        cuil: $("#cuil").val(),
+        address: $("#address").val(),
+        phone: $("#phone").val(),
+        createdDatetime: new Date($("#createdDatetime").val()),
+        mobilePhone: $("#mobilePhone").val(),
+    }
     disabled.attr('disabled','disabled');
     $("#loadingDivPadre").show();
     $.ajax({
-      url: base_url,
+      url: baseUrl,
       dataType: "json",
-      type:'POST',
-      data:datos,
+      type: 'PUT',
+      data: JSON.stringify(datos),
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+      },
       success:registroOK,
       error: function(xhr,status,error) {
         $("#loadingDivPadre").hide();   
@@ -263,7 +276,7 @@
   
   function registroOK(data) {
     if(data.success) {
-      $.removeCookie("id_usuario");
+      $.removeCookie("userId");
       $('#modalEditar').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       changeRowColor();
@@ -350,18 +363,18 @@
           },
       },  
 
-      submitHandler: AddUsuario,
+      submitHandler: addUser,
       errorLabelContainer: '#errors2'
     });
   }); 
 
 
-  function AddUsuario() {
-    var base_url = "http://local-api.partypic.com/api/users";
+  function addUser() {
+    var baseUrl = "http://local-api.partypic.com/api/users";
     var datos = {
         name: $("#name2").val(),
-        roleId: 1,
-        isActive: true,
+        roleId: parseInt($("#roleId").val()),
+        isActive: $("#isActive").val() === '1' ? true : false,
         email: $("#email2").val(),
         password: $("#password2").val(),
         cuil: $("#cuil2").val(),
@@ -371,7 +384,7 @@
     }
     $("#loadingDivPadre").show();
     $.ajax({
-      url: base_url,
+      url: baseUrl,
       dataType: "json",
       type: 'POST',
       data: JSON.stringify(datos),
@@ -414,14 +427,6 @@ function changeRowColor() {
   });   
 }
 
-/*
- * jQuery Password Strength plugin for Twitter Bootstrap
- *
- * Copyright (c) 2008-2013 Tane Piper
- * Copyright (c) 2013 Alejandro Blanco
- * Dual licensed under the MIT and GPL licenses.
- */
-
 jQuery(document).ready(function() {
   "use strict";
   var options = {};
@@ -444,10 +449,6 @@ jQuery(document).ready(function() {
 
 (function (jQuery) {
 // Source: src/rules.js
-
-
-
-
 var rulesEngine = {};
 
 try {

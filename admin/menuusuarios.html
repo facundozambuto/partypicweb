@@ -79,25 +79,19 @@
                 <div class="modal-body">
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="col-xs-12 col-md-12 col-lg-12" style="margin-bottom:20px">    
-                        <div class="form-group mb-7px">
-                          <label for="userId" class="required col-md-3 control-label">ID</label>
-                          <div class="col-md-3">
-                              <input id="userId" disabled="disabled" type="text" class="form-control text-center"  name="userId" placeholder="ID">
-                          </div>
-                        </div>
+                      <div class="col-xs-12 col-md-12 col-lg-12" style="margin-bottom:20px">
                         <div class="form-group mb-7px">
                           <label for="name" class="col-md-3 control-label">Nombre</label>
                           <div class="col-md-9">
-                              <input id="name" type="text" class="form-control" name="name" placeholder="Nombre">
+                            <input id="name" type="text" class="form-control" name="name" placeholder="Nombre">
                           </div>
                         </div>      
                         <div class="form-group mb-7px">
                           <label for="roleId" class="col-md-3 control-label">Rol</label>
                           <div class="col-md-5">
                             <select id="roleId" class="form-control" name="roleId">
-                              <option value="administrador">Administrador</option>
-                              <option value="encargado_salon">Encargado de Salón</option>
+                              <option value="1">Administrador</option>
+                              <option value="2">Encargado de Salón</option>
                             </select>
                           </div>
                         </div>
@@ -194,7 +188,7 @@
                 <div class="modal-body">
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="col-xs-12 col-md-12 col-lg-12"  style="margin-bottom:20px"> 
+                      <div class="col-xs-12 col-md-12 col-lg-12" style="margin-bottom:20px"> 
                         <div class="form-group mb-7px">
                           <label for="name2" class="col-md-3 control-label">Nombre</label>
                           <div class="col-md-9">
@@ -205,8 +199,8 @@
                           <label for="roleId2" class="col-md-3 control-label">Rol</label>
                           <div class="col-md-5">
                             <select id="roleId2" class="form-control" name="roleId2">
-                              <option value="administrador">Administrador</option>
-                              <option value="encargado_salon">Encargado de Salón</option>
+                              <option value="1">Administrador</option>
+                              <option value="2">Encargado de Salón</option>
                             </select>
                           </div>
                         </div>
@@ -214,8 +208,8 @@
                           <label for="isActive2" class="col-md-3 control-label">Estado</label>
                           <div class="col-md-4">
                             <select id="isActive2" class="form-control" name="isActive2">
-                              <option value="1">Activo</option>
-                              <option value="0">Inactivo</option>
+                              <option value="true">Activo</option>
+                              <option value="false">Inactivo</option>
                             </select>
                           </div>
                         </div>

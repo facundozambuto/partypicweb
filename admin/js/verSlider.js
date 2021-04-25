@@ -31,8 +31,8 @@ function getImagesByEventId() {
 function bindImages(data) {
 	if (data.length) {
 		for (i=0;i<data.length;i++) {
-			var urlFoto = data[i].path;
-			getMeta(urlFoto, data[i]);
+			var pictureUrl = data[i].path;
+			getMeta(pictureUrl, data[i]);
 		}
 		
 		Number.prototype.padLeft = function(base,chr) {
@@ -42,9 +42,9 @@ function bindImages(data) {
 
 	  	var d = new Date, dformat = [ (d.getMonth()+1).padLeft(), d.getDate().padLeft(), d.getFullYear()].join('/') + ' ' + [ d.getHours().padLeft(), d.getMinutes().padLeft(), d.getSeconds().padLeft() ].join(':');
 		
-		  var aux_date = new Date(d + ' GMT +0100');
+		var auxDate = new Date(d + ' GMT +0100');
 		
-		var requestTime = new Date, requestTime = [ aux_date.getFullYear(), (aux_date.getMonth()+1).padLeft(), aux_date.getDate().padLeft()].join('-') + ' ' + [ aux_date.getHours().padLeft(), aux_date.getMinutes().padLeft(), aux_date.getSeconds().padLeft()].join(':');
+		var requestTime = new Date, requestTime = [ auxDate.getFullYear(), (auxDate.getMonth()+1).padLeft(), auxDate.getDate().padLeft()].join('-') + ' ' + [ auxDate.getHours().padLeft(), auxDate.getMinutes().padLeft(), auxDate.getSeconds().padLeft()].join(':');
 		
 		$.cookie('requestTime', requestTime);
 	}
@@ -52,25 +52,26 @@ function bindImages(data) {
 
 var firstLoad = true;
 
-function getMeta(urlFoto, data) {
+function getMeta(pictureUrl, data) {
 	var dataImg = { "height": null, "width": null };
 	$("<img/>", {
 		load : function() {
 			dataImg.height = this.height;
 			dataImg.width = this.width;
 			if (dataImg.height > dataImg.width) {
-				$("#contenedor-imagenes").append('<li style="display:none;" data-url-imagen="'+urlFoto+'" data-tipo="vertical" data-imagen="'+data.imageId+'" ><div style="height:100vh"></div><div class="contenedor-imagen" style="background-image: url('+urlFoto+'); background-size:cover; height:100vh; width:698px; left:35em;""></div><div class="ns-box ns-other ns-effect-thumbslider ns-type-notice ns-show"><div class="ns-box-inner"><div class="ns-thumb"><img style="width:120px; height:120px" onerror="if (this.src != \'../images/mobile-user.png\'){ this.src = \'../images/mobile-user.png\'; this.width = \'100\'; this.height = \'120\';}" src="'+data.profileImageUrl+'"/></div><div class="ns-content"><p><a href="#">'+data.profileName+'</a></p><p>'+data.comment+'</p></div></div></div></li>');
+				$("#images-container").append('<li style="display:none;" data-image-url="'+pictureUrl+'" data-tipo="vertical" data-image="'+data.imageId+'" ><div style="height:100vh"></div><div class="image-container" style="background-image: url('+pictureUrl+'); background-size:cover; height:100vh; width:698px; left:35em;""></div><div class="ns-box ns-other ns-effect-thumbslider ns-type-notice ns-show"><div class="ns-box-inner"><div class="ns-thumb"><img style="width:120px; height:120px" onerror="if (this.src != \'../images/mobile-user.png\'){ this.src = \'../images/mobile-user.png\'; this.width = \'100\'; this.height = \'120\';}" src="'+data.profileImageUrl+'"/></div><div class="ns-content"><p><a href="#">'+data.profileName+'</a></p><p>'+data.comment+'</p></div></div></div></li>');
 			}
 			else {
-				$("#contenedor-imagenes").append('<li style="display:none" data-tipo="horizontal" data-imagen="'+data.imageId+'" ><div class="contenedor-imagen" style="background-image: url('+urlFoto+'); background-size:cover; height:100vh; width: 100%;"></div><div class="ns-box ns-other ns-effect-thumbslider ns-type-notice ns-show"><div class="ns-box-inner"><div class="ns-thumb"><img style="width:120px; height:120px" onerror="if (this.src != \'../images/mobile-user.png\') { this.src = \'../images/mobile-user.png\'; this.width = \'100\'; this.height = \'120\';}" src="'+data.profileImageUrl+'" style="width:120px" /></div><div class="ns-content"><p><a href="#">'+data.profileName+'</a></p><p>'+data.comment+'</p></div></div></div></li>');
+				$("#images-container").append('<li style="display:none" data-tipo="horizontal" data-image="'+data.imageId+'" ><div class="image-container" style="background-image: url('+pictureUrl+'); background-size:cover; height:100vh; width: 100%;"></div><div class="ns-box ns-other ns-effect-thumbslider ns-type-notice ns-show"><div class="ns-box-inner"><div class="ns-thumb"><img style="width:120px; height:120px" onerror="if (this.src != \'../images/mobile-user.png\') { this.src = \'../images/mobile-user.png\'; this.width = \'100\'; this.height = \'120\';}" src="'+data.profileImageUrl+'" style="width:120px" /></div><div class="ns-content"><p><a href="#">'+data.profileName+'</a></p><p>'+data.comment+'</p></div></div></div></li>');
 			}
 			
 			if (firstLoad) {
 			 	startSlider();
 			 	firstLoad = false;
 			}
+			
 		},
-		src  : urlFoto
+		src: pictureUrl
 	});
 }
 
@@ -85,10 +86,10 @@ function startSlider() {
 	i = 0;
 	
 	if (el.eq(i).data('tipo') == 'vertical') {
-		var urlImagen = el.eq(i).data('url-imagen');
+		var urlImagen = el.eq(i).data('image-url');
 		el.eq(i).children().eq(0).css('backgroundImage','url('+urlImagen+')');
 		el.eq(i).children().eq(0).css('background-size', 'cover');
-		el.eq(i).children().eq(0).addClass('fondo-vertical');
+		el.eq(i).children().eq(0).addClass('vertical-background');
 	}
 	el.eq(i).fadeIn(300);
 	i++;
@@ -105,10 +106,10 @@ function watchNextSlider(){
 	cant = el.length;
 	
 	if (el.eq(i).data('tipo') == 'vertical') {
-		var urlImagen = el.eq(i).data('url-imagen');
+		var urlImagen = el.eq(i).data('image-url');
 		el.eq(i).children().eq(0).css('backgroundImage','url('+urlImagen+')');
 		el.eq(i).children().eq(0).css('background-size', 'cover');
-		el.eq(i).children().eq(0).addClass('fondo-vertical');
+		el.eq(i).children().eq(0).addClass('vertical-background');
 	}
 
 	el.fadeOut(300);
@@ -147,7 +148,7 @@ function loadMore(){
 	var requestTime = $.cookie('requestTime');
 	
 	return $.ajax({
-		url:'http://local-api.partypic.com/api/images?eventId='+eventId+'&firstRequest='+false+'&requestTime='+requestTime,
+		url:'http://local-api.partypic.com/api/images/removed?eventId='+eventId+'&firstRequest='+false+'&requestTime='+requestTime,
 		type: 'GET',
 		dataType: 'json',
 		success: bindImages,
@@ -176,6 +177,6 @@ function checkRemovedImages() {
 
 function removeImages(data) {
 	for (i=0;i<data.length;i++) {
-		$('li[data-imagen="' + data[i].imageId + '"]').remove();
+		$('li[data-image="' + data[i].imageId + '"]').remove();
 	}
 }

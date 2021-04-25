@@ -228,7 +228,7 @@ p.codrops-demos a.current-demo:hover{
     -ms-animation: imageAnimation 100s linear infinite 0s;
     animation: imageAnimation 100s linear infinite 0s;
 }
-.cb-slideshow li div.contenedor-imagen {
+.cb-slideshow li div.image-container {
     z-index: 1000;
     position: absolute;
     bottom: 10px;
@@ -1178,7 +1178,7 @@ p.codrops-demos a.current-demo:hover{
 	100% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
 }
 
-.fondo-vertical {
+.vertical-background {
 	-webkit-filter: blur(15px);
   -moz-filter: blur(15px);
   -o-filter: blur(15px);
