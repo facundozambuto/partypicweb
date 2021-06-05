@@ -253,8 +253,11 @@
         createdDatetime: new Date($("#createdDatetime").val()),
         mobilePhone: $("#mobilePhone").val(),
     }
+
     disabled.attr('disabled','disabled');
+
     $("#loadingDivPadre").show();
+    
     $.ajax({
       url: baseUrl,
       dataType: "json",
