@@ -36,16 +36,16 @@
     $('[data-tooltip="tooltip"]').tooltip(); 
   });
   
-  if(window.location.href.indexOf("?id_salon=") > -1) {
+  if(window.location.href.indexOf("?venueId=") > -1) {
     var url = "../admin/BackMenuEventosWithParameterEncargado.php";
-    var id_salon= gup("id_salon", document.URL);
-    $.cookie('id_salon', id_salon);
+    var venueId= gup("venueId", document.URL);
+    $.cookie('venueId', venueId);
   }
   else {
-    if(window.location.href.indexOf("?id_evento=") > -1) {
+    if(window.location.href.indexOf("?eventId=") > -1) {
       var url = "../admin/BackMenuEventosWithParameterEventEncargado.php";
-      var id_evento= gup("id_evento", document.URL);
-      $.cookie('id_evento', id_evento);
+      var eventId= gup("eventId", document.URL);
+      $.cookie('eventId', eventId);
     }
     else
     {
@@ -63,40 +63,40 @@
     url: url,
     formatters: {
         "IDColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.id_evento + "</div>";
+          return "<div class=\"text-center\">" + row.eventId + "</div>";
         },
         "commands": function(column, row) {
-          return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar evento\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id_evento + "\"><span class=\"fa fa-pencil\"></span></button> " + 
-                "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar evento\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_evento + "\"><span class=\"fa fa-trash-o\"></span></button><button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Reenviar evento por correo\" class=\"btn btn-xs btn-default command-send\" data-row-id=\"" + row.id_evento + "\"><span class=\"fa fa-envelope-o\"></span></button>" +
-                "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Ver presentación\" class=\"btn btn-xs btn-default command-play-slider\" data-row-id=\"" + row.id_evento + "\"><span class=\"fa fa-play-circle\"></span></button></div>";
+          return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar evento\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+                "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar evento\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-trash-o\"></span></button><button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Reenviar evento por correo\" class=\"btn btn-xs btn-default command-send\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-envelope-o\"></span></button>" +
+                "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Ver presentación\" class=\"btn btn-xs btn-default command-play-slider\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-play-circle\"></span></button></div>";
         },
         "DescripcionColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.descripcion + "</div>";
+          return "<div class=\"text-center\">" + row.description + "</div>";
         },
         "CodigoColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.codigo + "</div>";
+          return "<div class=\"text-center\">" + row.code + "</div>";
         },
         "NombreEventoColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.nombre_evento + "</div>";
+          return "<div class=\"text-center\">" + row.name + "</div>";
         },
         "FechaColumn": function(column, row) {
-          return "<div class=\"text-center\">" + row.fecha + "</div>";
+          return "<div class=\"text-center\">" + row.startDatetime + "</div>";
         },
         "CodigoQRColumn": function(column, row) {
-          return "<div class=\"text-center\"><img src="+ row.codigo_qr +"></div>";
+          return "<div class=\"text-center\"><img src="+ row.qrCode +"></div>";
         },
         "NombreSalonColumn": function(column, row) {
-          return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"verSalon("+ row.id_salon +")\" target=\"blank\">"+row.nombre_salon+"</a></div>";
+          return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"verSalon("+ row.venueId +")\" target=\"blank\">"+row.nombre_salon+"</a></div>";
         },
         "VerFotosColumn": function(column, row) {
-          return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" href=\"/admin/verFotosEventoEncargado.php?id_evento="+ row.id_evento +"\" target=\"blank\">Ver Imágenes</a></div>";
+          return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" href=\"/admin/verFotosEventoEncargado.php?eventId="+ row.eventId +"\" target=\"blank\">Ver Imágenes</a></div>";
         },
         "HabilitadoColumn": function(column, row) {
-          if(row.habilitado == 1) {
-             return "<div data-status=\"habilitado\" class=\"text-center\">Habilitado</div>";
+          if(row.enabled == 1) {
+             return "<div data-status=\"enabled\" class=\"text-center\">Habilitado</div>";
           }
           else {
-            return "<div data-status=\"no-habilitado\" class=\"text-center\">No Habilitado</div>";
+            return "<div data-status=\"no-enabled\" class=\"text-center\">No Habilitado</div>";
           }
          
         }
@@ -105,28 +105,28 @@
     changeRowColor();
   /* Executes after data is loaded and rendered */
     grid.find(".command-edit").on("click", function(e) {
-      $.removeCookie("id_evento");
-      var id_evento = $(this).data("row-id");
-      $.cookie("id_evento", id_evento);
+      $.removeCookie("eventId");
+      var eventId = $(this).data("row-id");
+      $.cookie("eventId", eventId);
       $("#modalEditar").modal('show');
 
       $.ajax({
         url:'../endpoints/Get_EventoEdit.php',
         type: 'POST',
         dataType: 'json',
-        data: {id_evento:id_evento},
+        data: {eventId:eventId},
         success: function(result) {
-          $("#codigo").val(result[0].codigo);
-          $("#nombre_evento").val(result[0].nombre_evento);
-          $("#descripcion").val(result[0].descripcion);
+          $("#code").val(result[0].code);
+          $("#name").val(result[0].name);
+          $("#description").val(result[0].description);
 
-          var fecha_string = new Date(result[0].fecha);
+          var fecha_string = new Date(result[0].startDatetime);
           var fechaFormateada = fecha_string.getFullYear() + "/" + (fecha_string.getMonth()+1) + "/" + fecha_string.getDate() + " " + fecha_string.getHours() + ":" + fecha_string.getMinutes();
           $(".some_class").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});
-          $("#id_salon").val(result[0].id_salon);
-          $("#codigo_qr").attr('src', result[0].codigo_qr);
-          $("#habilitado").val(result[0].habilitado);
-          $("#id_evento").val(result[0].id_evento);  
+          $("#venueId").val(result[0].venueId);
+          $("#qrCode").attr('src', result[0].qrCode);
+          $("#enabled").val(result[0].enabled);
+          $("#eventId").val(result[0].eventId);  
         },
         error: function(xhr, status, error) {
           $("#modalError").modal('show');
@@ -134,38 +134,38 @@
         } 
       }); 
     }).end().find(".command-delete").on("click", function(e) {
-      $.removeCookie("id_evento");
-      var id_evento = $(this).data("row-id");
-      $.cookie("id_evento", id_evento);
+      $.removeCookie("eventId");
+      var eventId = $(this).data("row-id");
+      $.cookie("eventId", eventId);
       $("#modalEliminar").modal('show');
     }).end().find(".command-send").on("click", function(e) {
-      $.removeCookie("id_evento");
-      var id_evento = $(this).data("row-id");
-      $.cookie("id_evento", id_evento);
+      $.removeCookie("eventId");
+      var eventId = $(this).data("row-id");
+      $.cookie("eventId", eventId);
       $("#modalEnviar").modal('show');
     }).end().find(".command-play-slider").on("click", function(e) {
-      var id_evento = $(this).data("row-id");
-      var win = window.open("http://www.partypicok.com/admin/verSliderEncargado.php?id_evento="+id_evento, '_blank');
+      var eventId = $(this).data("row-id");
+      var win = window.open("http://www.partypicok.com/admin/verSliderEncargado.php?eventId="+eventId, '_blank');
       win.focus();
     });
   });
   $("#loadingDivPadre").hide();
 
   $("#btnCancelSend").on("click", function() {
-    $.removeCookie("id_evento");
+    $.removeCookie("eventId");
   });
 
   $("#btnConfirmSend").on("click", function(){
     var base_url = "../endpoints/SendInstrucciones.php";
-    id_evento = parseFloat($.cookie("id_evento"));
-    nombre_evento = $.cookie("nombre_evento");
-    codigo_qr = $.cookie("codigo_qr");
+    eventId = parseFloat($.cookie("eventId"));
+    name = $.cookie("name");
+    qrCode = $.cookie("qrCode");
   
     $.ajax({
       url: base_url,
       dataType: "json",
       type:'POST',
-      data:{id_evento:id_evento},
+      data:{eventId:eventId},
       success:envioOK,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
@@ -175,7 +175,7 @@
 
     function envioOK(data) {
       if(data.success) {
-        $.removeCookie("id_evento");
+        $.removeCookie("eventId");
         $('#modalEnviar').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         $("#modalSuccess").modal('show');
@@ -185,19 +185,19 @@
   });
   
   $("#btnCancelDelete").on("click", function() {
-    $.removeCookie("id_evento");
+    $.removeCookie("eventId");
   });
 
   $("#btnConfirmDelete").on("click", function(){
       
     var base_url = "../endpoints/DeleteEvento.php";
-    id_evento = parseFloat($.cookie("id_evento"));
+    eventId = parseFloat($.cookie("eventId"));
     $("#loadingDivPadre").show();
     $.ajax({
       url: base_url,
       dataType: "json",
       type:'POST',
-      data:{id_evento:id_evento},
+      data:{eventId:eventId},
       success:userOK,
       error: function(xhr,status,error) {   
         $("#loadingDivPadre").hide();
@@ -208,7 +208,7 @@
 
     function userOK(data) {
       if(data.success) {
-        $.removeCookie("id_evento");
+        $.removeCookie("eventId");
         $('#modalEliminar').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         $("#loadingDivPadre").hide();
@@ -221,38 +221,38 @@
   $(document).ready(function() {  
     $('#editForm').validate({
       rules: {
-        nombre_evento: {
+        name: {
           required: true
         },
-        descripcion: {
+        description: {
           required: true
         },
-        fecha: {
+        startDatetime: {
           required: true
         },
-        id_salon: {
+        venueId: {
           required: true
         },
-        habilitado: {
+        enabled: {
           required: true
         },
         spam: "required"
       },     
   
       messages:  {
-          nombre_evento: {
+          name: {
             required: '- Ingresá un nombre para el evento - '
           },
-          descripcion: {
+          description: {
             required: '- Ingresá una descripción para el evento - '
           },
-          fecha: {
-            required: '- Seleccioná una fecha para el evento - '
+          startDatetime: {
+            required: '- Seleccioná una startDatetime para el evento - '
           },
-          id_salon: {
+          venueId: {
             required: '- Seleccioná un salón para el evento - '
           },
-          habilitado: {
+          enabled: {
             required: '- Seleccioná un estado para el evento - '
           },
       },  
@@ -264,7 +264,7 @@
 
   function UpdateEvento() { 
     var base_url = "../endpoints/UpdateEventoEncargado.php";
-    var disabled = $("#id_evento").removeAttr('disabled');
+    var disabled = $("#eventId").removeAttr('disabled');
     var datos = $('#editForm').serialize();
     disabled.attr('disabled','disabled');
     $("#loadingDivPadre").show();
@@ -285,7 +285,7 @@
   
   function registroOK(data) {
     if(data.success) {
-      $.removeCookie("id_evento");
+      $.removeCookie("eventId");
       $('#modalEditar').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       changeRowColor();
@@ -338,7 +338,7 @@
             required: '- Ingresá una descripción para el evento - '
           },
           fecha2: {
-            required: '- Seleccioná una fecha para el evento - '
+            required: '- Seleccioná una startDatetime para el evento - '
           },
           id_salon2: {
             required: '- Seleccioná un salón para el evento - '
@@ -376,13 +376,13 @@
 
 function registroOK2(data) {
   if(data.success) {
-    var id_evento = data.id;
+    var eventId = data.id;
     var base_url = "../endpoints/SendInstrucciones.php";
     $.ajax({
       url: base_url,
       dataType: "json",
       type:'POST',
-      data:{id_evento:id_evento},
+      data:{eventId:eventId},
       success:InsertYEnvioOK,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
@@ -424,17 +424,17 @@ function cargarSalonesAlSelect() {
     data: {},
     success: function(result) {
       for(i=0;i<result.length;i++) {
-        $("#id_salon").append(
+        $("#venueId").append(
           $("<option>" , {
             text: result[i].nombre_salon,
-            value: result[i].id_salon
+            value: result[i].venueId
           })
         );
           
         $("#id_salon2").append(
           $("<option>" , {
             text: result[i].nombre_salon,
-            value: result[i].id_salon
+            value: result[i].venueId
           })
         );
       } 
@@ -448,23 +448,23 @@ function cargarSalonesAlSelect() {
 }
 
 function changeRowColor() {
-  $('[data-status="habilitado"]').each(function() {
+  $('[data-status="enabled"]').each(function() {
     $(this).parent().parent().addClass('success');
   });
-  $('[data-status="no-habilitado"]').each(function() {
+  $('[data-status="no-enabled"]').each(function() {
     $(this).parent().parent().addClass('danger');
   });   
 }
 
-function verSalon(id_salon) {
+function verSalon(venueId) {
   $("#modalSalon").modal('show');  
   $.ajax({
     url:'../endpoints/Get_SalonEdit.php',
     type: 'POST',
     dataType: 'json',
-    data: {id_salon:id_salon},
+    data: {venueId:venueId},
     success: function(result) {
-      $("#id_salon3").text(id_salon);
+      $("#id_salon3").text(venueId);
       $("#nombre_salon").text(result[0].nombre_salon);
       $("#domicilio_salon").text(result[0].domicilio_salon);
       $("#telefono_salon").text(result[0].telefono_salon);

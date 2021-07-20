@@ -29,35 +29,42 @@ $(document).ready(function () {
   var fechaFormateada = fecha_string.getFullYear() + "/" + (fecha_string.getMonth()+1) + "/" + fecha_string.getDate() + " " + fecha_string.getHours() + ":" + fecha_string.getMinutes();
   $(".some_class2").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});  
 
-});  
+});
 
 $(document).ready(function(){
+  loadVenues();
+  loadCategories();
+
+  var button = $('<button id="AgregarEvento" class="btn btn-default pull-left" type="button" title="Agregar un nuevo evento"><span class="glyphicon glyphicon-plus"></span>   Agregar evento</button>');
+  $('.col-sm-12.actionBar').append(button);
+  $("#AgregarEvento").on("click", function() { 
+    $('#addForm').trigger("reset");
+    $(".some_class2").datetimepicker({lang:'es', minDate:'-1', todayButton: 1, inline: true});
+    $('#modalAgregar').modal('show');
+  });
+  
   $('[data-tooltip="tooltip"]').tooltip(); 
 });
 
-if(window.location.href.indexOf("?id_salon=") > -1) {
+if (window.location.href.indexOf("?venueId=") > -1) {
   var url = "../admin/BackMenuEventosWithParameter.php";
-  var id_salon= gup("id_salon", document.URL);
-  $.cookie('id_salon', id_salon);
-}
-else {
-  if(window.location.href.indexOf("?eventId=") > -1) {
+  var venueId = gup("venueId", document.URL);
+  $.cookie('venueId', venueId);
+} else {
+  if (window.location.href.indexOf("?eventId=") > -1) {
     var url = "../admin/BackMenuEventosWithParameterEvent.php";
-    var eventId=  gup("eventId", document.URL);
+    var eventId = gup("eventId", document.URL);
     $.cookie('eventId', eventId);
-  }
-  else
-  {
-    var url = "http://local-api.partypic.com/api/events";
+  } else {
+    var url = "http://local-api.partypic.com/api/events/grid";
   }
 }
 
 var grid = $("#grid-command-buttons").bootgrid({
   ajaxSettings: {
-      method: "GET",
-      cache: false
+    method: "GET",
+    cache: false
   },
-  
   ajax: true,
   url: url,
   formatters: {
@@ -70,7 +77,7 @@ var grid = $("#grid-command-buttons").bootgrid({
               "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Ver presentación\" class=\"btn btn-xs btn-default command-play-slider\" data-row-id=\"" + row.eventId + "\"><span class=\"fa fa-play-circle\"></span></button></div>";
       },
       "DescripcionColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.descripcion + "</div>";
+        return "<div class=\"text-center\">" + row.description + "</div>";
       },
       "CodigoColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.code + "</div>";
@@ -79,25 +86,27 @@ var grid = $("#grid-command-buttons").bootgrid({
         return "<div class=\"text-center\">" + row.name + "</div>";
       },
       "FechaColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.date + "</div>";
+        return "<div class=\"text-center\">" + row.startDatetime + "</div>";
       },
       "CodigoQRColumn": function(column, row) {
         return "<div class=\"text-center\"><img src="+ row.qrCode +"></div>";
       },
       "NombreSalonColumn": function(column, row) {
-        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"verSalon("+ row.venueId +")\" target=\"blank\">"+row.venueName+"</a></div>";
+        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"verSalon("+ row.venueId +")\" target=\"blank\">"+getVenueName(row.venueName)+"</a></div>";
+      },
+      "CategoryColumn": function(column, row) {
+        return "<div class=\"text-center\">" + row.categoryDescription + "</div>";
       },
       "VerFotosColumn": function(column, row) {
         return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" href=\"/admin/verFotosEvento.php?eventId="+ row.eventId +"\" target=\"blank\">Ver Imágenes</a></div>";
       },
       "HabilitadoColumn": function(column, row) {
-        if(row.habilitado == 1) {
-           return "<div data-status=\"habilitado\" class=\"text-center\">Habilitado</div>";
+        if (row.enabled == 1) {
+          return "<div data-status=\"enabled\" class=\"text-center\">Habilitado</div>";
         }
         else {
-          return "<div data-status=\"no-habilitado\" class=\"text-center\">No Habilitado</div>";
+          return "<div data-status=\"no-enabled\" class=\"text-center\">No Habilitado</div>";
         }
-       
       }
   }
 }).on("loaded.rs.jquery.bootgrid", function() {
@@ -110,22 +119,23 @@ var grid = $("#grid-command-buttons").bootgrid({
     $("#modalEditar").modal('show');
 
     $.ajax({
-      url:'../endpoints/Get_EventoEdit.php',
-      type: 'POST',
+      url: 'http://local-api.partypic.com/api/events/' + eventId,
+      type: 'GET',
       dataType: 'json',
-      data: { eventId: eventId},
+      data: { eventId: eventId },
       success: function(result) {
-        $("#codigo").val(result[0].codigo);
-        $("#nombre_evento").val(result[0].nombre_evento);
-        $("#descripcion").val(result[0].descripcion);
+        $("#code").val(result.code);
+        $("#eventName").val(result.name);
+        $("#description").val(result.description);
 
-        var fecha_string = new Date(result[0].fecha);
+        var fecha_string = new Date(result.startDatetime);
         var fechaFormateada = fecha_string.getFullYear() + "/" + (fecha_string.getMonth()+1) + "/" + fecha_string.getDate() + " " + fecha_string.getHours() + ":" + fecha_string.getMinutes();
         $(".some_class").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});
-        $("#id_salon").val(result[0].id_salon);
-        $("#codigo_qr").attr('src', result[0].codigo_qr);
-        $("#habilitado").val(result[0].habilitado);
-        $("#eventId").val(result[0].eventId);  
+        $("#venueIdDDLEdit").val(result.venueId).change();;
+        $("#qrCode").attr('src', result.qrCode);
+        $("#enabledDDLEdit").val(result.enabled ? 1 : 0);
+        $("#eventId").val(result.eventId);  
+        $("#categoryIdDDLEdit").val(result.categoryId).change();;
       },
       error: function(xhr, status, error) {
         $("#modalError").modal('show');
@@ -144,7 +154,7 @@ var grid = $("#grid-command-buttons").bootgrid({
     $("#modalEnviar").modal('show');
   }).end().find(".command-play-slider").on("click", function(e) {
     var eventId = $(this).data("row-id");
-    var win = window.open("http://www.partypicok.com/admin/verSlider.php?eventId="+eventId, '_blank');
+    var win = window.open("http://local-web.partypic.com/admin/verSlider.html?eventId="+eventId, '_blank');
     win.focus();
   });
 });
@@ -155,15 +165,22 @@ $("#btnCancelSend").on("click", function() {
 });
 
 $("#btnConfirmSend").on("click", function(){
-  var base_url = "../endpoints/SendInstrucciones.php";
-  eventId = parseFloat($.cookie("eventId"));
-  nombre_evento = $.cookie("nombre_evento");
-  codigo_qr = $.cookie("codigo_qr");
+  var baseUrl = "http://local-api.partypic.com/api/events/sendInstructions";
+  eventId = parseInt($.cookie("eventId"));
+
+  var datos = {
+    eventId: eventId
+  };
+
   $.ajax({
-    url: base_url,
+    url: baseUrl,
     dataType: "json",
     type:'POST',
-    data:{eventId:eventId},
+    data: JSON.stringify(datos),
+    headers: { 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json' 
+    },
     success:envioOK,
     error: function(xhr,status,error) {   
       $("#modalError").modal('show');
@@ -186,25 +203,32 @@ $("#btnCancelDelete").on("click", function() {
   $.removeCookie("eventId");
 });
 
-$("#btnConfirmDelete").on("click", function(){
+$("#btnConfirmDelete").on("click", function() {
     
-  var base_url = "../endpoints/DeleteEvento.php";
-  eventId = parseFloat($.cookie("eventId"));
+  var eventId = parseFloat($.cookie("eventId"));
+  var baseUrl = 'http://local-api.partypic.com/api/events/' + eventId;
   $("#loadingDivPadre").show();
   $.ajax({
-    url: base_url,
+    url: baseUrl,
     dataType: "json",
-    type:'POST',
-    data:{eventId:eventId},
-    success:userOK,
-    error: function(xhr,status,error) {   
+    type: 'DELETE',
+    headers: { 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json' 
+    },
+    success: successDeleteHandler,
+    error: function(xhr,status,error) {
+      if (xhr && xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors[0] && xhr.responseJSON.errors[0].description === 'ExistingAsociatedImagesToEventException') {
+        $("#mensajeError").text("Existen imágenes asociadas a este evento y por tal razón no se puede eliminar el mismo. Comuníquese con el administrador.");
+      } else {
+        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      }
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
       $("#loadingDivPadre").hide();
     }
   });
 
-  function userOK(data) {
+  function successDeleteHandler(data) {
     if(data.success) {
       $.removeCookie("eventId");
       $('#modalEliminar').modal('hide');
@@ -219,39 +243,45 @@ $("#btnConfirmDelete").on("click", function(){
 $(document).ready(function() {  
   $('#editForm').validate({
     rules: {
-      nombre_evento: {
+      eventName: {
         required: true
       },
-      descripcion: {
+      description: {
         required: true
       },
-      fecha: {
+      startDatetime: {
         required: true
       },
-      id_salon: {
+      venueIdDDLEdit: {
         required: true
       },
-      habilitado: {
+      enabledDDLEdit: {
+        required: true
+      },
+      categoryDDLEdit: {
         required: true
       },
       spam: "required"
     },     
 
     messages:  {
-        nombre_evento: {
+      eventName: {
           required: '- Ingresá un nombre para el evento - '
         },
-        descripcion: {
+        description: {
           required: '- Ingresá una descripción para el evento - '
         },
-        fecha: {
+        startDatetime: {
           required: '- Seleccioná una fecha para el evento - '
         },
-        id_salon: {
+        venueIdDDLEdit: {
           required: '- Seleccioná un salón para el evento - '
         },
-        habilitado: {
+        enabledDDLEdit: {
           required: '- Seleccioná un estado para el evento - '
+        },
+        categoryDDLEdit: {
+          required: '- Seleccioná una categoría de evento - '
         },
     },  
 
@@ -261,29 +291,43 @@ $(document).ready(function() {
 }); 
 
 function UpdateEvento() { 
-  var base_url = "../endpoints/UpdateEvento.php";
+  var eventId = parseFloat($.cookie("eventId"));
+  var baseUrl = 'http://local-api.partypic.com/api/events/' + eventId;
   var disabled = $("#eventId").removeAttr('disabled');
-  var datos = $('#editForm').serialize();
+  var datos = {
+    name: $("#eventName").val(),
+    description: $("#description").val(),
+    startDatetime: $("#startDatetime").val(),
+    venueId: parseInt($("#venueIdDDLEdit").val()),
+    enabled: $("#enabledDDLEdit").val() === '1' ? true : false,
+    categoryId: parseInt($("#categoryIdDDLEdit").val())
+  };
+
   disabled.attr('disabled','disabled');
   $("#loadingDivPadre").show();
 
   $.ajax({
-    url: base_url,
+    url: baseUrl,
     dataType: "json",
-    type:'POST',
-    data:datos,
-    success:registroOK,
-    error: function(xhr,status,error) {   
+    type: 'PUT',
+    data: JSON.stringify(datos),
+    headers: { 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json' 
+    },
+    success: successUpdateHandler,
+    error: function(xhr,status,error) {
+      $("#loadingDivPadre").hide();   
       $("#modalError").modal('show');
       $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
-      $("#loadingDivPadre").hide();
     }
   }); 
+  
   return false;
 }
 
-function registroOK(data) {
-  if(data.success) {
+function successUpdateHandler(data) {
+  if (data.success) {
     $.removeCookie("eventId");
     $('#modalEditar').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
@@ -298,52 +342,52 @@ function registroOK(data) {
   }
 }
   
-$(document).ready(function(){
-  var button = $('<button id="AgregarEvento" class="btn btn-default pull-left" type="button" title="Agregar un nuevo evento"><span class="glyphicon glyphicon-plus"></span>   Agregar evento</button>');
-  $('.col-sm-12.actionBar').append(button);
-  $("#AgregarEvento").on("click", function() { 
-    $('#addForm').trigger("reset");
-    $(".some_class2").datetimepicker({lang:'es', minDate:'-1', todayButton: 1, inline: true});
-    $('#modalAgregar').modal('show');
-  });
+$(document).ready(function() {
+  
 });
 
 $(document).ready(function() {
   $('#addForm').validate({
     rules: {
-      nombre_evento2: {
+      eventNameAdd: {
         required: true
       },
-      descripcion2: {
+      descriptionAdd: {
         required: true
       },
-      fecha2: {
+      startDatetimeAdd: {
         required: true
       },
-      id_salon2: {
+      venueIdDDLAdd: {
         required: true
       },
-      habilitado2: {
+      enabledDDLAdd: {
+        required: true
+      },
+      categoryIdDDLAdd: {
         required: true
       },
       spam: "required"
     },     
 
     messages:  {
-        nombre_evento2: {
+      eventNameAdd: {
           required: '- Ingresá un nombre para el evento - '
         },
-        descripcion2: {
+        descriptionAdd: {
           required: '- Ingresá una descripción para el evento - '
         },
-        fecha2: {
+        startDatetimeAdd: {
           required: '- Seleccioná una fecha para el evento - '
         },
-        id_salon2: {
+        venueIdDDLAdd: {
           required: '- Seleccioná un salón para el evento - '
         },
-        habilitado2: {
+        enabledDDLAdd: {
           required: '- Seleccioná un estado para el evento - '
+        },
+        categoryIdDDLAdd: {
+          required: '- Seleccioná un tipo de evento - '
         },
     },  
 
@@ -354,15 +398,26 @@ $(document).ready(function() {
 
 
 function addEvento() {
-  var base_url = "../endpoints/AgregarEvento.php";
-  var datos = $('#addForm').serialize();
+  var baseUrl = 'http://local-api.partypic.com/api/events/';
+  var datos = {
+    name: $("#eventNameAdd").val(),
+    description: $("#descriptionAdd").val(),
+    startDatetime: $("#startDatetimeAdd").val(),
+    venueId: parseInt($("#venueIdDDLAdd").val()),
+    enabled: $("#enabledDDLAdd").val() === '1' ? true : false,
+    categoryId: parseInt($("#categoryIdDDLAdd").val())
+  };
   $("#loadingDivPadre").show();
   $.ajax({
-    url: base_url,
+    url: baseUrl,
     dataType: "json",
-    type:'POST',
-    data:datos,
-    success:registroOK2,
+    type: 'POST',
+    data: JSON.stringify(datos),
+    headers: { 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json' 
+    },
+    success: successAddHandler,
     error: function(xhr,status,error) {
       $("#loadingDivPadre").hide();   
       $("#modalError").modal('show');
@@ -373,23 +428,27 @@ function addEvento() {
   return false;
 }
 
-function registroOK2(data) {
-  if(data.success) {
-    var eventId = data.id;
-    var base_url = "../endpoints/SendInstrucciones.php";
+function successAddHandler(data) {
+  if (data.success) {
+    var eventId = data.eventId;
+    var baseUrl = "http://local-api.partypic.com/api/events/sendInstructions";
     $.ajax({
-      url: base_url,
+      url: baseUrl,
       dataType: "json",
-      type:'POST',
-      data:{eventId:eventId},
-      success:InsertYEnvioOK,
+      type: 'POST',
+      data: JSON.stringify(eventId),
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+      },
+      success: successInstructionsSendingHandler,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
         $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
     });
 
-    function InsertYEnvioOK(data){
+    function successInstructionsSendingHandler(data){
       if(data.success) {
         $('#modalAgregar').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
@@ -411,69 +470,107 @@ function registroOK2(data) {
   }
 }  
 
-$(document).ready(function(){
-  cargarSalonesAlSelect();
-});
-  
-function cargarSalonesAlSelect() {   
+function loadVenues() {
   $.ajax({
-    url:'../endpoints/GetAllSalones.php',
-    type: 'POST',
+    url:'http://local-api.partypic.com/api/venues',
+    type: 'GET',
     dataType: 'json',
     data: {},
     success: function(result) {
-      for(i=0;i<result.length;i++) {
-        $("#id_salon").append(
+
+      var venues = result.venues;
+
+      for (i=0;i<venues.length;i++) {
+
+        $("#venueIdDDLEdit").append(
           $("<option>" , {
-            text: result[i].nombre_salon,
-            value: result[i].id_salon
+            text: venues[i].name,
+            value: venues[i].venueId
           })
         );
-          
-        $("#id_salon2").append(
+        $("#venueIdDDLAdd").append(
           $("<option>" , {
-            text: result[i].nombre_salon,
-            value: result[i].id_salon
+            text: venues[i].name,
+            value: venues[i].venueId
           })
         );
-      } 
+      }
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
       $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
-    } 
-    
+    }
   }); 
 }
 
+function loadCategories() {
+  $.ajax({
+    url:'http://local-api.partypic.com/api/categories',
+    type: 'GET',
+    dataType: 'json',
+    data: {},
+    success: function(result) {
+
+      var categories = result.categories;
+
+      for (i=0;i<categories.length;i++) {
+
+        $("#categoryIdDDLEdit").append(
+          $("<option>" , {
+            text: categories[i].description,
+            value: categories[i].categoryId
+          })
+        );
+        $("#categoryIdDDLAdd").append(
+          $("<option>" , {
+            text: categories[i].description,
+            value: categories[i].categoryId
+          })
+        );
+      }
+    },
+    error: function(xhr, status, error) {
+      $("#modalError").modal('show');
+      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+    }
+  }); 
+}
+
+function getVenueName(venueName) {
+  if (venueName != '' && venueName != null && venueName != undefined) {
+    return venueName;
+  }
+  return 'NA'
+}
+
 function changeRowColor() {
-  $('[data-status="habilitado"]').each(function() {
+  $('[data-status="enabled"]').each(function() {
     $(this).parent().parent().addClass('success');
   });
-  $('[data-status="no-habilitado"]').each(function() {
+  $('[data-status="no-enabled"]').each(function() {
     $(this).parent().parent().addClass('danger');
   });   
 }
 
-function verSalon(id_salon) {
+function verSalon(venueId) {
   $("#modalSalon").modal('show');  
   $.ajax({
-    url:'../endpoints/Get_SalonEdit.php',
-    type: 'POST',
+    url:'http://local-api.partypic.com/api/venues/' + venueId,
+    type: 'GET',
     dataType: 'json',
-    data: {id_salon:id_salon},
+    data: {},
     success: function(result) {
-      $("#id_salon3").text(id_salon);
-      $("#nombre_salon").text(result[0].nombre_salon);
-      $("#domicilio_salon").text(result[0].domicilio_salon);
-      $("#telefono_salon").text(result[0].telefono_salon);
-      $("#nombre_usuario").text(result[0].nombre_usuario);
-      $("#telefono_usuario").text(result[0].telefono_usuario);
-      $("#celular_usuario").text(result[0].celular_usuario);
-      $("#domicilio_usuario").text(result[0].domicilio_usuario);
-      $("#cuil_usuario").text(result[0].cuil_usuario);
-      $("#email").text(result[0].email);
-      $("#email").attr('href','mailto:'+result[0].email);
+      $("#venueIdTD").text(venueId);
+      $("#venueNameTD").text(result.name);
+      $("#venueAddressTD").text(result.address);
+      $("#venuePhoneTD").text(result.venuePhone);
+      $("#venueUserNameTD").text(result.venueUserName);
+      $("#userNamePhoneTD").text(result.userNamePhone);
+      $("#userNameMobilePhoneTD").text(result.userNameMobilePhone);
+      $("#userNameAddressTD").text(result.userNameAddress);
+      $("#userCuilTD").text(result.userCuil);
+      $("#email").text(result.email);
+      $("#email").attr('href','mailto:'+result.email);
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');

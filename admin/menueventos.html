@@ -27,7 +27,6 @@
   </head>
   
   <body>
-    <?php include_once('../admin/nav-superior-lateral.php') ?>
     <!-- Page Content -->
     <div id="page-content-wrapper" style="padding-top:40px">
       <div class="container container-ppal" style="margin-top:40px; margin-bottom:40px">
@@ -55,6 +54,7 @@
               <th data-column-id="description" data-formatter="DescripcionColumn" data-header-css-class="DescripcionColumn" data-identifier="true" data-sortable="true">Descripción</th>
               <th data-column-id="date" data-formatter="FechaColumn" data-header-css-class="FechaColumn" data-sortable="true">Fecha</th>
               <th data-column-id="venueName" data-formatter="NombreSalonColumn" data-header-css-class="NombreSalonColumn" data-sortable="true">Salón</th>
+              <th data-column-id="categoryDescription" data-formatter="CategoryColumn" data-header-css-class="CategoryColumn" data-sortable="true">Tipo de Evento</th>
               <th data-column-id="qrCode" data-formatter="CodigoQRColumn" data-header-css-class="CodigoQRColumn" data-sortable="true">Código QR</th>
               <th data-column-id="isEnabled" data-formatter="HabilitadoColumn" data-header-css-class="HabilitadoColumn" data-sortable="true">Estado</th>
               <th data-column-id="goToSlider" data-formatter="VerFotosColumn" data-header-css-class="VerFotosColumn" data-sortable="true">Ver Imágenes</th>
@@ -88,9 +88,9 @@
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="name" class="col-md-3 control-label">Nombre Evento</label>
+                          <label for="eventName" class="col-md-3 control-label">Nombre Evento</label>
                           <div class="col-md-9">
-                              <input id="name" type="text" class="form-control" name="name" placeholder="Nombre del Evento">
+                              <input id="eventName" type="text" class="form-control" name="eventName" placeholder="Nombre del Evento">
                           </div>
                         </div>      
                         <div class="form-group mb-7px">
@@ -100,22 +100,29 @@
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="date" class="col-md-3 control-label">Fecha</label>
+                          <label for="startDatetime" class="col-md-3 control-label">Fecha</label>
                           <div class="col-md-9">
-                              <input id="date" type="text" class="form-control some_class" name="date" placeholder="Fecha">
+                              <input id="startDatetime" type="text" class="form-control some_class" name="startDatetime" placeholder="Fecha">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="id_salon" class="col-md-3 control-label">Salón</label>
+                          <label for="venueIdDDLEdit" class="col-md-3 control-label">Salón</label>
                           <div class="col-md-6">
-                            <select id="id_salon" class="form-control" name="id_salon">
+                            <select id="venueIdDDLEdit" class="form-control" name="venueIdDDLEdit">
                             </select>
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="isEnabled" class="col-md-3 control-label">Estado</label>
+                          <label for="categoryIdDDLEdit" class="col-md-3 control-label">Categoría</label>
+                          <div class="col-md-6">
+                            <select id="categoryIdDDLEdit" class="form-control" name="categoryIdDDLEdit">
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group mb-7px">
+                          <label for="enabledDDLEdit" class="col-md-3 control-label">Estado</label>
                           <div class="col-md-4">
-                            <select id="isEnabled" class="form-control" name="isEnabled">
+                            <select id="enabledDDLEdit" class="form-control" name="enabledDDLEdit">
                               <option value="1">Habilitado</option>
                               <option value="0">No Habilitado</option>
                             </select>
@@ -161,7 +168,7 @@
         <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel2" id="modalAgregar" aria-hidden="true" tabindex="-1">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <form class="form-horizontal required" action="../endpoints/AgregarEvento.php" method="post" name="addForm" id="addForm">
+              <form class="form-horizontal required" action="" method="post" name="addForm" id="addForm">
                 <div class="modal-header">
                   <h4 class="modal-title" id="gridSystemModalLabel2">Agregar Evento</h4>
                 </div>
@@ -170,34 +177,41 @@
                 	<div class="row">
                       <div class="col-xs-12 col-md-12 col-lg-12"  style="margin-bottom:20px"> 
                         <div class="form-group mb-7px">
-                          <label for="nombre_evento2" class="col-md-3 control-label">Nombre Evento</label>
+                          <label for="eventNameAdd" class="col-md-3 control-label">Nombre Evento</label>
                           <div class="col-md-9">
-                              <input id="nombre_evento2" type="text" class="form-control" name="nombre_evento2" placeholder="Nombre del Evento">
+                              <input id="eventNameAdd" type="text" class="form-control" name="eventNameAdd" placeholder="Nombre del Evento">
                           </div>
                         </div>      
                         <div class="form-group mb-7px">
-                          <label for="descripcion2" class="required col-md-3 control-label">Descripción</label>
+                          <label for="descriptionAdd" class="required col-md-3 control-label">Descripción</label>
                           <div class="col-md-9">
-                              <input id="descripcion2" type="text" class="form-control"  name="descripcion2" placeholder="Descripción">
+                              <input id="descriptionAdd" type="text" class="form-control"  name="descriptionAdd" placeholder="Descripción">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="fecha2" class="col-md-3 control-label">Fecha</label>
+                          <label for="startDatetimeAdd" class="col-md-3 control-label">Fecha</label>
                           <div class="col-md-9">
-                              <input id="fecha2" type="text" class="form-control some_class2" name="fecha2" placeholder="Fecha">
+                              <input id="startDatetimeAdd" type="text" class="form-control some_class2" name="startDatetimeAdd" placeholder="Fecha">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="id_salon2" class="col-md-3 control-label">Salón</label>
+                          <label for="venueIdDDLAdd" class="col-md-3 control-label">Salón</label>
                           <div class="col-md-6">
-                            <select id="id_salon2" class="form-control" name="id_salon2">
+                            <select id="venueIdDDLAdd" class="form-control" name="venueIdDDLAdd">
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group mb-7px">
+                          <label for="categoryIdDDLAdd" class="col-md-3 control-label">Categoría</label>
+                          <div class="col-md-6">
+                            <select id="categoryIdDDLAdd" class="form-control" name="categoryIdDDLAdd">
                             </select>
                           </div>
                         </div> 
                         <div class="form-group mb-7px">
-                          <label for="habilitado2" class="col-md-3 control-label">Estado</label>
+                          <label for="enabledDDLAdd" class="col-md-3 control-label">Estado</label>
                           <div class="col-md-4">
-                            <select id="habilitado2" class="form-control" name="habilitado2">
+                            <select id="enabledDDLAdd" class="form-control" name="enabledDDLAdd">
                               <option value="1">Habilitado</option>
                               <option value="0">No Habilitado</option>
                             </select>
@@ -225,57 +239,57 @@
 	            </div>
 	            <div class="modal-body">
 	              <div class="container-fluid">
-	            	<div class="row">
+	            	  <div class="row">
 	                  <div class="col-xs-12 col-md-12 col-lg-12"  style="margin-bottom:20px"> 
 	                    <div class="col-md-offset-1 col-lg-offset-1 col-md-10 col-lg-10"> 
-			              <table class="table table-user-information">
-			                <tbody>
-			                  <tr>
-			                    <td>ID Salón:</td>
-			                    <td id="id_salon3"></td>
-			                  </tr>
-			                  <tr>
-			                    <td>Salón</td>
-			                    <td id="venueName"></td>
-			                  </tr>
-			                  <tr>
-			                    <td>Dirección</td>
-			                    <td id="domicilio_salon"></td>
-			                  </tr>
-			                  <tr>
-			                    <td>Teléfono Salón</td>
-			                    <td id="telefono_salon"></td>
-			                  </tr>
-			                  <tr>
-			                    <td>Encargado/a</td>
-			                    <td id="nombre_usuario"></td>
-			                  </tr>
-			                  <tr>
-			                    <td>E-mail</td>
-			                    <td><a id="email" href=""></a></td>
-			                  </tr>
-			                  <tr>
-			                  	<td>Celular</td>
-			                  	<td id="celular_usuario"></td>
-			                  </tr>
-			                  <tr>
-			                  	<td>Teléfono</td>
-			                  	<td id="telefono_usuario"></td>
-			                  </tr>
-			                  <tr>
-			                  	<td>Domicilio</td>
-			                  	<td id="domicilio_usuario"></td>
-			                  </tr>
-			                  <tr>
-			                  	<td>CUIL</td>
-			                  	<td id="cuil_usuario"></td>
-			                  </tr>
-
-			                </tbody>
-			              </table>
+                        <table class="table table-user-information">
+                          <tbody>
+                            <tr>
+                              <td>ID Salón:</td>
+                              <td id="venueIdTD"></td>
+                            </tr>
+                            <tr>
+                              <td>Salón</td>
+                              <td id="venueNameTD"></td>
+                            </tr>
+                            <tr>
+                              <td>Dirección</td>
+                              <td id="venueAddressTD"></td>
+                            </tr>
+                            <tr>
+                              <td>Teléfono Salón</td>
+                              <td id="venuePhoneTD"></td>
+                            </tr>
+                            <tr>
+                              <td>Encargado/a</td>
+                              <td id="venueUserNameTD"></td>
+                            </tr>
+                            <tr>
+                              <td>E-mail</td>
+                              <td><a id="email" href=""></a></td>
+                            </tr>
+                            <tr>
+                              <td>Celular</td>
+                              <td id="userNameMobilePhoneTD"></td>
+                            </tr>
+                            <tr>
+                              <td>Teléfono</td>
+                              <td id="userNamePhoneTD"></td>
+                            </tr>
+                            <tr>
+                              <td>Domicilio</td>
+                              <td id="userNameAddressTD"></td>
+                            </tr>
+                            <tr>
+                              <td>CUIL</td>
+                              <td id="userCuilTD"></td>
+                            </tr>
+                          </tbody>
+                        </table>
                   
-		                  <a href="../admin/menusalones.php" class="btn btn-primary">Editar / Ver Salones</a>
-                		</div>         
+                        <a href="../admin/menusalones.html" class="btn btn-primary">Editar / Ver Salones</a>
+                        
+                		  </div>         
 	                  </div>                  
 	          	    </div>
 	              </div>
