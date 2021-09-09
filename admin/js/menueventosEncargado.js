@@ -28,7 +28,7 @@
 
     var fecha_string = new Date();
     var fechaFormateada = fecha_string.getFullYear() + "/" + (fecha_string.getMonth()+1) + "/" + fecha_string.getDate() + " " + fecha_string.getHours() + ":" + fecha_string.getMinutes();
-    $(".some_class2").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});  
+    $(".datePickerAdd").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});  
   
   });  
 
@@ -122,7 +122,7 @@
 
           var fecha_string = new Date(result[0].startDatetime);
           var fechaFormateada = fecha_string.getFullYear() + "/" + (fecha_string.getMonth()+1) + "/" + fecha_string.getDate() + " " + fecha_string.getHours() + ":" + fecha_string.getMinutes();
-          $(".some_class").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});
+          $(".datePickerEdit").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});
           $("#venueId").val(result[0].venueId);
           $("#qrCode").attr('src', result[0].qrCode);
           $("#enabled").val(result[0].enabled);
@@ -137,12 +137,12 @@
       $.removeCookie("eventId");
       var eventId = $(this).data("row-id");
       $.cookie("eventId", eventId);
-      $("#modalEliminar").modal('show');
+      $("#deleteModal").modal('show');
     }).end().find(".command-send").on("click", function(e) {
       $.removeCookie("eventId");
       var eventId = $(this).data("row-id");
       $.cookie("eventId", eventId);
-      $("#modalEnviar").modal('show');
+      $("#sendModal").modal('show');
     }).end().find(".command-play-slider").on("click", function(e) {
       var eventId = $(this).data("row-id");
       var win = window.open("http://www.partypicok.com/admin/verSliderEncargado.php?eventId="+eventId, '_blank');
@@ -176,7 +176,7 @@
     function envioOK(data) {
       if(data.success) {
         $.removeCookie("eventId");
-        $('#modalEnviar').modal('hide');
+        $('#sendModal').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         $("#modalSuccess").modal('show');
         changeRowColor();
@@ -209,7 +209,7 @@
     function userOK(data) {
       if(data.success) {
         $.removeCookie("eventId");
-        $('#modalEliminar').modal('hide');
+        $('#deleteModal').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         $("#loadingDivContainer").hide();
         $("#modalSuccess").modal('show');
@@ -300,12 +300,12 @@
   }
   
   $(document).ready(function(){
-    var button = $('<button id="AgregarEvento" class="btn btn-default pull-left" type="button" title="Agregar un nuevo evento"><span class="glyphicon glyphicon-plus"></span>   Agregar evento</button>');
+    var button = $('<button id="addEventBtn" class="btn btn-default pull-left" type="button" title="Agregar un nuevo evento"><span class="glyphicon glyphicon-plus"></span>   Agregar evento</button>');
     $('.col-sm-12.actionBar').append(button);
-    $("#AgregarEvento").on("click", function() { 
+    $("#addEventBtn").on("click", function() { 
       $('#addForm').trigger("reset");
-      $(".some_class2").datetimepicker({lang:'es', minDate:'-1', todayButton: 1, inline: true});
-      $('#modalAgregar').modal('show');
+      $(".datePickerAdd").datetimepicker({lang:'es', minDate:'-1', todayButton: 1, inline: true});
+      $('#addingModal').modal('show');
     });
   });
   
@@ -355,7 +355,7 @@
 
 
   function addEvento() {
-    var base_url = "../endpoints/AgregarEventoEncargado.php";
+    var base_url = "../endpoints/addEventBtnEncargado.php";
     var datos = $('#addForm').serialize();
     $("#loadingDivContainer").show();
     $.ajax({
@@ -392,7 +392,7 @@ function registroOK2(data) {
 
     function InsertYEnvioOK(data){
       if(data.success) {
-        $('#modalAgregar').modal('hide');
+        $('#addingModal').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         changeRowColor();
         $("#loadingDivContainer").hide();

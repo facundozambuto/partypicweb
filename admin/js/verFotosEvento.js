@@ -130,7 +130,7 @@ $("#btnConfirmDelete").on("click", function(){
   function deleteImageHandler(data) {
     if (data.success) {
       $.removeCookie("imageId");
-      $('#modalEliminar').modal('hide');
+      $('#deleteModal').modal('hide');
       $("#images-container").html("");
       getImagenesByIdEvento();
       $("#modalSuccess").modal('show');

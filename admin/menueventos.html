@@ -102,7 +102,7 @@
                         <div class="form-group mb-7px">
                           <label for="startDatetime" class="col-md-3 control-label">Fecha</label>
                           <div class="col-md-9">
-                              <input id="startDatetime" type="text" class="form-control some_class" name="startDatetime" placeholder="Fecha">
+                              <input id="startDatetime" type="text" class="form-control datePickerEdit" name="startDatetime" placeholder="Fecha">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
@@ -148,7 +148,7 @@
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -165,7 +165,7 @@
           </div><!-- /.modal-dialog -->
         </div>
 
-        <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel2" id="modalAgregar" aria-hidden="true" tabindex="-1">
+        <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel2" id="addingModal" aria-hidden="true" tabindex="-1">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <form class="form-horizontal required" action="" method="post" name="addForm" id="addForm">
@@ -191,7 +191,7 @@
                         <div class="form-group mb-7px">
                           <label for="startDatetimeAdd" class="col-md-3 control-label">Fecha</label>
                           <div class="col-md-9">
-                              <input id="startDatetimeAdd" type="text" class="form-control some_class2" name="startDatetimeAdd" placeholder="Fecha">
+                              <input id="startDatetimeAdd" type="text" class="form-control datePickerAdd" name="startDatetimeAdd" placeholder="Fecha">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
@@ -273,10 +273,6 @@
                               <td id="userNameMobilePhoneTD"></td>
                             </tr>
                             <tr>
-                              <td>Teléfono</td>
-                              <td id="userNamePhoneTD"></td>
-                            </tr>
-                            <tr>
                               <td>Domicilio</td>
                               <td id="userNameAddressTD"></td>
                             </tr>
@@ -301,7 +297,7 @@
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div id="modalEnviar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div id="sendModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

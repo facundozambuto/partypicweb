@@ -88,7 +88,7 @@
       $.removeCookie("id_profile");
       var id_profile = $(this).data("row-id");
       $.cookie("id_profile", id_profile);
-      $("#modalEliminar").modal('show');
+      $("#deleteModal").modal('show');
     });
   });
   $("#loadingDivContainer").hide();
@@ -121,14 +121,14 @@
     function userOK(data) {
       if(data.success) {
         $.removeCookie("id_profile");
-        $('#modalEliminar').modal('hide');
+        $('#deleteModal').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         $("#loadingDivContainer").hide();
         $("#modalSuccess").modal('show');
       }
       else {
         $.removeCookie("id_profile");
-        $('#modalEliminar').modal('hide');
+        $('#deleteModal').modal('hide');
         $("#loadingDivContainer").hide();
         $("#modalError").modal('show');
         $("#errorMessage").text(data.mensaje);

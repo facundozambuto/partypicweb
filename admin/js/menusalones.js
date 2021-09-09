@@ -89,7 +89,7 @@ var grid = $("#grid-command-buttons").bootgrid({
     $.removeCookie("venueId");
     var venueId= $(this).data("row-id");
     $.cookie("venueId", venueId);
-    $("#modalEliminar").modal('show');
+    $("#deleteModal").modal('show');
   });
 });
 
@@ -121,13 +121,13 @@ $("#btnConfirmDelete").on("click", function() {
   function deleteVenueHandler(data) {
     if (data.success) {
       $.removeCookie("venueId");
-      $('#modalEliminar').modal('hide');
+      $('#deleteModal').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       $("#loadingDivContainer").hide();
       $("#modalSuccess").modal('show');
     } else {
       $.removeCookie("venueId");
-      $('#modalEliminar').modal('hide');
+      $('#deleteModal').modal('hide');
       $("#loadingDivContainer").hide();
       $("#modalError").modal('show');
       $("#errorMessage").text(data.mensaje);
@@ -221,7 +221,7 @@ $(document).ready(function(){
   $('.col-sm-12.actionBar').append(button);
   $("#AgregarSalon").on("click", function() { 
     $('#addForm').trigger("reset");
-    $('#modalAgregar').modal('show');
+    $('#addingModal').modal('show');
   });
 });
 
@@ -293,7 +293,7 @@ function AddVenue() {
 
 function addVenueHandler(data) {
   if (data.success) {
-    $('#modalAgregar').modal('hide');
+    $('#addingModal').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
     $("#loadingDivContainer").hide();
     $("#modalSuccess").modal('show');

@@ -123,7 +123,7 @@
                         <div class="form-group mb-7px">
                           <label for="fecha" class="col-md-3 control-label">Fecha</label>
                           <div class="col-md-9">
-                              <input id="fecha" type="text" class="form-control some_class" name="fecha" placeholder="Fecha" disabled="disabled">
+                              <input id="fecha" type="text" class="form-control datePickerEdit" name="fecha" placeholder="Fecha" disabled="disabled">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
@@ -162,7 +162,7 @@
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div id="modalEliminar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -179,10 +179,10 @@
           </div><!-- /.modal-dialog -->
         </div>
 
-        <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel2" id="modalAgregar" aria-hidden="true" tabindex="-1">
+        <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel2" id="addingModal" aria-hidden="true" tabindex="-1">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <form class="form-horizontal required" action="../endpoints/AgregarEvento.php" method="post" name="addForm" id="addForm">
+              <form class="form-horizontal required" action="../endpoints/addEventBtn.php" method="post" name="addForm" id="addForm">
                 <div class="modal-header">
                   <h4 class="modal-title" id="gridSystemModalLabel2">Agregar Evento</h4>
                 </div>
@@ -205,7 +205,7 @@
                         <div class="form-group mb-7px">
                           <label for="fecha2" class="col-md-3 control-label">Fecha</label>
                           <div class="col-md-9">
-                              <input id="fecha2" type="text" class="form-control some_class2" name="fecha2" placeholder="Fecha">
+                              <input id="fecha2" type="text" class="form-control datePickerAdd" name="fecha2" placeholder="Fecha">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
@@ -306,7 +306,7 @@
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div id="modalEnviar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div id="sendModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

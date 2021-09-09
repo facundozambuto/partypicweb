@@ -124,7 +124,7 @@ var grid = $("#grid-command-buttons").bootgrid({
     $.removeCookie("userId");
     var userId = $(this).data("row-id");
     $.cookie("userId", userId);
-    $("#modalEliminar").modal('show');
+    $("#deleteModal").modal('show');
   });
 });
 $("#loadingDivContainer").hide();
@@ -154,7 +154,7 @@ $("#btnConfirmDelete").on("click", function(){
   function userOK(data) {
     if(data.success) {
       $.removeCookie("userId");
-      $('#modalEliminar').modal('hide');
+      $('#deleteModal').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       $("#loadingDivContainer").hide();
       $("#modalSuccess").modal('show');
@@ -162,7 +162,7 @@ $("#btnConfirmDelete").on("click", function(){
     }
     else {
       $.removeCookie("userId");
-      $('#modalEliminar').modal('hide');
+      $('#deleteModal').modal('hide');
       $("#loadingDivContainer").hide();
       $("#modalError").modal('show');
       $("#errorMessage").text(data.mensaje);
@@ -297,7 +297,7 @@ $(document).ready(function(){
   $('.col-sm-12.actionBar').append(button);
   $("#AgregarUsuario").on("click", function() { 
     $('#addForm').trigger("reset");
-    $('#modalAgregar').modal('show');
+    $('#addingModal').modal('show');
   });
 });
 
@@ -407,7 +407,7 @@ function addUser() {
 
 function registroOK2(data) {
   if (data.success) {
-    $('#modalAgregar').modal('hide');
+    $('#addingModal').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
     changeRowColor();
     $("#loadingDivContainer").hide();

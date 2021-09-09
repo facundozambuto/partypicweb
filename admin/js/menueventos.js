@@ -12,8 +12,7 @@ $(document).ready(function () {
       trigger.removeClass('is-open');
       trigger.addClass('is-closed');
       isClosed = false;
-    } 
-    else {   
+    } else {   
       overlay.show();
       trigger.removeClass('is-closed');
       trigger.addClass('is-open');
@@ -25,9 +24,9 @@ $(document).ready(function () {
     $('#wrapper').toggleClass('toggled');
   });
 
-  var fecha_string = new Date();
-  var fechaFormateada = fecha_string.getFullYear() + "/" + (fecha_string.getMonth()+1) + "/" + fecha_string.getDate() + " " + fecha_string.getHours() + ":" + fecha_string.getMinutes();
-  $(".some_class2").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});  
+  var stringDate = new Date();
+  var formattedDate = stringDate.getFullYear() + "/" + (stringDate.getMonth()+1) + "/" + stringDate.getDate() + " " + stringDate.getHours() + ":" + stringDate.getMinutes();
+  $(".datePickerAdd").datetimepicker({value: formattedDate, lang:'es', minDate:'-1', todayButton: 1, inline: true});  
 
 });
 
@@ -35,12 +34,12 @@ $(document).ready(function(){
   loadVenues();
   loadCategories();
 
-  var button = $('<button id="AgregarEvento" class="btn btn-default pull-left" type="button" title="Agregar un nuevo evento"><span class="glyphicon glyphicon-plus"></span>   Agregar evento</button>');
+  var button = $('<button id="addEventBtn" class="btn btn-default pull-left" type="button" title="Agregar un nuevo evento"><span class="glyphicon glyphicon-plus"></span>   Agregar evento</button>');
   $('.col-sm-12.actionBar').append(button);
-  $("#AgregarEvento").on("click", function() { 
+  $("#addEventBtn").on("click", function() { 
     $('#addForm').trigger("reset");
-    $(".some_class2").datetimepicker({lang:'es', minDate:'-1', todayButton: 1, inline: true});
-    $('#modalAgregar').modal('show');
+    $(".datePickerAdd").datetimepicker({lang:'es', minDate:'-1', todayButton: 1, inline: true});
+    $('#addingModal').modal('show');
   });
   
   $('[data-tooltip="tooltip"]').tooltip(); 
@@ -86,13 +85,13 @@ var grid = $("#grid-command-buttons").bootgrid({
         return "<div class=\"text-center\">" + row.name + "</div>";
       },
       "FechaColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.startDatetime + "</div>";
+        return "<div class=\"text-center\">" + formatStartDatetime(row.startDatetime) + "</div>";
       },
       "CodigoQRColumn": function(column, row) {
         return "<div class=\"text-center\"><img src="+ row.qrCode +"></div>";
       },
       "NombreSalonColumn": function(column, row) {
-        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"verSalon("+ row.venueId +")\" target=\"blank\">"+getVenueName(row.venueName)+"</a></div>";
+        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"openVenue("+ row.venueId +")\" target=\"blank\">"+getVenueName(row.venueName)+"</a></div>";
       },
       "CategoryColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.categoryDescription + "</div>";
@@ -111,7 +110,6 @@ var grid = $("#grid-command-buttons").bootgrid({
   }
 }).on("loaded.rs.jquery.bootgrid", function() {
   changeRowColor();
-/* Executes after data is loaded and rendered */
   grid.find(".command-edit").on("click", function(e) {
     $.removeCookie("eventId");
     var eventId = $(this).data("row-id");
@@ -128,9 +126,10 @@ var grid = $("#grid-command-buttons").bootgrid({
         $("#eventName").val(result.name);
         $("#description").val(result.description);
 
-        var fecha_string = new Date(result.startDatetime);
-        var fechaFormateada = fecha_string.getFullYear() + "/" + (fecha_string.getMonth()+1) + "/" + fecha_string.getDate() + " " + fecha_string.getHours() + ":" + fecha_string.getMinutes();
-        $(".some_class").datetimepicker({value: fechaFormateada, lang:'es', minDate:'-1', todayButton: 1, inline: true});
+        var dateString = new Date(result.startDatetime);
+        var formattedDate = dateString.getFullYear() + "/" + (dateString.getMonth()+1) + "/" + dateString.getDate() + " " + dateString.getHours() + ":" + dateString.getMinutes();
+
+        $(".datePickerEdit").datetimepicker({value: formattedDate, lang:'es', minDate:'-1', todayButton: 1, inline: true});
         $("#venueIdDDLEdit").val(result.venueId).change();;
         $("#qrCode").attr('src', result.qrCode);
         $("#enabledDDLEdit").val(result.enabled ? 1 : 0);
@@ -146,12 +145,12 @@ var grid = $("#grid-command-buttons").bootgrid({
     $.removeCookie("eventId");
     var eventId = $(this).data("row-id");
     $.cookie("eventId", eventId);
-    $("#modalEliminar").modal('show');
+    $("#deleteModal").modal('show');
   }).end().find(".command-send").on("click", function(e) {
     $.removeCookie("eventId");
     var eventId = $(this).data("row-id");
     $.cookie("eventId", eventId);
-    $("#modalEnviar").modal('show');
+    $("#sendModal").modal('show');
   }).end().find(".command-play-slider").on("click", function(e) {
     var eventId = $(this).data("row-id");
     var win = window.open("http://local-web.partypic.com/admin/verSlider.html?eventId="+eventId, '_blank');
@@ -191,7 +190,7 @@ $("#btnConfirmSend").on("click", function(){
   function envioOK(data) {
     if(data.success) {
       $.removeCookie("eventId");
-      $('#modalEnviar').modal('hide');
+      $('#sendModal').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       $("#modalSuccess").modal('show');
       changeRowColor();
@@ -231,7 +230,7 @@ $("#btnConfirmDelete").on("click", function() {
   function successDeleteHandler(data) {
     if(data.success) {
       $.removeCookie("eventId");
-      $('#modalEliminar').modal('hide');
+      $('#deleteModal').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       $("#loadingDivContainer").hide();
       $("#modalSuccess").modal('show');
@@ -454,7 +453,7 @@ function successAddHandler(data) {
 
     function successInstructionsSendingHandler(data){
       if (data.success) {
-        $('#modalAgregar').modal('hide');
+        $('#addingModal').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         changeRowColor();
         $("#loadingDivContainer").hide();
@@ -548,10 +547,10 @@ function changeRowColor() {
   });   
 }
 
-function verSalon(venueId) {
+function openVenue(venueId) {
   $("#modalSalon").modal('show');  
   $.ajax({
-    url:'http://local-api.partypic.com/api/venues/' + venueId,
+    url:'http://local-api.partypic.com/api/venues/venueManager?venueId=' + venueId,
     type: 'GET',
     dataType: 'json',
     data: {},
@@ -559,14 +558,13 @@ function verSalon(venueId) {
       $("#venueIdTD").text(venueId);
       $("#venueNameTD").text(result.name);
       $("#venueAddressTD").text(result.address);
-      $("#venuePhoneTD").text(result.venuePhone);
-      $("#venueUserNameTD").text(result.venueUserName);
-      $("#userNamePhoneTD").text(result.userNamePhone);
-      $("#userNameMobilePhoneTD").text(result.userNameMobilePhone);
-      $("#userNameAddressTD").text(result.userNameAddress);
-      $("#userCuilTD").text(result.userCuil);
-      $("#email").text(result.email);
-      $("#email").attr('href','mailto:'+result.email);
+      $("#venuePhoneTD").text(result.phone);
+      $("#venueUserNameTD").text(result.managerName);
+      $("#userNameMobilePhoneTD").text(result.managerMobilePhone);
+      $("#userNameAddressTD").text(result.managerAddress);
+      $("#userCuilTD").text(result.managerCuil);
+      $("#email").text(result.managerEmail);
+      $("#email").attr('href','mailto:'+result.managerEmail);
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
@@ -582,6 +580,11 @@ function gup(name, url) {
   var regex = new RegExp( regexS );
   var results = regex.exec( url );
   return results == null ? null : results[1];
+}
+
+function formatStartDatetime(startDatetime) {
+  var dateString = new Date(startDatetime);
+  return dateString.getDate() + "/" + (dateString.getMonth()+1) + "/" + dateString.getFullYear();
 }
 
 $.datetimepicker.setLocale('es');
