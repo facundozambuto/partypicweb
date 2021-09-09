@@ -14,7 +14,7 @@ function post_data($recoveryEmail)
   if($email == null)
   {
     $res['success'] = false;
-    $res['mensajeError'] = "El campo Email está vacío" . ' email: ' . $email;
+    $res['errorMessage'] = "El campo Email está vacío" . ' email: ' . $email;
   }
   else
   {
@@ -23,7 +23,7 @@ function post_data($recoveryEmail)
     if(!$usuario_ok)
     {
       $res['success'] = false;
-      $res['mensajeError'] = "No existe usuario registrado con ese email";
+      $res['errorMessage'] = "No existe usuario registrado con ese email";
     }
     else
     {

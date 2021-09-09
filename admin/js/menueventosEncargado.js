@@ -130,7 +130,7 @@
         },
         error: function(xhr, status, error) {
           $("#modalError").modal('show');
-          $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+          $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
         } 
       }); 
     }).end().find(".command-delete").on("click", function(e) {
@@ -149,7 +149,7 @@
       win.focus();
     });
   });
-  $("#loadingDivPadre").hide();
+  $("#loadingDivContainer").hide();
 
   $("#btnCancelSend").on("click", function() {
     $.removeCookie("eventId");
@@ -169,7 +169,7 @@
       success:envioOK,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
     });
 
@@ -192,7 +192,7 @@
       
     var base_url = "../endpoints/DeleteEvento.php";
     eventId = parseFloat($.cookie("eventId"));
-    $("#loadingDivPadre").show();
+    $("#loadingDivContainer").show();
     $.ajax({
       url: base_url,
       dataType: "json",
@@ -200,9 +200,9 @@
       data:{eventId:eventId},
       success:userOK,
       error: function(xhr,status,error) {   
-        $("#loadingDivPadre").hide();
+        $("#loadingDivContainer").hide();
         $("#modalError").modal('show');
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
     });
 
@@ -211,7 +211,7 @@
         $.removeCookie("eventId");
         $('#modalEliminar').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
-        $("#loadingDivPadre").hide();
+        $("#loadingDivContainer").hide();
         $("#modalSuccess").modal('show');
         changeRowColor();
       }    
@@ -267,7 +267,7 @@
     var disabled = $("#eventId").removeAttr('disabled');
     var datos = $('#editForm').serialize();
     disabled.attr('disabled','disabled');
-    $("#loadingDivPadre").show();
+    $("#loadingDivContainer").show();
     $.ajax({
       url: base_url,
       dataType: "json",
@@ -275,9 +275,9 @@
       data:datos,
       success:registroOK,
       error: function(xhr,status,error) {
-        $("#loadingDivPadre").hide();   
+        $("#loadingDivContainer").hide();   
         $("#modalError").modal('show');
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
     }); 
     return false;
@@ -289,13 +289,13 @@
       $('#modalEditar').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       changeRowColor();
-      $("#loadingDivPadre").hide();
+      $("#loadingDivContainer").hide();
       $("#modalSuccess").modal('show');
     }
     else {
-      $("#loadingDivPadre").hide();
+      $("#loadingDivContainer").hide();
       $("#modalError").modal('show');
-      $("#mensajeError").text(data.mensaje);
+      $("#errorMessage").text(data.mensaje);
     }
   }
   
@@ -357,7 +357,7 @@
   function addEvento() {
     var base_url = "../endpoints/AgregarEventoEncargado.php";
     var datos = $('#addForm').serialize();
-    $("#loadingDivPadre").show();
+    $("#loadingDivContainer").show();
     $.ajax({
       url: base_url,
       dataType: "json",
@@ -365,9 +365,9 @@
       data:datos,
       success:registroOK2,
       error: function(xhr,status,error) {
-        $("#loadingDivPadre").hide();   
+        $("#loadingDivContainer").hide();   
         $("#modalError").modal('show');
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
     });
 
@@ -386,7 +386,7 @@ function registroOK2(data) {
       success:InsertYEnvioOK,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
     });
 
@@ -395,20 +395,20 @@ function registroOK2(data) {
         $('#modalAgregar').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         changeRowColor();
-        $("#loadingDivPadre").hide();
+        $("#loadingDivContainer").hide();
         $("#modalSuccess").modal('show');
       }
       else {
-        $("#loadingDivPadre").hide();
+        $("#loadingDivContainer").hide();
         $("#modalError").modal('show');
-        $("#mensajeError").text(data.mensaje);
+        $("#errorMessage").text(data.mensaje);
       }
     }
   }
   else {
-    $("#loadingDivPadre").hide();
+    $("#loadingDivContainer").hide();
     $("#modalError").modal('show');
-    $("#mensajeError").text(data.mensaje);
+    $("#errorMessage").text(data.mensaje);
   }
 }  
 
@@ -441,7 +441,7 @@ function cargarSalonesAlSelect() {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
     } 
     
   }); 
@@ -478,7 +478,7 @@ function verSalon(venueId) {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.")
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.")
     }   
   });
 }

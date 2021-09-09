@@ -32,7 +32,7 @@
     else
     {
       $res['success'] = false;
-      $res['mensajeError'] = 'El usuario o contraseña son inválidos.';
+      $res['errorMessage'] = 'El usuario o contraseña son inválidos.';
       $res['request'] = $request;
     }
     

@@ -98,7 +98,7 @@ var grid = $("#grid-command-buttons").bootgrid({
         return "<div class=\"text-center\">" + row.categoryDescription + "</div>";
       },
       "VerFotosColumn": function(column, row) {
-        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" href=\"/admin/verFotosEvento.php?eventId="+ row.eventId +"\" target=\"blank\">Ver Imágenes</a></div>";
+        return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" href=\"/admin/verFotosEvento.html?eventId="+ row.eventId +"\" target=\"blank\">Ver Imágenes</a></div>";
       },
       "HabilitadoColumn": function(column, row) {
         if (row.enabled == 1) {
@@ -135,11 +135,11 @@ var grid = $("#grid-command-buttons").bootgrid({
         $("#qrCode").attr('src', result.qrCode);
         $("#enabledDDLEdit").val(result.enabled ? 1 : 0);
         $("#eventId").val(result.eventId);  
-        $("#categoryIdDDLEdit").val(result.categoryId).change();;
+        $("#categoryIdDDLEdit").val(result.categoryId).change();
       },
       error: function(xhr, status, error) {
         $("#modalError").modal('show');
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       } 
     }); 
   }).end().find(".command-delete").on("click", function(e) {
@@ -158,7 +158,7 @@ var grid = $("#grid-command-buttons").bootgrid({
     win.focus();
   });
 });
-$("#loadingDivPadre").hide();
+$("#loadingDivContainer").hide();
 
 $("#btnCancelSend").on("click", function() {
   $.removeCookie("eventId");
@@ -184,7 +184,7 @@ $("#btnConfirmSend").on("click", function(){
     success:envioOK,
     error: function(xhr,status,error) {   
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
     }
   });
 
@@ -207,7 +207,7 @@ $("#btnConfirmDelete").on("click", function() {
     
   var eventId = parseFloat($.cookie("eventId"));
   var baseUrl = 'http://local-api.partypic.com/api/events/' + eventId;
-  $("#loadingDivPadre").show();
+  $("#loadingDivContainer").show();
   $.ajax({
     url: baseUrl,
     dataType: "json",
@@ -219,12 +219,12 @@ $("#btnConfirmDelete").on("click", function() {
     success: successDeleteHandler,
     error: function(xhr,status,error) {
       if (xhr && xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors[0] && xhr.responseJSON.errors[0].description === 'ExistingAsociatedImagesToEventException') {
-        $("#mensajeError").text("Existen imágenes asociadas a este evento y por tal razón no se puede eliminar el mismo. Comuníquese con el administrador.");
+        $("#errorMessage").text("Existen imágenes asociadas a este evento y por tal razón no se puede eliminar el mismo. Comuníquese con el administrador.");
       } else {
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
       $("#modalError").modal('show');
-      $("#loadingDivPadre").hide();
+      $("#loadingDivContainer").hide();
     }
   });
 
@@ -233,7 +233,7 @@ $("#btnConfirmDelete").on("click", function() {
       $.removeCookie("eventId");
       $('#modalEliminar').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
-      $("#loadingDivPadre").hide();
+      $("#loadingDivContainer").hide();
       $("#modalSuccess").modal('show');
       changeRowColor();
     }    
@@ -304,7 +304,7 @@ function UpdateEvento() {
   };
 
   disabled.attr('disabled','disabled');
-  $("#loadingDivPadre").show();
+  $("#loadingDivContainer").show();
 
   $.ajax({
     url: baseUrl,
@@ -317,9 +317,9 @@ function UpdateEvento() {
     },
     success: successUpdateHandler,
     error: function(xhr,status,error) {
-      $("#loadingDivPadre").hide();   
+      $("#loadingDivContainer").hide();   
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
     }
   }); 
   
@@ -331,14 +331,14 @@ function successUpdateHandler(data) {
     $.removeCookie("eventId");
     $('#modalEditar').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
-    $("#loadingDivPadre").hide();
+    $("#loadingDivContainer").hide();
     changeRowColor();
     $("#modalSuccess").modal('show');
   }
   else {
-    $("#loadingDivPadre").hide();
+    $("#loadingDivContainer").hide();
     $("#modalError").modal('show');
-    $("#mensajeError").text(data.mensaje);
+    $("#errorMessage").text(data.mensaje);
   }
 }
   
@@ -407,7 +407,7 @@ function addEvento() {
     enabled: $("#enabledDDLAdd").val() === '1' ? true : false,
     categoryId: parseInt($("#categoryIdDDLAdd").val())
   };
-  $("#loadingDivPadre").show();
+  $("#loadingDivContainer").show();
   $.ajax({
     url: baseUrl,
     dataType: "json",
@@ -419,9 +419,9 @@ function addEvento() {
     },
     success: successAddHandler,
     error: function(xhr,status,error) {
-      $("#loadingDivPadre").hide();   
+      $("#loadingDivContainer").hide();   
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
     }
   });
 
@@ -430,13 +430,17 @@ function addEvento() {
 
 function successAddHandler(data) {
   if (data.success) {
-    var eventId = data.eventId;
     var baseUrl = "http://local-api.partypic.com/api/events/sendInstructions";
+    var eventId = data.eventId;
+    var datos = {
+      eventId: eventId
+    };
+  
     $.ajax({
       url: baseUrl,
       dataType: "json",
-      type: 'POST',
-      data: JSON.stringify(eventId),
+      type:'POST',
+      data: JSON.stringify(datos),
       headers: { 
         'Accept': 'application/json',
         'Content-Type': 'application/json' 
@@ -444,29 +448,27 @@ function successAddHandler(data) {
       success: successInstructionsSendingHandler,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
     });
 
     function successInstructionsSendingHandler(data){
-      if(data.success) {
+      if (data.success) {
         $('#modalAgregar').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
         changeRowColor();
-        $("#loadingDivPadre").hide();
+        $("#loadingDivContainer").hide();
         $("#modalSuccess").modal('show');
-      }
-      else {
-        $("#loadingDivPadre").hide();
+      } else {
+        $("#loadingDivContainer").hide();
         $("#modalError").modal('show');
-        $("#mensajeError").text(data.mensaje);
+        $("#errorMessage").text(data.mensaje);
       }
     }
-  }
-  else {
-    $("#loadingDivPadre").hide();
+  } else {
+    $("#loadingDivContainer").hide();
     $("#modalError").modal('show');
-    $("#mensajeError").text(data.mensaje);
+    $("#errorMessage").text(data.mensaje);
   }
 }  
 
@@ -477,11 +479,8 @@ function loadVenues() {
     dataType: 'json',
     data: {},
     success: function(result) {
-
       var venues = result.venues;
-
       for (i=0;i<venues.length;i++) {
-
         $("#venueIdDDLEdit").append(
           $("<option>" , {
             text: venues[i].name,
@@ -498,7 +497,7 @@ function loadVenues() {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
     }
   }); 
 }
@@ -510,11 +509,8 @@ function loadCategories() {
     dataType: 'json',
     data: {},
     success: function(result) {
-
       var categories = result.categories;
-
       for (i=0;i<categories.length;i++) {
-
         $("#categoryIdDDLEdit").append(
           $("<option>" , {
             text: categories[i].description,
@@ -531,7 +527,7 @@ function loadCategories() {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
     }
   }); 
 }
@@ -574,7 +570,7 @@ function verSalon(venueId) {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.")
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.")
     }   
   });
 }
@@ -587,7 +583,5 @@ function gup(name, url) {
   var results = regex.exec( url );
   return results == null ? null : results[1];
 }
-
-
 
 $.datetimepicker.setLocale('es');

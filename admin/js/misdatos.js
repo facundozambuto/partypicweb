@@ -63,11 +63,11 @@ $(document).ready(function () {
   			$("#telefono_usuario").val(result[0].telefono_usuario);
   			$("#cuil_usuario").val(result[0].cuil_usuario);
   			$("#celular_usuario").val(result[0].celular_usuario);
-        $("#loadingDivPadre").hide();
+        $("#loadingDivContainer").hide();
   	 },
   	 error: function(xhr, status, error) {
               $("#modalError").modal('show');
-              $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+              $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
   	 				} 
   	}); 
   }
@@ -120,7 +120,7 @@ function updateUser() {
   var datos = $('#actualizarUserForm').serialize();
   disabled.attr('disabled','disabled');
   $("#contenidoMisDatos").hide();
-  $('#loadingDivPadre').show(); 
+  $('#loadingDivContainer').show(); 
   
   $.ajax({
     url: base_url,
@@ -131,7 +131,7 @@ function updateUser() {
     error: function(xhr,status,error)
     {   
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
     }
   });
   
@@ -140,7 +140,7 @@ function updateUser() {
  
 function UpdateOK(data) {
     if(data.success) {
-      $('#loadingDivPadre').hide(); 
+      $('#loadingDivContainer').hide(); 
       cargarDatosForm();
       $("#modalContrasenia").modal('hide');
       $("#nombre_usuario").attr('disabled','disabled');    
@@ -155,7 +155,7 @@ function UpdateOK(data) {
     }
     else {
       $("#modalError").modal('show');
-      $("#mensajeError").text(data.mensaje);
+      $("#errorMessage").text(data.mensaje);
     }
 }
 
@@ -200,7 +200,7 @@ function updatePass() {
     success:UpdatePassOK,
     error: function(xhr,status,error) {   
       $("#modalError").modal('show');
-      $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
     }
   });
   
@@ -221,7 +221,7 @@ function UpdatePassOK(data) {
   }
   else {
     $("#modalError").modal('show');
-    $("#mensajeError").text(data.mensaje);
+    $("#errorMessage").text(data.mensaje);
   }
 }
 

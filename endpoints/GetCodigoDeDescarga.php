@@ -29,7 +29,7 @@
     else
     {
       $res['success'] = false;
-      $res['mensajeError'] = 'El código ingresado es inválido.';
+      $res['errorMessage'] = 'El código ingresado es inválido.';
       $res['request'] = $request;
     }
     

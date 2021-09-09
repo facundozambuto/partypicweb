@@ -91,7 +91,7 @@
       $("#modalEliminar").modal('show');
     });
   });
-  $("#loadingDivPadre").hide();
+  $("#loadingDivContainer").hide();
 
   
   
@@ -103,7 +103,7 @@
       
     var base_url = "../endpoints/DeleteBlocked.php";
     id_profile = parseFloat($.cookie("id_profile"));
-    $("#loadingDivPadre").show();
+    $("#loadingDivContainer").show();
 
     $.ajax({
       url: base_url,
@@ -112,9 +112,9 @@
       data:{id_profile:id_profile},
       success:userOK,
       error: function(xhr,status,error) {
-        $("#loadingDivPadre").hide();   
+        $("#loadingDivContainer").hide();   
         $("#modalError").modal('show');
-        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
       }
     });
 
@@ -123,15 +123,15 @@
         $.removeCookie("id_profile");
         $('#modalEliminar').modal('hide');
         $("#grid-command-buttons").bootgrid('reload');
-        $("#loadingDivPadre").hide();
+        $("#loadingDivContainer").hide();
         $("#modalSuccess").modal('show');
       }
       else {
         $.removeCookie("id_profile");
         $('#modalEliminar').modal('hide');
-        $("#loadingDivPadre").hide();
+        $("#loadingDivContainer").hide();
         $("#modalError").modal('show');
-        $("#mensajeError").text(data.mensaje);
+        $("#errorMessage").text(data.mensaje);
       }    
     }
   });

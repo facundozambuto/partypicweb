@@ -52,14 +52,14 @@
 	      success:userOK,
 	      error: function(xhr,status,error) {   
 	        $("#modalError").modal('show');
-	        $("#mensajeError").text("Ocurrió un error. Comunicalo al desarrollador.");
+	        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
 	      }
 	    });
             var eventos = [];
 	    function userOK(data) {
 	      if(data) {
 	        eventos = data;
-	        $("#loadingDivPadre").hide();
+	        $("#loadingDivContainer").hide();
 	        var calendar =  $('#calendar').fullCalendar({
         header: {
           left: 'title',

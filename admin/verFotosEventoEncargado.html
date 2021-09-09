@@ -89,15 +89,15 @@
 		<!--<div style="margin-left: auto; margin-right: auto; display: none" class="text-center" id="loading">
 	            <img alt="cargando" src="../images/ajax-loader.gif">
 	        </div>-->
-	        <div class="animationload" id="loadingDivPadre">
+	        <div class="animationload" id="loadingDivContainer">
 	       	   <img src="../images/animacionLogo.gif" style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic"/>
 	        </div>
-		<h2 class="text-center" id="nombreEvento" style="display:none"></h2>
+		<h2 class="text-center" id="eventName" style="display:none"></h2>
 		<div id="images-container" class="container container-ppal-2" style="display:none">
 		  
 		  
 		</div>
-       		<div class="container text-center" id="contenedor-error" style="display:none" >
+       		<div class="container text-center" id="errorContainer" style="display:none" >
 	       		<div class="alert alert-dismissible alert-warning">
 			  <h4>Evento sin imágenes</h4>
 			  <p>Al parecer no se han subido imágenes aún. Por favor, esperá y volvé a intentar nuevamente en unos minutos.</p>
@@ -125,7 +125,7 @@
                 <button style="color:red" type="button" class="close" data-dismiss="modal" aria-label="Close"><span>×</span></button>
                 <h4 style="color:black" class="modal-title" id="mySmallModalLabel2">Ups!<a class="anchorjs-link" href="#myLargeModalLabel"><span class="anchorjs-icon"></span></a></h4>
               </div>
-              <div style="color:black" class="modal-body" id="mensajeError">
+              <div style="color:black" class="modal-body" id="errorMessage">
               </div>
             </div>
           </div>
