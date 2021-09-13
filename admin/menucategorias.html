@@ -5,12 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <title>Party Pic App - Menú de Salones</title>
+    <title>Party Pic App - Menú de Categorías</title>
     <link rel="shortcut icon" href="../images/favicon.png"/>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="../css/style_menu.css"/>
     <link rel="stylesheet" type="text/css" href="../css/jquery.bootgrid.min.css" />
-    <link rel="stylesheet" type="text/css" href="../admin/css/menusalones.css" />
+    <link rel="stylesheet" type="text/css" href="../admin/css/menucategorias.css" />
     <link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css"/>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oswald">
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -36,26 +36,23 @@
           <div class="btn-group btn-breadcrumb pull-left">
             <a href="../admin/dashboard.html" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
             <a href="../admin/dashboard.html" class="btn btn-primary">Menú Principal</a>
-            <a href="../admin/menusalones.html" class="btn btn-primary">Menú Salones</a>
+            <a href="../admin/menucategorias.html" class="btn btn-primary">Menú Categorías</a>
             <!--<a href="#" class="btn btn-primary">Primary</a>-->
           </div>
         </div>
       </div>
       
       <div class="animationload" id="loadingDivContainer">
-       	  <img src="../images/animacionLogo.gif" style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic"/>
+       	<img src="../images/animacionLogo.gif" style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic"/>
       </div>
       
       <div class="container container-ppal-2">
-        <table id="grid-command-buttons" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="http://local-api.partypic.com/api/venues/grid">
+        <table id="grid-command-buttons" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="http://local-api.partypic.com/api/categories/grid">
           <thead style="border: 2px solid black;">
             <tr>
-              <th data-column-id="venueId" data-formatter="IDColumn" data-type="numeric" data-header-css-class="IDColumn" data-identifier="true" data-sortable="true">ID</th>
-              <th data-column-id="name" data-formatter="nameColumn" data-header-css-class="nameColumn" data-sortable="true">Nombre Salón</th>
-              <th data-column-id="address" data-formatter="addressColumn" data-header-css-class="addressColumn" data-sortable="true">Domicilio</th>
-              <th data-column-id="phone" data-formatter="phoneColumn" data-header-css-class="phoneColumn" data-sortable="true">Teléfono</th>
-              <th data-column-id="userName" data-formatter="userNameColumn" data-header-css-class="userNameColumn" data-sortable="true">Encargado</th>
-              <th data-column-id="events" data-formatter="eventsColumn" data-header-css-class="eventsColumn" data-sortable="true">Ver Eventos</th>
+              <th data-column-id="categorId" data-formatter="IDColumn" data-type="numeric" data-header-css-class="IDColumn" data-identifier="true" data-sortable="true">ID</th>
+              <th data-column-id="description" data-formatter="descriptionColumn" data-header-css-class="descriptionColumn" data-sortable="true">Descripción</th>
+              <th data-column-id="createdDatetime" data-formatter="createdDatetimeColumn" data-header-css-class="createdDatetimeColumn" data-sortable="true">Fecha Alta</th>
               <th data-column-id="commands" data-formatter="commands" data-header-css-class="CommandColumn" data-sortable="false">Opciones</th>
             </tr>
           </thead>
@@ -67,43 +64,24 @@
             <div class="modal-content">
               <form class="form-horizontal required" action="#" method="post" name="editForm" id="editForm">
                 <div class="modal-header">
-                  <h4 class="modal-title" id="gridSystemModalLabel3">Editar Salón</h4>
+                  <h4 class="modal-title" id="gridSystemModalLabel3">Editar Categoría</h4>
                 </div>
                 <div class="modal-body">
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col-xs-12 col-md-12 col-lg-12" style="margin-bottom:20px">    
                         <div class="form-group mb-7px">
-                          <label for="venueId" class="required col-md-3 control-label">ID</label>
+                          <label for="categoryId" class="required col-md-3 control-label">ID</label>
                           <div class="col-md-3">
-                              <input id="venueId" disabled="disabled" type="text" class="form-control text-center"  name="venueId" placeholder="ID">
+                            <input id="categoryId" disabled="disabled" type="text" class="form-control text-center"  name="categoryId" placeholder="ID">
                           </div>
                         </div>
                         <div class="form-group mb-7px">
-                          <label for="venueNameEdit" class="col-md-3 control-label">Nombre</label>
+                          <label for="categoryDescriptionEdit" class="col-md-3 control-label">Descripción</label>
                           <div class="col-md-9">
-                              <input id="venueNameEdit" type="text" class="form-control" name="venueNameEdit" placeholder="Nombre del Salón">
+                            <input id="categoryDescriptionEdit" type="text" class="form-control" name="categoryDescriptionEdit" placeholder="Nombre de la categoría">
                           </div>
-                        </div>
-                        <div class="form-group mb-7px">
-                          <label for="venueAddressEdit" class="col-md-3 control-label">Domicilio</label>
-                          <div class="col-md-9">
-                            <input id="venueAddressEdit" type="text" class="form-control" name="venueAddressEdit" placeholder="Domicilio">
-                          </div>
-                        </div>   
-                        <div class="form-group mb-7px">
-                          <label for="venuePhoneEdit" class="col-md-3 control-label">Teléfono</label>
-                          <div class="col-md-6">
-                            <input id="venuePhoneEdit" type="text" class="form-control" name="venuePhoneEdit" placeholder="Teléfono">
-                          </div>
-                        </div>
-                        <div class="form-group mb-7px">
-                          <label for="userIdDDLEdit" class="col-md-3 control-label">Encargado</label>
-                          <div class="col-md-6">
-                            <select id="userIdDDLEdit" class="form-control" name="userIdDDLEdit">
-                            </select>
-                          </div>
-                        </div>  
+                        </div> 
                       </div>    
                       <div id="errorsEditContainer" class="form-group div-errores"></div>             
                     </div>                  
@@ -122,10 +100,10 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="mySmallModalLabel">Eliminar Salón</h4>
+                <h4 class="modal-title" id="mySmallModalLabel">Eliminar Categoría</h4>
               </div>
               <div class="modal-body">
-                &iquest;Estás seguro que deseás eliminar el salón seleccionado?
+                &iquest;Estás seguro que deseás eliminar la cateogoría seleccionada?
               </div>
               <div class="modal-footer">
                 <button id="btnCancelDelete" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -140,37 +118,18 @@
             <div class="modal-content">
               <form class="form-horizontal required" action="#" method="post" name="addForm" id="addForm">
                 <div class="modal-header">
-                  <h4 class="modal-title" id="gridSystemModalLabel2">Agregar Salón</h4>
+                  <h4 class="modal-title" id="gridSystemModalLabel2">Agregar Categoría</h4>
                 </div>
                 <div class="modal-body">
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col-xs-12 col-md-12 col-lg-12"  style="margin-bottom:20px"> 
                         <div class="form-group mb-7px">
-                          <label for="venueNameAdd" class="col-md-3 control-label">Nombre</label>
+                          <label for="categoryDescriptionAdd" class="col-md-3 control-label">Nombre</label>
                           <div class="col-md-9">
-                            <input id="venueNameAdd" type="text" class="form-control" name="venueNameAdd" placeholder="Nombre del Salón">
+                            <input id="categoryDescriptionAdd" type="text" class="form-control" name="categoryDescriptionAdd" placeholder="Nombre de la categoría">
                           </div>
                         </div>
-                        <div class="form-group mb-7px">
-                          <label for="venueAddressAdd" class="col-md-3 control-label">Domicilio</label>
-                          <div class="col-md-9">
-                            <input id="venueAddressAdd" type="text" class="form-control" name="venueAddressAdd" placeholder="Domicilio">
-                          </div>
-                        </div>   
-                        <div class="form-group mb-7px">
-                          <label for="venuePhoneAdd" class="col-md-3 control-label">Teléfono</label>
-                          <div class="col-md-6">
-                            <input id="venuePhoneAdd" type="text" class="form-control" name="venuePhoneAdd" placeholder="Teléfono">
-                          </div>
-                        </div>
-                        <div class="form-group mb-7px">
-                          <label for="userIdDDLAdd" class="col-md-3 control-label">Encargado</label>
-                          <div class="col-md-6">
-                            <select id="userIdDDLAdd" class="form-control" name="userIdDDLAdd">
-                            </select>
-                          </div>
-                        </div> 
                         <div id="errorsAddContainer" class="form-group div-errores"></div>               
                       </div>                  
                     </div>
@@ -212,61 +171,10 @@
           </div>
         </div>
         
-        <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel2" id="venueManagerModal" aria-hidden="true" tabindex="-1">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title" id="gridSystemModalLabel2">Encargado del Salón</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="container-fluid">
-                    <div class="row">
-                      <div class="col-xs-12 col-md-12 col-lg-12"  style="margin-bottom:20px"> 
-                        <div class="col-md-offset-1 col-lg-offset-1 col-md-10 col-lg-10"> 
-                          <table class="table table-user-information">
-                            <tbody>
-                              <tr>
-                                <td>Encargado/a</td>
-                                <td id="venueManagerName"></td>
-                              </tr>
-                              <tr>
-                                <td>E-mail</td>
-                                <td><a id="venueManagerEmail" href=""></a></td>
-                              </tr>
-                              <tr>
-                                <td>Celular</td>
-                                <td id="venueManagerMobilePhone"></td>
-                              </tr>
-                              <tr>
-                                <td>Teléfono</td>
-                                <td id="venueManagerPhone"></td>
-                              </tr>
-                              <tr>
-                                <td>Domicilio</td>
-                                <td id="venueManagerAddress"></td>
-                              </tr>
-                              <tr>
-                                <td>CUIL</td>
-                                <td id="venueManagerCuil"></td>
-                              </tr>
-                            </tbody>
-                          </table>
-	                      <a href="../admin/menuusuarios.html" class="btn btn-primary">Editar / Ver Encargados</a>
-	                    </div>         
-	                  </div>                  
-	                </div>
-	              </div>
-	            </div>  
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
       </div>
       <!-- /#page-content-wrapper -->
     </div>
     <!-- /#wrapper -->
-    <script type="text/javascript" src="../admin/js/menusalones.js"></script>
+    <script type="text/javascript" src="../admin/js/menucategorias.js"></script>
   </body>
 </html>

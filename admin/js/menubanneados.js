@@ -47,7 +47,7 @@
         "commands": function(column, row) {
           return "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Quitar bloquedo\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_profile + "\"><span class=\"fa fa-trash-o\"></span></button></div>";
         },
-        "NombreColumn": function(column, row) {
+        "nameColumn": function(column, row) {
           return "<div class=\"text-center\">" + row.nombre_usuario + "</div>";
         },
         "RolColumn": function(column, row) {

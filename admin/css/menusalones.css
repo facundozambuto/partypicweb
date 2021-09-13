@@ -11,35 +11,35 @@ th:hover {
    border: 2px solid black !important;
 }
 
-.TelefonoColumn {
+.phoneColumn {
     width: 12%
     text-align: center;
     background-color: white;
     border: 2px solid black !important;
 }
 
-.NombreColumn {
+.nameColumn {
     width: 20%;
     text-align: center;
     background-color: white;
     border: 2px solid black !important;
 }
 
-.DomicilioColumn{
+.addressColumn{
     width: 20%;
     text-align: center;
     background-color: white;
     border: 2px solid black !important;
 }
 
-.NombreUsuarioColumn {
+.userNameColumn {
     width: 20%;
     text-align: center;
     background-color: white;
     border: 2px solid black !important;
 }
 
-.EventosColumn {
+.eventsColumn {
     width: 12%;
     text-align: center;
     background-color: white;

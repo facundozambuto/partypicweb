@@ -114,7 +114,7 @@ var grid = $("#grid-command-buttons").bootgrid({
     $.removeCookie("eventId");
     var eventId = $(this).data("row-id");
     $.cookie("eventId", eventId);
-    $("#modalEditar").modal('show');
+    $("#editModal").modal('show');
 
     $.ajax({
       url: 'http://local-api.partypic.com/api/events/' + eventId,
@@ -328,7 +328,7 @@ function UpdateEvento() {
 function successUpdateHandler(data) {
   if (data.success) {
     $.removeCookie("eventId");
-    $('#modalEditar').modal('hide');
+    $('#editModal').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
     $("#loadingDivContainer").hide();
     changeRowColor();

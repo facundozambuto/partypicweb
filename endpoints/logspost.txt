@@ -1,9 +1,0 @@
-Array
-(
-    [comentario] => ??????
-    [id_evento] => 25
-    [profile_name] => Facundo Zambuto
-    [profile_pic] => https://lh6.googleusercontent.com/-WvN3abeY83A/AAAAAAAAAAI/AAAAAAAAC5g/1YYO3yxx6pY/photo.jpg
-    [profile_id] => 117667943089003512131
-)
-??p??ASCII????jthisí¡ñnullnull

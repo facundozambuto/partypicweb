@@ -47,7 +47,7 @@ var grid = $("#grid-command-buttons").bootgrid({
         return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar usuario\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.userId + "\"><span class=\"fa fa-pencil\"></span></button> " + 
               "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar usuario\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.userId + "\"><span class=\"fa fa-trash-o\"></span></button></div>";
       },
-      "NombreColumn": function(column, row) {
+      "nameColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.name + "</div>";
       },
       "RolColumn": function(column, row) {
@@ -59,7 +59,7 @@ var grid = $("#grid-command-buttons").bootgrid({
         }
         return "<div class=\"text-center\">" + row.rol + "</div>";
       },
-      "TelefonoColumn": function(column, row) {
+      "phoneColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.mobilePhone + "</div>";
       },
       "FechaColumn": function(column, row) {
@@ -71,7 +71,7 @@ var grid = $("#grid-command-buttons").bootgrid({
       "ContraseniaColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.password + "</div>";
       },
-      "DomicilioColumn": function(column, row) {
+      "addressColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.address + "</div>";
       },
       "CuilColumn": function(column, row) {
@@ -96,7 +96,7 @@ var grid = $("#grid-command-buttons").bootgrid({
     $.removeCookie("userId");
     var userId = $(this).data("row-id");
     $.cookie("userId", userId);
-    $("#modalEditar").modal('show');
+    $("#editModal").modal('show');
 
     $.ajax({
       url:'http://local-api.partypic.com/api/users/' + userId,
@@ -279,7 +279,7 @@ function UpdateUser() {
 function registroOK(data) {
   if(data.success) {
     $.removeCookie("userId");
-    $('#modalEditar').modal('hide');
+    $('#editModal').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
     changeRowColor();
     $("#loadingDivContainer").hide();

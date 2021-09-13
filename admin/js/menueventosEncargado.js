@@ -108,7 +108,7 @@
       $.removeCookie("eventId");
       var eventId = $(this).data("row-id");
       $.cookie("eventId", eventId);
-      $("#modalEditar").modal('show');
+      $("#editModal").modal('show');
 
       $.ajax({
         url:'../endpoints/Get_EventoEdit.php',
@@ -286,7 +286,7 @@
   function registroOK(data) {
     if(data.success) {
       $.removeCookie("eventId");
-      $('#modalEditar').modal('hide');
+      $('#editModal').modal('hide');
       $("#grid-command-buttons").bootgrid('reload');
       changeRowColor();
       $("#loadingDivContainer").hide();

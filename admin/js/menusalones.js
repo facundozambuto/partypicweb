@@ -44,19 +44,19 @@ var grid = $("#grid-command-buttons").bootgrid({
         return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar salón\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.venueId + "\"><span class=\"fa fa-pencil\"></span></button> " + 
               "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar salón\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.venueId + "\"><span class=\"fa fa-trash-o\"></span></button></div>";
       },
-      "NombreColumn": function(column, row) {
+      "nameColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.name + "</div>";
       },
-      "NombreUsuarioColumn": function(column, row) {
+      "userNameColumn": function(column, row) {
         return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" onclick=\"showVenueManager("+ row.userId + ")\" target=\"blank\">" + row.managerName + "</a></div>";
       },
-      "TelefonoColumn": function(column, row) {
+      "phoneColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.phone + "</div>";
       },
-      "DomicilioColumn": function(column, row) {
+      "addressColumn": function(column, row) {
         return "<div class=\"text-center\">" + row.address + "</div>";
       },
-      "EventosColumn": function(column, row) {
+      "eventsColumn": function(column, row) {
         return "<div class=\"text-center\"><a style=\"cursor:pointer !important\" href=\"/admin/menueventos.html?venueId="+ row.venueId +"\" target=\"blank\">Ver Eventos</a></div>";
       },
   }
@@ -66,7 +66,7 @@ var grid = $("#grid-command-buttons").bootgrid({
     $.removeCookie("venueId");
     var venueId = $(this).data("row-id");
     $.cookie("venueId", venueId);
-    $("#modalEditar").modal('show');
+    $("#editModal").modal('show');
 
     $.ajax({
       url: 'http://local-api.partypic.com/api/venues/ ' + venueId,
@@ -205,7 +205,7 @@ function UpdateVenue() {
 function updateVenueHandler(data) {
   if (data.success) {
     $.removeCookie("venueId");
-    $('#modalEditar').modal('hide');
+    $('#editModal').modal('hide');
     $("#grid-command-buttons").bootgrid('reload');
     $("#loadingDivContainer").hide();
     $("#modalSuccess").modal('show');
@@ -217,9 +217,9 @@ function updateVenueHandler(data) {
 }
 
 $(document).ready(function(){
-  var button = $('<button id="AgregarSalon" class="btn btn-default pull-left" type="button" title="Agregar un nuevo salón"><span class="glyphicon glyphicon-plus"></span>   Agregar salón</button>');
+  var button = $('<button id="addVenueBtn" class="btn btn-default pull-left" type="button" title="Agregar un nuevo salón"><span class="glyphicon glyphicon-plus"></span>   Agregar salón</button>');
   $('.col-sm-12.actionBar').append(button);
-  $("#AgregarSalon").on("click", function() { 
+  $("#addVenueBtn").on("click", function() { 
     $('#addForm').trigger("reset");
     $('#addingModal').modal('show');
   });
@@ -243,7 +243,7 @@ $(document).ready(function() {
       spam: "required"
     },     
     messages:  {
-        nombre_salon2: {
+      venueNameAdd: {
           required: '- Ingresá un nombre de salón - '
         },
         venuePhoneAdd: {

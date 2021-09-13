@@ -53,14 +53,14 @@
           <thead style="border: 2px solid black;">
             <tr>
               <th data-column-id="userId" data-formatter="IDColumn" data-type="numeric" data-header-css-class="IDColumn" data-identifier="true" data-sortable="true">ID</th>
-              <th data-column-id="name" data-formatter="NombreColumn" data-header-css-class="NombreColumn" data-sortable="true">Nombre</th>
+              <th data-column-id="name" data-formatter="nameColumn" data-header-css-class="nameColumn" data-sortable="true">Nombre</th>
               <th data-column-id="roleId" data-formatter="RolColumn" data-header-css-class="RolColumn" data-sortable="true">Rol</th>
               <th data-column-id="isActive" data-formatter="ActivoColumn" data-header-css-class="ActivoColumn" data-identifier="true" data-sortable="true">Activo</th>
               <th data-column-id="createdDatetime" data-formatter="FechaColumn" data-header-css-class="FechaColumn" data-sortable="true">Fecha de Alta</th>
               <th data-column-id="email" data-formatter="EmailColumn" data-header-css-class="EmailColumn" data-sortable="true">Email</th>
               <th data-column-id="password" data-formatter="ContraseniaColumn" data-header-css-class="ContraseniaColumn" data-sortable="true">Contraseña</th>
-              <th data-column-id="address" data-formatter="DomicilioColumn" data-header-css-class="DomicilioColumn" data-sortable="true">Domicilio</th>
-              <th data-column-id="phone" data-formatter="TelefonoColumn" data-header-css-class="TelefonoColumn" data-sortable="true">Teléfono</th>
+              <th data-column-id="address" data-formatter="addressColumn" data-header-css-class="addressColumn" data-sortable="true">Domicilio</th>
+              <th data-column-id="phone" data-formatter="phoneColumn" data-header-css-class="phoneColumn" data-sortable="true">Teléfono</th>
               <th data-column-id="mobilePhone" data-formatter="CelularColumn" data-header-css-class="CelularColumn" data-sortable="true">Celular</th>
               <th data-column-id="cuil" data-formatter="CuilColumn" data-header-css-class="CuilColumn" data-sortable="true">CUIL</th>
               <th data-column-id="commands" data-formatter="commands" data-header-css-class="CommandColumn" data-sortable="false">Opciones</th>
@@ -69,7 +69,7 @@
         </table>
        </div>
        
-       <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel3" id="modalEditar" aria-hidden="true" tabindex="-1">
+       <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel3" id="editModal" aria-hidden="true" tabindex="-1">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <form class="form-horizontal required" action="../endpoints/UpdateUsuario.php" method="post" name="editForm" id="editForm">
