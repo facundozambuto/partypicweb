@@ -1,4 +1,8 @@
-$(document).ready(function () {
+$(document).ready(function(){
+  $('[data-tooltip="tooltip"]').tooltip();
+ 
+  getImagesByEventId();
+
   var trigger = $('.hamburger'),
   overlay = $('.overlay'),
   isClosed = false;
@@ -6,28 +10,24 @@ $(document).ready(function () {
     hamburger_cross();      
   });
 
-  function hamburger_cross() {
-    if(isClosed == true) {          
-      overlay.hide();
-      trigger.removeClass('is-open');
-      trigger.addClass('is-closed');
-      isClosed = false;
-    } else {   
-      overlay.show();
-      trigger.removeClass('is-closed');
-      trigger.addClass('is-open');
-      isClosed = true;
-    }
-  }
-
   $('[data-toggle="offcanvas"]').click(function () {
     $('#wrapper').toggleClass('toggled');
   });
-});  
-
-$(document).ready(function(){
-  $('[data-tooltip="tooltip"]').tooltip(); 
 });
+
+function hamburger_cross() {
+  if (isClosed == true) {          
+    overlay.hide();
+    trigger.removeClass('is-open');
+    trigger.addClass('is-closed');
+    isClosed = false;
+  } else {   
+    overlay.show();
+    trigger.removeClass('is-closed');
+    trigger.addClass('is-open');
+    isClosed = true;
+  }
+}
 
 function gup(name, url) {
   if (!url) url = location.href
@@ -37,10 +37,6 @@ function gup(name, url) {
     var results = regex.exec( url );
     return results == null ? null : results[1];
 }
-
-$(document).ready(function(){
-  getImagesByEventId();
-});
   
 function getImagesByEventId() {
   $("#loadingDivContainer").show();

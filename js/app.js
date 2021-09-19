@@ -1,9 +1,9 @@
-angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination'])
+angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination', 'ngCookies'])
   
   .service('loginService', function () { })
-    .controller('MainCtrl', ['$scope', '$timeout', 'loginService', '$filter', 
+    .controller('MainCtrl', ['$scope', '$timeout', 'loginService', '$filter', '$cookies', 
 
-  function MainCtrl($scope, $timeout, loginService, $filter) {
+  function MainCtrl($scope, $timeout, loginService, $filter, $cookies) {
 
     $scope.loadingGif = true;
     $scope.showLoginError = false;
@@ -23,6 +23,7 @@ angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination'])
       loginService.login(loginEmail, loginPassword)
         .then(function (response) {
           if (response.success) {
+            $cookies.put('AppSessionId', response.token, { path: '/' });
             window.location = '../admin/dashboard.html'
           } else {  
             $scope.showLoginError = true;
