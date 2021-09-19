@@ -1,23 +1,6 @@
-/*!
- * FullCalendar v1.6.4
- * Docs & License: http://arshaw.com/fullcalendar/
- * (c) 2013 Adam Shaw
- */
-
-/*
- * Use fullcalendar.css for basic styling.
- * For event drag & drop, requires jQuery UI draggable.
- * For event resizing, requires jQuery UI resizable.
- */
- 
 (function($, undefined) {
-
-
-;;
-
 var defaults = {
 
-	// display
 	defaultView: 'month',
 	aspectRatio: 1.35,
 	header: {
@@ -29,21 +12,11 @@ var defaults = {
 	weekNumbers: false,
 	weekNumberCalculation: 'iso',
 	weekNumberTitle: 'W',
-	
-	// editing
-	//editable: false,
-	//disableDragging: false,
-	//disableResizing: false,
-	
 	allDayDefault: true,
 	ignoreTimezone: true,
-	
-	// event ajax
 	lazyFetching: true,
 	startParam: 'start',
 	endParam: 'end',
-	
-	// time formats
 	titleFormat: {
 		month: 'MMMM yyyy',
 		week: "MMM d[ yyyy]{ '—'[ MMM] d yyyy}",
@@ -54,11 +27,9 @@ var defaults = {
 		week: 'ddd M/d',
 		day: 'dddd M/d'
 	},
-	timeFormat: { // for event elements
-		'': 'h(:mm)t' // default
+	timeFormat: {
+		'': 'h(:mm)t'
 	},
-	
-	// locale
 	isRTL: false,
 	firstDay: 0,
 	monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
@@ -75,24 +46,16 @@ var defaults = {
 		week: 'Semana',
 		day: 'Día'
 	},
-	
-	// jquery-ui theming
 	theme: false,
 	buttonIcons: {
 		prev: 'circle-triangle-w',
 		next: 'circle-triangle-e'
 	},
-	
-	//selectable: false,
 	unselectAuto: true,
-	
 	dropAccept: '*',
-	
 	handleWindowResize: true
-	
 };
 
-// right-to-left defaults
 var rtlDefaults = {
 	header: {
 		left: 'next,prev today',
@@ -111,18 +74,12 @@ var rtlDefaults = {
 	}
 };
 
-
-
 ;;
 
 var fc = $.fullCalendar = { version: "1.6.4" };
 var fcViews = fc.views = {};
 
-
 $.fn.fullCalendar = function(options) {
-
-
-	// method calling
 	if (typeof options == 'string') {
 		var args = Array.prototype.slice.call(arguments, 1);
 		var res;
@@ -146,7 +103,6 @@ $.fn.fullCalendar = function(options) {
 
 	options = options || {};
 	
-	// would like to have this logic in EventManager, but needs to happen before options are recursively extended
 	var eventSources = options.eventSources || [];
 	delete options.eventSources;
 	if (options.events) {
@@ -154,42 +110,33 @@ $.fn.fullCalendar = function(options) {
 		delete options.events;
 	}
 	
-
 	options = $.extend(true, {},
 		defaults,
 		(options.isRTL || options.isRTL===undefined && defaults.isRTL) ? rtlDefaults : {},
 		options
 	);
 	
-	
 	this.each(function(i, _element) {
 		var element = $(_element);
 		var calendar = new Calendar(element, options, eventSources);
-		element.data('fullCalendar', calendar); // TODO: look into memory leak implications
+		element.data('fullCalendar', calendar);
 		calendar.render();
 	});
 	
-	
 	return this;
-	
 };
 
 
-// function for adding/overriding defaults
 function setDefaults(d) {
 	$.extend(true, defaults, d);
 }
-
-
 
 ;;
 
  
 function Calendar(element, options, eventSources) {
 	var t = this;
-	
-	
-	// exports
+
 	t.options = options;
 	t.render = render;
 	t.destroy = destroy;
@@ -213,20 +160,17 @@ function Calendar(element, options, eventSources) {
 	t.getView = getView;
 	t.option = option;
 	t.trigger = trigger;
-	
-	
-	// imports
+
 	EventManager.call(t, options, eventSources);
 	var isFetchNeeded = t.isFetchNeeded;
 	var fetchEvents = t.fetchEvents;
 	
-	
-	// locals
+
 	var _element = element[0];
 	var header;
 	var headerElement;
 	var content;
-	var tm; // for making theme classes
+	var tm;
 	var currentView;
 	var elementOuterWidth;
 	var suggestedViewHeight;
@@ -235,44 +179,31 @@ function Calendar(element, options, eventSources) {
 	var date = new Date();
 	var events = [];
 	var _dragElement;
-	
-	
-	
-	/* Main Rendering
-	-----------------------------------------------------------------------------*/
-	
-	
+		
 	setYMD(date, options.year, options.month, options.date);
-	
 	
 	function render(inc) {
 		if (!content) {
 			initialRender();
-		}
-		else if (elementVisible()) {
-			// mainly for the public API
+		} else if (elementVisible()) {
 			calcSize();
 			_renderView(inc);
 		}
 	}
-	
 	
 	function initialRender() {
 		tm = options.theme ? 'ui' : 'fc';
 		element.addClass('fc');
 		if (options.isRTL) {
 			element.addClass('fc-rtl');
-		}
-		else {
+		} else {
 			element.addClass('fc-ltr');
 		}
 		if (options.theme) {
 			element.addClass('ui-widget');
 		}
-
 		content = $("<div class='fc-content' style='position:relative'/>")
 			.prependTo(element);
-
 		header = new Header(t, options);
 		headerElement = header.render();
 		if (headerElement) {
@@ -285,54 +216,38 @@ function Calendar(element, options, eventSources) {
 			$(window).resize(windowResize);
 		}
 
-		// needed for IE in a 0x0 iframe, b/c when it is resized, never triggers a windowResize
 		if (!bodyVisible()) {
 			lateRender();
 		}
 	}
 	
-	
-	// called when we know the calendar couldn't be rendered when it was initialized,
-	// but we think it's ready now
 	function lateRender() {
-		setTimeout(function() { // IE7 needs this so dimensions are calculated correctly
-			if (!currentView.start && bodyVisible()) { // !currentView.start makes sure this never happens more than once
+		setTimeout(function() {
+			if (!currentView.start && bodyVisible()) {
 				renderView();
 			}
 		},0);
 	}
 	
-	
 	function destroy() {
-
 		if (currentView) {
 			trigger('viewDestroy', currentView, currentView, currentView.element);
 			currentView.triggerEventDestroy();
 		}
-
 		$(window).unbind('resize', windowResize);
-
 		header.destroy();
 		content.remove();
 		element.removeClass('fc fc-rtl ui-widget');
 	}
 	
-	
 	function elementVisible() {
 		return element.is(':visible');
 	}
-	
 	
 	function bodyVisible() {
 		return $('body').is(':visible');
 	}
 	
-	
-	
-	/* View Rendering
-	-----------------------------------------------------------------------------*/
-	
-
 	function changeView(newViewName) {
 		if (!currentView || newViewName != currentView.name) {
 			_changeView(newViewName);
@@ -1237,12 +1152,13 @@ function EventManager(options, _sources) {
 		var source = event.source || {};
 		var ignoreTimezone = firstDefined(source.ignoreTimezone, options.ignoreTimezone);
 		event._id = event._id || (event.id === undefined ? '_fc' + eventGUID++ : event.id + '');
-		if (event.date) {
+		if (event.startDatetime) {
 			if (!event.start) {
-				event.start = event.date;
+				event.start = event.startDatetime;
 			}
-			delete event.date;
+			delete event.startDatetime;
 		}
+		event.title = event.name;
 		event._start = cloneDate(event.start = parseDate(event.start, ignoreTimezone));
 		event.end = parseDate(event.end, ignoreTimezone);
 		if (event.end && event.end <= event.start) {

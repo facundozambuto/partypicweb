@@ -22,7 +22,7 @@
       $res['success'] = true;
       $id_evento= $info_devuelta[0]['id_evento'];
 
-      $res['respuesta'] = $id_evento . ' ' . $codigo;
+      $res['response'] = $id_evento . ' ' . $codigo;
       $res['id_evento'] = $id_evento;
       create_session($id_evento);
     }

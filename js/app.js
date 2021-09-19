@@ -1,64 +1,54 @@
 angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination'])
   
-  .service('insuranceService', function () { })
-    .controller('MainCtrl', ['$scope', '$timeout', 'insuranceService', '$filter', 
+  .service('loginService', function () { })
+    .controller('MainCtrl', ['$scope', '$timeout', 'loginService', '$filter', 
 
-  function MainCtrl($scope, $timeout, insuranceService, $filter) {
+  function MainCtrl($scope, $timeout, loginService, $filter) {
 
     $scope.loadingGif = true;
     $scope.showLoginError = false;
     $scope.showRecoveryMessage = false;
 
-    $timeout( function(){
+    $timeout( function() {
       $scope.loadingGif = false;
     }, 2000 );
     
-    $scope.iniciarSesion = function(loginEmail, loginPassword) {
-
+    $scope.login = function(loginEmail, loginPassword) {
       $scope.loadingGif = true;
       
-      $timeout( function(){
+      $timeout( function() {
         $scope.loadingGif = false;
       }, 2000 );
     
-      insuranceService.iniciarSesion(loginEmail, loginPassword)
-      .then(function (respuesta) {
-
-        if(respuesta.success) {
-          window.location = '../admin/dashboard.php'
-        }
-        else {  
+      loginService.login(loginEmail, loginPassword)
+        .then(function (response) {
+          if (response.success) {
+            window.location = '../admin/dashboard.html'
+          } else {  
+            $scope.showLoginError = true;
+          }
+        }, function (error) {
           $scope.showLoginError = true;
-        }
-
-      }, function (error) {
-        $scope.showLoginError = true;
         });
-
     };
     
-    $scope.descargarAlbum = function(code) {
-
+    $scope.downloadAlbum = function(code) {
       $scope.loadingGif = true;
-      
+
       $timeout( function(){
         $scope.loadingGif = false;
       }, 2000 );
     
-      insuranceService.descargarAlbum(code)
-      .then(function (respuesta) {
-
-        if(respuesta.success) {
-          window.location = '../verFotosEvento.php?id_evento='+respuesta.id_evento;
-        }
-        else {  
+      loginService.downloadAlbum(code)
+        .then(function (response) {
+          if (response.success) {
+            window.location = '../verFotosEvento.php?id_evento='+response.id_evento;
+          } else {  
+            $scope.showLoginError = true;
+          }
+        }, function (error) {
           $scope.showLoginError = true;
-        }
-
-      }, function (error) {
-        $scope.showLoginError = true;
         });
-
     };
     
     $scope.goBack = function() {
@@ -66,27 +56,22 @@ angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination'])
       $scope.showRecoveryMessage = false;
     }
     
-    $scope.recuperarPassword = function(recoveryEmail) {
-
+    $scope.recoverPassword = function(recoveryEmail) {
       $scope.loadingGif = true;
       
       $timeout( function(){
         $scope.loadingGif = false;
       }, 2000 );
     
-      insuranceService.recuperarPassword(recoveryEmail)
-      .then(function (respuesta) {
-
-        if(respuesta.success) {
-          $scope.showRecoveryMessage = true;
-        }
-        else {  
+      loginService.recoverPassword(recoveryEmail)
+        .then(function (response) {
+          if(response.success) {
+            $scope.showRecoveryMessage = true;
+          } else {  
+            $scope.showLoginError = true;
+          }
+        }, function (error) {
           $scope.showLoginError = true;
-        }
-
-      }, function (error) {
-        $scope.showLoginError = true;
         });
      };
-
-  }]);
+}]);

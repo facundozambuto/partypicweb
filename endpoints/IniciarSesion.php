@@ -26,7 +26,7 @@
       $nombre = $info_devuelta[0]['nombre_usuario'];
       $id_usuario = $info_devuelta[0]['id_usuario'];
 
-      $res['respuesta'] = $usuario . $rol . $nombre . $id_usuario;
+      $res['response'] = $usuario . $rol . $nombre . $id_usuario;
       create_session($usuario, $rol, $nombre, $id_usuario);
     }
     else

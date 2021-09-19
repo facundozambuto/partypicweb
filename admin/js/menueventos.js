@@ -46,13 +46,13 @@ $(document).ready(function(){
 });
 
 if (window.location.href.indexOf("?venueId=") > -1) {
-  var url = "../admin/BackMenuEventosWithParameter.php";
   var venueId = gup("venueId", document.URL);
+  var url = "http://local-api.partypic.com/api/events/grid?venueId=" + venueId;
   $.cookie('venueId', venueId);
 } else {
   if (window.location.href.indexOf("?eventId=") > -1) {
-    var url = "../admin/BackMenuEventosWithParameterEvent.php";
     var eventId = gup("eventId", document.URL);
+    var url = "http://local-api.partypic.com/api/events/grid?eventId=" + eventId;
     $.cookie('eventId', eventId);
   } else {
     var url = "http://local-api.partypic.com/api/events/grid";
