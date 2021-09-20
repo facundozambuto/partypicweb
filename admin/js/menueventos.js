@@ -514,7 +514,7 @@ function changeRowColor() {
 function openVenue(venueId) {
   $("#modalSalon").modal('show');  
   $.ajax({
-    url:'http://local-api.partypic.com/api/venues/venueManager?venueId=' + venueId,
+    url:'http://local-api.partypic.com/api/venues/venueManager/' + venueId,
     type: 'GET',
     dataType: 'json',
     data: {},
