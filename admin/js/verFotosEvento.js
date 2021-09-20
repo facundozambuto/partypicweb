@@ -1,33 +1,86 @@
-$(document).ready(function(){
-  $('[data-tooltip="tooltip"]').tooltip();
- 
+$(document).ready(function() {
+
   getImagesByEventId();
 
-  var trigger = $('.hamburger'),
-  overlay = $('.overlay'),
-  isClosed = false;
-  trigger.click(function () {
-    hamburger_cross();      
+  $("#btnDownload").on("click", function() {
+    imageId = parseFloat($.cookie("imageId"));
+    profileId = $.cookie("profileId");
+    profileName = $.cookie("profileName");
+    var blockUser = false;
+    var eventId = gup("eventId", document.URL);
+    
+    var baseUrl = "http://local-api.partypic.com/api/images/download?eventId=" + eventId;
+  
+    $.ajax({
+      url: baseUrl,
+      dataType: "json",
+      type:'GET',
+      data:{ imageId:imageId, blockUser: blockUser, eventId: eventId, profileId: profileId, profileName: profileName},
+      success: downloadSuccessHandler,
+      error: function(xhr,status,error) {   
+        if (xhr.status === 200) {
+          $("#modalSuccess").modal('show');
+        } else {
+          $("#modalError").modal('show');
+          $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+        }
+      }
+    });
   });
 
-  $('[data-toggle="offcanvas"]').click(function () {
-    $('#wrapper').toggleClass('toggled');
+  $("#btnCancelDelete").on("click", function() {
+    $.removeCookie("imageId");
+  });
+    
+  $("#btnConfirmDelete").on("click", function() {
+    var baseUrl = "http://local-api.partypic.com/api/images/";
+    imageId = parseFloat($.cookie("imageId"));
+    var blockUser = false;
+    var eventId = gup("eventId", document.URL);
+
+    $.ajax({
+      url: baseUrl,
+      dataType: "json",
+      type:'DELETE',
+      data: { imageId: imageId, blockUser: blockUser, eventId: eventId},
+      success: deleteImageHandler,
+      error: function(xhr,status,error) {   
+        $("#modalError").modal('show');
+        $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+      }
+    });
+  });
+
+  $("#btnCancelDeleteBlock").on("click", function() {
+    $.removeCookie("imageId");
+    $.removeCookie("profileId");
+    $.removeCookie("profileName");
+  });
+  
+  $("#btnConfirmDeleteBlock").on("click", function() {
+    
+    imageId = parseFloat($.cookie("imageId"));
+    profileId = $.cookie("profileId");
+    profileName = $.cookie("profileName");
+    var blockUser = false;
+    var eventId = gup("eventId", document.URL);
+    
+    var baseUrl = "http://local-api.partypic.com/api/images/";
+  
+    $.ajax({
+      url: baseUrl,
+      dataType: "json",
+      type:'DELETE',
+      data:{ imageId:imageId, blockUser: blockUser, eventId: eventId, profileId: profileId, profileName: profileName},
+      success: blockUserHandler,
+      error: function(xhr,status,error) {   
+        $("#modalError").modal('show');
+        $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+      }
+    });
   });
 });
 
-function hamburger_cross() {
-  if (isClosed == true) {          
-    overlay.hide();
-    trigger.removeClass('is-open');
-    trigger.addClass('is-closed');
-    isClosed = false;
-  } else {   
-    overlay.show();
-    trigger.removeClass('is-closed');
-    trigger.addClass('is-open');
-    isClosed = true;
-  }
-}
 
 function gup(name, url) {
   if (!url) url = location.href
@@ -100,39 +153,16 @@ function deleteImage() {
   $.cookie("imageId", imageId);
   $("#modalDelete").modal('show');
 }
-  
-$("#btnCancelDelete").on("click", function() {
-  $.removeCookie("imageId");
-});
-  
-$("#btnConfirmDelete").on("click", function(){
-  var baseUrl = "http://local-api.partypic.com/api/images/";
-  imageId = parseFloat($.cookie("imageId"));
-  var blockUser = false;
-  var eventId = gup("eventId", document.URL);
 
-  $.ajax({
-    url: baseUrl,
-    dataType: "json",
-    type:'DELETE',
-    data: { imageId: imageId, blockUser: blockUser, eventId: eventId},
-    success: deleteImageHandler,
-    error: function(xhr,status,error) {   
-      $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
-    }
-  });
-
-  function deleteImageHandler(data) {
-    if (data.success) {
-      $.removeCookie("imageId");
-      $('#deleteModal').modal('hide');
-      $("#images-container").html("");
-      getImagenesByIdEvento();
-      $("#modalSuccess").modal('show');
-    }    
-  }
-});
+function deleteImageHandler(data) {
+  if (data.success) {
+    $.removeCookie("imageId");
+    $('#deleteModal').modal('hide');
+    $("#images-container").html("");
+    getImagenesByIdEvento();
+    $("#modalSuccess").modal('show');
+  }    
+}
   
 function blockUser() {
   $('#myModal').modal('hide');
@@ -148,73 +178,18 @@ function blockUser() {
   $("#modalBlock").modal('show');
 }
 
-$("#btnCancelDeleteBlock").on("click", function() {
-  $.removeCookie("imageId");
-  $.removeCookie("profileId");
-  $.removeCookie("profileName");
-});
+function blockUserHandler(data) {
+  if (data.success) {
+    $.removeCookie("imageId");
+    $('#modalBlock').modal('hide');
+    $("#images-container").html("");
+    getImagesByEventId();
+    $("#modalSuccess").modal('show');
+  }    
+}
 
-$("#btnConfirmDeleteBlock").on("click", function() {
-  
-  imageId = parseFloat($.cookie("imageId"));
-  profileId = $.cookie("profileId");
-  profileName = $.cookie("profileName");
-  var blockUser = false;
-  var eventId = gup("eventId", document.URL);
-  
-  var baseUrl = "http://local-api.partypic.com/api/images/";
-
-  $.ajax({
-    url: baseUrl,
-    dataType: "json",
-    type:'DELETE',
-    data:{ imageId:imageId, blockUser: blockUser, eventId: eventId, profileId: profileId, profileName: profileName},
-    success: blockUserHandler,
-    error: function(xhr,status,error) {   
-      $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
-    }
-  });
-
-  function blockUserHandler(data) {
-    if (data.success) {
-      $.removeCookie("imageId");
-      $('#modalBlock').modal('hide');
-      $("#images-container").html("");
-      getImagesByEventId();
-      $("#modalSuccess").modal('show');
-    }    
-  }
-});
-
-$("#btnDownload").on("click", function() {
-  imageId = parseFloat($.cookie("imageId"));
-  profileId = $.cookie("profileId");
-  profileName = $.cookie("profileName");
-  var blockUser = false;
-  var eventId = gup("eventId", document.URL);
-  
-  var baseUrl = "http://local-api.partypic.com/api/images/download?eventId=" + eventId;
-
-  $.ajax({
-    url: baseUrl,
-    dataType: "json",
-    type:'GET',
-    data:{ imageId:imageId, blockUser: blockUser, eventId: eventId, profileId: profileId, profileName: profileName},
-    success: test,
-    error: function(xhr,status,error) {   
-      if (xhr.status === 200) {
-        $("#modalSuccess").modal('show');
-      } else {
-        $("#modalError").modal('show');
-        $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
-      }
-    }
-  });
-
-  function test() {
-    if (data.success) {
-      $("#modalSuccess").modal('show');
-    }    
-  }
-});
+function downloadSuccessHandler() {
+  if (data.success) {
+    $("#modalSuccess").modal('show');
+  }    
+}
