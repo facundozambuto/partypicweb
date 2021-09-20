@@ -194,7 +194,7 @@ $("#btnDownload").on("click", function() {
   var blockUser = false;
   var eventId = gup("eventId", document.URL);
   
-  var baseUrl = "http://local-api.partypic.com/api/images/download?eventId=25";
+  var baseUrl = "http://local-api.partypic.com/api/images/download?eventId=" + eventId;
 
   $.ajax({
     url: baseUrl,

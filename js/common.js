@@ -56,6 +56,10 @@ function bindUserData(data) {
         $("#spanUserRole").append('<strong>Administrador</strong>');
     } else if (data.roleId == 2) {
         $("#spanUserRole").append('<strong>Gerente de Salón</strong>');
+        $("#menuSalonesLi").hide();
+        $("#menuUsuariosLi").hide();
+        $("#menuCategoriasLi").hide();
+        $("#menuRolesLi").hide();
     }
 }
 

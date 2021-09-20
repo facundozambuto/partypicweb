@@ -16,19 +16,18 @@ angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination', 'ngCookies'])
     $scope.login = function(loginEmail, loginPassword) {
       $scope.loadingGif = true;
       
-      $timeout( function() {
-        $scope.loadingGif = false;
-      }, 2000 );
-    
       loginService.login(loginEmail, loginPassword)
         .then(function (response) {
           if (response.success) {
+            $scope.loadingGif = false;
             $cookies.put('AppSessionId', response.token, { path: '/' });
-            window.location = '../admin/dashboard.html'
-          } else {  
+            window.location = '../admin/dashboard.html';
+          } else {
+            $scope.loadingGif = false;
             $scope.showLoginError = true;
           }
         }, function (error) {
+          $scope.loadingGif = false;
           $scope.showLoginError = true;
         });
     };
@@ -36,18 +35,17 @@ angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination', 'ngCookies'])
     $scope.downloadAlbum = function(code) {
       $scope.loadingGif = true;
 
-      $timeout( function(){
-        $scope.loadingGif = false;
-      }, 2000 );
-    
       loginService.downloadAlbum(code)
         .then(function (response) {
           if (response.success) {
-            window.location = '../verFotosEvento.php?id_evento='+response.id_evento;
-          } else {  
+            $scope.loadingGif = false;
+            window.location = '../verFotosEvento.html?id_evento='+response.id_evento;
+          } else { 
+            $scope.loadingGif = false;
             $scope.showLoginError = true;
           }
         }, function (error) {
+          $scope.loadingGif = false;
           $scope.showLoginError = true;
         });
     };
@@ -59,19 +57,18 @@ angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination', 'ngCookies'])
     
     $scope.recoverPassword = function(recoveryEmail) {
       $scope.loadingGif = true;
-      
-      $timeout( function(){
-        $scope.loadingGif = false;
-      }, 2000 );
     
       loginService.recoverPassword(recoveryEmail)
         .then(function (response) {
           if(response.success) {
+            $scope.loadingGif = false;
             $scope.showRecoveryMessage = true;
-          } else {  
+          } else { 
+            $scope.loadingGif = false;
             $scope.showLoginError = true;
           }
         }, function (error) {
+          $scope.loadingGif = false;
           $scope.showLoginError = true;
         });
      };

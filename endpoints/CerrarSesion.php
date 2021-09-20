@@ -16,7 +16,7 @@ if (ini_get("session.use_cookies")) {
 // Finalmente, destruir la sesión.
 session_destroy();
 
-header("Location: http://www.partypicok.com/index.php");
+header("Location: http://www.partypicok.com/index.html");
 
 
 ?>

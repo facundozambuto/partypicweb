@@ -12,8 +12,9 @@ angular.module('myApp').service('loginService', loginService);
 		function login(loginEmail, loginPassword) {
 			var url = 'http://local-api.partypic.com/api/login?email=' + loginEmail + '&password=' + loginPassword;
 
-            return $http({ method: 'GET',
-			      url: url
+            return $http({ 
+					method: 'GET',
+			      	url: url
 			    }).then(function (response) {
 					if (response.data.success) {
 						return response.data;
@@ -24,37 +25,32 @@ angular.module('myApp').service('loginService', loginService);
 		}
 		
 		function recoverPassword(recoveryEmail) {
-			var url = '../endpoints/RecuperarPassword.php';
+			var url = 'http://local-api.partypic.com/api/passwordRecover?email=' + recoveryEmail;
 
-			var data = { recoveryEmail: recoveryEmail };
-
-            return $http({    method: 'POST',
-			      url: url,
-			      data: data
+            return $http({ 
+					method: 'GET',
+			      	url: url,
 			    }).then(function (response) {
-                if (response.data.success) {
-                    return response.data;
-                }
-                else {
-                	return response.data;
-                }
-            });
+					if (response.data.success) {
+						return response.data;
+					} else {
+						return response.data;
+					}
+            	});
 		}
 		
-		function downloadAlbum(code) {
-			var url = '../endpoints/GetCodigoDeDescarga.php';
+		function downloadAlbum(eventCode) {
+			var url = 'http://local-api.partypic.com/api/images/downloadByEventCode?eventCode=' + eventCode;
 
-			var data = {code: code};
-
-            return $http({ method: 'POST',
-			      url: url,
-			      data: data
+            return $http({ 
+					method: 'GET',
+					url: url
 			    }).then(function (response) {
-                if (response.data.success) {
-                    return response.data;
-                } else {
-                	return response.data;
-                }
+					if (response.data.success) {
+						return response.data;
+					} else {
+						return response.data;
+					}
             });
 		}
 
