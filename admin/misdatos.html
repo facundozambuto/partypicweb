@@ -25,169 +25,265 @@
     <script type="text/javascript" src="../js/jquery.bootgrid.fa.js"></script>
     <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="../js/jquery.datetimepicker.full.js"></script>
-    <script type="text/javascript" src="../js/bootswatch.js"></script>
-    <script type="text/javascript" src="../admin/js/misdatos.js"></script>
-      
+    <script type="text/javascript" src="../js/common.js"></script>  
+    <script type="text/javascript" src="../admin/js/misdatos.js"></script> 
   </head>
   
   <body>
+    <nav class="navbar navbar-default navbar-fixed-top text-center" style="height: 50px; background-color: #1A1A1A">
+      <div class="container-fluid"   style="background-color:white">
+         <!-- Brand and toggle get grouped for better mobile display -->
+         <div class="navbar-header">
+            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+            <span style="background-color:white" class="hamb-top"></span>
+            <span style="background-color:white" class="hamb-middle"></span>
+            <span style="background-color:white" class="hamb-bottom"></span>
+            </button>
+         </div>
+         <!-- Collect the nav links, forms, and other content for toggling -->
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         </div>
+         <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+      <div style="margin:0 auto; color:white; display:inline-block; width:20%; margin-top:5px">
+         <img src="../images/favicon.png" class="img-responsive" style="margin:0 auto; width:10%; display: inline-block;">
+         <img src="../images/logotipoGrisNav.png" class="img-responsive" style="margin:0 auto; display: inline-block;">
+      </div>
+      <ul class="nav navbar-nav navbar-right" style="margin-right: 15px;">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-user"></span> 
+            <span id="mainSpanUserName"></span>
+            <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <ul class="dropdown-menu" style="margin-top: 5px;">
+               <li>
+                  <div class="navbar-login">
+                     <div class="row">
+                        <div class="col-lg-4">
+                           <p class="text-center">
+                              <span class="glyphicon glyphicon-user icon-size"></span>
+                           </p>
+                        </div>
+                        <div class="col-lg-8">
+                           <p class="text-left" id="navUserName"></p>
+                           <p class="text-left small" id="navUserEmail"></p>
+                           <p class="text-left small" id="navUserRole"></p>
+                           <p class="text-left">
+                              <a href="../admin/misdatos.html" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </li>
+               <li class="divider"></li>
+               <li>
+                  <div class="navbar-login navbar-login-session">
+                     <div class="row">
+                        <div class="col-lg-12">
+                           <p>
+                              <a href="#" class="btn btn-danger btn-block btn-cerrar-sesion" onclick="logOutUser()">Salir <span class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a>
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </li>
+            </ul>
+         </li>
+      </ul>
+    </nav>
+    <div id="wrapper">
+      <div class="overlay"></div>
+      <!-- Sidebar -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
+        <ul class="nav sidebar-nav">
+           <li class="sidebar-brand" style="line-height: 20px;">
+              <span id="spanUserName" style="margin-left:1.5em; color:white"></span>
+              <span id="spanUserRole" style="margin-left:4.5em; font-size:14px; color:white"></span>
+           </li>
+           <li>
+              <a href="../admin/dashboard.html">Inicio <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>	
+           </li>
+           <li>
+              <a href="../admin/menueventos.html">Menú Eventos <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span></a>
+           </li>
+           <li id="menuSalonesLi">
+              <a href="../admin/menusalones.html">Menú Salones <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-modal-window"></span></a>
+           </li>
+           <li id="menuUsuariosLi">
+              <a href="../admin/menuusuarios.html">Menú Usuarios <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon-user"></span></a>
+           </li>
+           <li>
+              <a href="../admin/menubanneados.html">Menú Banneados <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon-ban-circle"></span></a>
+           </li>
+           <li id="menuCategoriasLi">
+            <a href="../admin/menucategorias.html">Menú Categorías <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon glyphicon-tasks"></span></a>
+           </li>
+           <li id="menuRolesLi">
+             <a href="../admin/menuroles.html">Menú Roles <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon-certificate"></span></a>
+           </li>
+           <li>
+              <a href="../admin/misdatos.html">Mi Perfil<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-align-justify"></span></a>
+           </li>
+           <li>
+              <a href="#" onclick="logOutUser()">Salir <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a>
+           </li>
+        </ul>
+      </nav>
+    </div>
     <!-- Page Content -->
-      <div id="page-content-wrapper" style="padding-top:40px">
-         <div class="container container-ppal" style="margin-top:40px; margin-bottom:40px">
+    <div id="page-content-wrapper" style="padding-top:40px">
+        <div class="container container-ppal" style="margin-top:40px; margin-bottom:40px">
           <div class="row">
             <div class="btn-group btn-breadcrumb pull-left">
-              <a href="../admin/dashboard.php" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
-              <a href="../admin/dashboard.php" class="btn btn-primary">Menú Principal</a>
-              <a href="../admin/misdatos.php" class="btn btn-primary">Mis Datos</a>
+              <a href="../admin/dashboard.html" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+              <a href="../admin/dashboard.html" class="btn btn-primary">Menú Principal</a>
+              <a href="../admin/misdatos.html" class="btn btn-primary">Mis Datos</a>
             </div>
           </div>
         </div>
-        
-        <!--<div class="col-md-offset-5" id="loadingDivContainer" style="display:none">
-            <div class="loadingDiv" id="loadingDiv"></div>
-        </div>-->
         
         <div class="animationload" id="loadingDivContainer" sytle="display:none">
        	   <img src="../images/animacionLogo.gif" style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic"/>
       	</div>
         
-        <div class="container" id="contenidoMisDatos">        
-		<div class="col-md-12 col-lg-12">
-			<div class="col-lg-6 col-lg-offset-3">
-			 <div class="well bs-component">
-				<div id="source-button" class="btn btn-primary btn-xs pull-right" style="display: inline-block;"><span class="glyphicon glyphicon-pencil"></span></div>
-				<form class="form-horizontal required" action="UpdateByUser.php" method="post" name="actualizarUserForm" id="actualizarUserForm">
-				  <fieldset>
-					<legend>Mis datos</legend>
-					<div class="form-group">
-					  <label for="email" class="col-lg-2 control-label">Email</label>
-					  <div class="col-lg-10">
-						<input id="email" type="text" class="form-control" name="email" placeholder="Email" disabled="disabled">
-					  </div>
-					</div>
-					<div class="form-group">
-					  <label for="contrasenia" class="col-lg-2 control-label">Contraseña</label>
-					  <div class="col-lg-10">
-						<a href="#" class="btn btn-link" id="btnCambiar">Cambiar</a>
-					  </div>
-					</div>
-					<div class="form-group">
-					  <label for="nombre_usuario" class="col-lg-2 control-label">Nombre</label>
-					  <div class="col-lg-10">
-						<input id="nombre_usuario" type="text" class="form-control" name="nombre_usuario" placeholder="Nombre" disabled="disabled">
-					  </div>
-					</div>
-					<div class="form-group">
-					  <label for="domicilio_usuario" class="col-lg-2 control-label">Domicilio</label>
-					  <div class="col-lg-10">
-						<input id="domicilio_usuario" type="text" class="form-control" name="domicilio_usuario" placeholder="Domicilio" disabled="disabled">
-					  </div>
-					</div>
-					<div class="form-group">
-					  <label for="telefono_usuario" class="col-lg-2 control-label">Teléfono</label>
-					  <div class="col-lg-10">
-						<input id="telefono_usuario" type="text" class="form-control" name="telefono_usuario" placeholder="Teléfono" disabled="disabled">
-					  </div>
-					</div>
-					<div class="form-group">
-					  <label for="celular_usuario" class="col-lg-2 control-label">Celular</label>
-					  <div class="col-lg-10">
-						<input id="celular_usuario" type="text" class="form-control" name="celular_usuario" placeholder="Celular" disabled="disabled">
-					  </div>
-					</div>
-					<div class="form-group">
-					  <label for="cuil_usuario" class="col-lg-2 control-label">CUIL</label>
-					  <div class="col-lg-10">
-						<input id="cuil_usuario" type="text" class="form-control" name="cuil_usuario" placeholder="CUIL" disabled="disabled">
-					  </div>
-					</div>
-					<div class="form-group">
-					  <div class="col-lg-10 col-lg-offset-2">
-						<button type="submit" id="btnSave" class="btn btn-primary" disabled="disabled">Guardar</button>
-					  </div>
-					</div>
-					<div id="errors" class="form-group"></div>    
-				  </fieldset>
-				</form>
-			  </div>	
-			</div>
-		 </div>
-	</div>
-	<div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel" id="modalContrasenia" aria-hidden="true" tabindex="-1">
-  	<div class="modal-dialog" role="document">
-			<div class="modal-content" style="width:680px">
-		  	<form class="form-horizontal required" action="UpdateUserPassword.php" method="post" name="changePasswordForm" id="changePasswordForm">
-				  <div class="modal-header">
-						<h4 class="modal-title" id="gridSystemModalLabel">Cambiar contraseña</h4>
-				  </div>
-			  	<div class="modal-body">
-						<div class="container-fluid">
-					  	<div class="row">      
-								<div class="col-lg-12">
+		<div class="container" id="myDataContent">        
+			<div class="col-md-12 col-lg-12">
+				<div class="col-lg-6 col-lg-offset-3">
+					<div class="well bs-component">
+						<div id="pencilBtn" class="btn btn-primary btn-xs pull-right" style="display: inline-block;"><span class="glyphicon glyphicon-pencil"></span></div>
+							<form class="form-horizontal required" action="#" method="post" name="updateUserForm" id="updateUserForm">
+								<fieldset>
+									<legend>Mis datos</legend>
 									<div class="form-group">
-									  <label for="oldpassword" class="col-lg-3 control-label">Contraseña</label>
-									  <div class="col-lg-7">
-										<input type="password" id="oldpassword" class="form-control" name="oldpassword" placeholder="Contraseña Actual">
-									  </div>
+										<label for="userEmailField" class="col-lg-2 control-label">Email</label>
+										<div class="col-lg-10">
+											<input id="userEmailField" type="text" class="form-control" name="userEmailField" placeholder="Email" disabled="disabled">
+										</div>
 									</div>
-									<div class="form-group" id="divPassword">
-									  <label for="password" class="col-lg-3 control-label">Nueva Contraseña</label>
-									  <div class="col-lg-7">
-										<input type="password" id="password" class="form-control password" name="password" placeholder="Nueva Contraseña">
-										<div class="pwstrength_viewport_progress"></div>
-									  </div>
+									<div class="form-group">
+										<label for="userPasswordField" class="col-lg-2 control-label">Contraseña</label>
+										<div class="col-lg-10">
+											<a href="#" class="btn btn-link" id="btnChange">Cambiar</a>
+										</div>
 									</div>
-									<div class="form-group" id="divNewpassword2">
-									  <label for="newpassword2" class="col-lg-3 control-label">Confirmac.</label>
-									  <div class="col-lg-7">
-										<input type="password" id="newpassword2" class="form-control" name="newpassword2" placeholder="Confirmar Nueva Contraseña">
-									  </div>
-									</div>			
-							    <div id="errors2" class="form-group"></div>    
-  	</div>								   
-					 	 	</div>                  
+									<div class="form-group">
+										<label for="userNameField" class="col-lg-2 control-label">Nombre</label>
+										<div class="col-lg-10">
+											<input id="userNameField" type="text" class="form-control" name="userNameField" placeholder="Nombre" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="userAddressField" class="col-lg-2 control-label">Domicilio</label>
+										<div class="col-lg-10">
+											<input id="userAddressField" type="text" class="form-control" name="userAddressField" placeholder="Domicilio" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="userPhoneField" class="col-lg-2 control-label">Teléfono</label>
+										<div class="col-lg-10">
+											<input id="userPhoneField" type="text" class="form-control" name="userPhoneField" placeholder="Teléfono" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="userMobilePhoneField" class="col-lg-2 control-label">Celular</label>
+										<div class="col-lg-10">
+											<input id="userMobilePhoneField" type="text" class="form-control" name="userMobilePhoneField" placeholder="Celular" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="userCuilField" class="col-lg-2 control-label">CUIL</label>
+										<div class="col-lg-10">
+											<input id="userCuilField" type="text" class="form-control" name="userCuilField" placeholder="CUIL" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-10 col-lg-offset-2">
+											<button type="submit" id="btnSave" class="btn btn-primary" disabled="disabled">Guardar</button>
+										</div>
+									</div>
+									<div id="errors" class="form-group"></div>    
+								</fieldset>
+							</form>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel" id="passwordModal" aria-hidden="true" tabindex="-1">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" style="width:680px">
+					<form class="form-horizontal required" action="UpdateUserPassword.html" method="post" name="changePasswordForm" id="changePasswordForm">
+						<div class="modal-header">
+							<h4 class="modal-title" id="gridSystemModalLabel">Cambiar contraseña</h4>
 						</div>
-				  </div>
-				  <div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button type="submit" class="btn btn-primary">Guardar</button>
-				  </div>
-				</form>
-			</div><!-- /.modal-content -->
-  	</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-			
-	<div id="modalSuccess" class="modal fade bs-example-modal-lg">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="background-color:#dff0d8">
-              <div class="modal-header">
-                <button style="color:red" type="button" class="close" data-dismiss="modal" aria-label="Close"><span>×</span></button>
-                <h4 style="color:black" class="modal-title" id="mySmallModalLabel2">OK<a class="anchorjs-link" href="#myLargeModalLabel"><span class="anchorjs-icon"></span></a></h4>
-              </div>
-              <div style="color:black" class="modal-body">
-                ¡La acción fue completada con éxito!
-              </div>
-            </div>
-          </div>
-        </div>
+						<div class="modal-body">
+							<div class="container-fluid">
+								<div class="row">      
+									<div class="col-lg-12">
+										<div class="form-group">
+											<label for="oldPassword" class="col-lg-3 control-label">Contraseña</label>
+											<div class="col-lg-7">
+												<input type="password" id="oldPassword" class="form-control" name="oldPassword" placeholder="Contraseña Actual">
+											</div>
+										</div>
+										<div class="form-group" id="divPassword">
+											<label for="password" class="col-lg-3 control-label">Nueva Contraseña</label>
+											<div class="col-lg-7">
+												<input type="password" id="password" class="form-control password" name="password" placeholder="Nueva Contraseña">
+												<div class="pwstrength_viewport_progress"></div>
+											</div>
+										</div>
+										<div class="form-group" id="divpasswordConfirmation">
+											<label for="passwordConfirmation" class="col-lg-3 control-label">Confirmac.</label>
+											<div class="col-lg-7">
+												<input type="password" id="passwordConfirmation" class="form-control" name="passwordConfirmation" placeholder="Confirmar Nueva Contraseña">
+											</div>
+										</div>			
+										<div id="errors2" class="form-group"></div>    
+									</div>								   
+								</div>                  
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Guardar</button>
+						</div>
+					</form>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	
+		<div id="modalSuccess" class="modal fade bs-example-modal-lg">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content" style="background-color:#dff0d8">
+					<div class="modal-header">
+						<button style="color:red" type="button" class="close" data-dismiss="modal" aria-label="Close"><span>×</span></button>
+						<h4 style="color:black" class="modal-title" id="mySmallModalLabel2">OK<a class="anchorjs-link" href="#myLargeModalLabel"><span class="anchorjs-icon"></span></a></h4>
+					</div>
+					<div style="color:black" class="modal-body">
+						¡La acción fue completada con éxito!
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div id="modalError" class="modal fade bs-example-modal-lg">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="background-color: #f2dede">
-              <div class="modal-header">
-                <button style="color:red" type="button" class="close" data-dismiss="modal" aria-label="Close"><span>×</span></button>
-                <h4 style="color:black" class="modal-title" id="mySmallModalLabel2">Ups!<a class="anchorjs-link" href="#myLargeModalLabel"><span class="anchorjs-icon"></span></a></h4>
-              </div>
-              <div style="color:black" class="modal-body" id="errorMessage">
-              </div>
-            </div>
-          </div>
-        </div>
-             
+		<div id="modalError" class="modal fade bs-example-modal-lg">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content" style="background-color: #f2dede">
+					<div class="modal-header">
+						<button style="color:red" type="button" class="close" data-dismiss="modal" aria-label="Close"><span>×</span></button>
+						<h4 style="color:black" class="modal-title" id="mySmallModalLabel2">Ups!<a class="anchorjs-link" href="#myLargeModalLabel"><span class="anchorjs-icon"></span></a></h4>
+					</div>
+					<div style="color:black" class="modal-body" id="errorMessage">
+					</div>
+				</div>
+			</div>
+		</div>
       
-      </div>
-      <!-- /#page-content-wrapper -->
     </div>
+      	<!-- /#page-content-wrapper -->
     <!-- /#wrapper -->
-  </body>
+	</body>
 </html>

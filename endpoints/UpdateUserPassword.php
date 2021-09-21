@@ -10,21 +10,21 @@ function post_data($args)
 {
   //Datos enviados desde el form
   $id_usuario = $_SESSION['id_usuario'];
-  $password = $args['oldpassword'];
+  $password = $args['oldPassword'];
   $newpassword = $args['password'];
-  $newpassword2 = $args['newpassword2'];
+  $passwordConfirmation = $args['passwordConfirmation'];
   
   
   $res = array();
   
-  if($password == null || $newpassword == null || $newpassword2 == null)
+  if($password == null || $newpassword == null || $passwordConfirmation == null)
   {
   	$res['success'] = false;
 	  $res['mensaje'] = "Existen campos vacíos.";
   }
   else
   {
-	if($newpassword != $newpassword2)
+	if($newpassword != $passwordConfirmation)
 	{
 		$res['success'] = false;
 		$res['mensaje'] = "Las contraseñas no coinciden.";

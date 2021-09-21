@@ -40,8 +40,7 @@ function getUserSession() {
         data: { },
         success: bindUserData,
         error: function(xhr, status, error) {
-          $("#modalError").modal('show');
-          $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+          window.location.href = 'http://local-web.partypic.com/login.html';
         }     
     }); 
 }

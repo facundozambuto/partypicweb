@@ -1,238 +1,240 @@
-$(document).ready(function () {
-    var trigger = $('.hamburger'),
-    overlay = $('.overlay'),
-    isClosed = false;
-    trigger.click(function () {
-      hamburger_cross();      
+$(document).ready(function() {
+    
+    loadFormData();
+
+    $("#btnChange").on('click', function() {
+      $("#passwordModal").modal('show');
     });
 
-    function hamburger_cross() {
-      if(isClosed == true) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } 
-      else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-    }
-
-    $('[data-toggle="offcanvas"]').click(function () {
-      $('#wrapper').toggleClass('toggled');
+    $('#updateUserForm').validate({
+        rules: {
+            userNameField: {
+                required: true
+            },
+            userEmailField: {
+                required: true
+            },
+            userPhoneField: {
+                digits: true
+            },
+            userMobilePhoneField: {
+                digits: true
+            },
+            userCuilField: {
+                digits: true
+            },
+            spam: "required"
+        },     
+        messages:  {
+            userNameField: {
+              required: '- Ingresá un nombre - '
+            },
+            userEmailField: {
+              required: '- Ingresá un e-mail - '
+            },
+            userPhoneField: {
+              digits: '- Ingresá sólo números enteros para el teléfono - '
+            },
+            userMobilePhoneField: {
+              digits: '- Ingresá sólo números enteros para el celular - '
+            },
+            userCuilField: {
+              digits: '- Ingresá sólo números enteros para el CUIL - '
+            },
+        },  
+        submitHandler: updateUser,
+        errorLabelContainer: '#errors' 
     });
 
-    $("#btnCambiar").on('click', function() {
-      $("#modalContrasenia").modal('show');
-    });
-    $("#source-button").on('click', function(){
-      $("#nombre_usuario").removeAttr('disabled');
-      $("#domicilio_usuario").removeAttr('disabled');
-      $("#celular_usuario").removeAttr('disabled');
-      $("#telefono_usuario").removeAttr('disabled');
-      $("#cuil_usuario").removeAttr('disabled');
-      $("#email").removeAttr('disabled');
+    $('#changePasswordForm').validate({
+        rules: {
+          oldPassword: {
+            required: true
+          },
+          password: {
+            required: true,
+            rangelength:[8,40],
+            equalTo: passwordConfirmation
+          },
+          passwordConfirmation: {
+            required: true,
+            equalTo: password
+          },
+          spam: "required"
+        },     
+        messages:  {
+          oldPassword: {
+            required: '- Ingresá tu contraseña actual - '
+          },
+          password: {
+            required: '- Ingresá una nueva contraseña - ',
+            rangelength: ''
+          },
+          passwordConfirmation: {
+            required: '- Ingresá la confirmación de la contraseña nueva - ',
+            equalTo: '- Las contraseñas deben coincidir -'
+          },
+        },  
+        submitHandler: updatePassword,
+        errorLabelContainer: '#errors2'
+      });
+
+    $("#pencilBtn").on('click', function() {
+      $("#userEmailField").removeAttr('disabled');
+      $("#userNameField").removeAttr('disabled');
+      $("#userAddressField").removeAttr('disabled');
+      $("#userPhoneField").removeAttr('disabled');
+      $("#userCuilField").removeAttr('disabled');
+      $("#userMobilePhoneField").removeAttr('disabled');
       $("#btnSave").removeAttr('disabled');
     });
   
-  });  
+});
 
-  $(document).ready(function(){
-    $('[data-tooltip="tooltip"]').tooltip(); 
-  });
-  
-  $(document).ready(function(){
-		cargarDatosForm();
-	});
+function getAuthHeader() {
+    
+    var token = $.cookie("AppSessionId");
 
-	function cargarDatosForm() {   
+    if (token !== '' && token !== null && token !== undefined) {
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', token);
+            }
+        });
+    }
+}
 
-  	$.ajax({
-  		 url:'../endpoints/Get_Usuario.php',
-  		 type: 'POST',
-  		 dataType: 'json',
-  		 data: {},
-  		 success: function(result) {
-  		 
-  			$("#email").val(result[0].email);
-  			$("#nombre_usuario").val(result[0].nombre_usuario);
-  			$("#domicilio_usuario").val(result[0].domicilio_usuario);
-  			$("#telefono_usuario").val(result[0].telefono_usuario);
-  			$("#cuil_usuario").val(result[0].cuil_usuario);
-  			$("#celular_usuario").val(result[0].celular_usuario);
-        $("#loadingDivContainer").hide();
-  	 },
-  	 error: function(xhr, status, error) {
-              $("#modalError").modal('show');
-              $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
-  	 				} 
-  	}); 
-  }
-
-$(document).ready(function() {  
-  $('#actualizarUserForm').validate({
-    rules: {
-      nombre_usuario: {
-        required: true
-      },
-      email: {
-        required: true
-      },
-      telefono_usuario: {
-        digits: true
-      },
-      celular_usuario: {
-        digits: true
-      },
-      cuil_usuario: {
-        digits: true
-      },
-      spam: "required"
-      },     
-    messages:  {
-        nombre_usuario: {
-          required: '- Ingresá un nombre - '
+function loadFormData() {   
+    $.ajax({
+        url: 'http://local-api.partypic.com/api/session',
+        type: 'GET',
+        dataType: 'json',
+        data: {},
+        success: function(result) {
+            $.cookie('userId', result.userId);
+            if (result.success) {
+                $("#userEmailField").val(result.email);
+                $("#userNameField").val(result.name);
+                $("#userAddressField").val(result.address);
+                $("#userPhoneField").val(result.phone);
+                $("#userCuilField").val(result.cuil);
+                $("#userMobilePhoneField").val(result.mobilePhone);
+            } else {
+                $("#modalError").modal('show');
+                $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+            }
+            
+            $("#loadingDivContainer").hide();
         },
-        email: {
-          required: '- Ingresá un e-mail - '
-        },
-        telefono_usuario: {
-          digits: '- Ingresá sólo números enteros para el teléfono - '
-        },
-        celular_usuario: {
-          digits: '- Ingresá sólo números enteros para el celular - '
-        },
-        cuil_usuario: {
-          digits: '- Ingresá sólo números enteros para el CUIL - '
-        },
-    },  
-    submitHandler: updateUser,
-    errorLabelContainer: '#errors' 
-  });      
-}); 
+        error: function(xhr, status, error) {
+            $("#loadingDivContainer").hide();
+            $("#modalError").modal('show');
+            $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+        } 
+    }); 
+}
 
 function updateUser() {
-  var base_url = "../endpoints/UpdateByUser.php";
-  var disabled = $("#email").removeAttr('disabled');
-  var datos = $('#actualizarUserForm').serialize();
-  disabled.attr('disabled','disabled');
-  $("#contenidoMisDatos").hide();
-  $('#loadingDivContainer').show(); 
+    var userId = $.cookie('userId');
+    var baseUrl = "http://local-api.partypic.com/api/users/currentUser/" + userId;
+    
+    var datos = {
+        name: $("#userNameField").val(),
+        email: $("#userEmailField").val(),
+        cuil: $("#userCuilField").val(),
+        address: $("#userAddressField").val(),
+        phone: $("#userPhoneField").val(),
+        mobilePhone: $("#userMobilePhoneField").val(),
+    };
+
+    $("#myDataContent").hide();
+    $('#loadingDivContainer').show(); 
   
-  $.ajax({
-    url: base_url,
-    dataType: "json",
-    type:'POST',
-    data:datos,
-    success:UpdateOK,
-    error: function(xhr,status,error)
-    {   
-      $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
-    }
-  });
-  
-  return false; 
+    $.ajax({
+        url: baseUrl,
+        dataType: "json",
+        type:'PUT',
+        data: JSON.stringify(datos),
+        headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+        },
+        success: UpdateUserHandler,
+        error: function(xhr,status,error) {   
+            $("#modalError").modal('show');
+            $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+        }
+    });
+
+    return false; 
 }
  
-function UpdateOK(data) {
-    if(data.success) {
+function UpdateUserHandler(data) {
+    if (data.success) {
       $('#loadingDivContainer').hide(); 
-      cargarDatosForm();
-      $("#modalContrasenia").modal('hide');
-      $("#nombre_usuario").attr('disabled','disabled');    
-      $("#domicilio_usuario").attr('disabled','disabled'); 
-      $("#celular_usuario").attr('disabled','disabled'); 
-      $("#telefono_usuario").attr('disabled','disabled'); 
-      $("#cuil_usuario").attr('disabled','disabled'); 
-      $("#email").attr('disabled','disabled'); 
+      loadFormData();
+      $("#passwordModal").modal('hide');
+      $("#userEmailField").attr('disabled','disabled');    
+      $("#userNameField").attr('disabled','disabled'); 
+      $("#userAddressField").attr('disabled','disabled'); 
+      $("#userPhoneField").attr('disabled','disabled'); 
+      $("#userCuilField").attr('disabled','disabled'); 
+      $("#userMobilePhoneField").attr('disabled','disabled'); 
       $("#btnSave").attr('disabled','disabled'); 
-      $("#contenidoMisDatos").show();
+      $("#myDataContent").show();
       $("#modalSuccess").modal('show');
-    }
-    else {
+    } else {
       $("#modalError").modal('show');
-      $("#errorMessage").text(data.mensaje);
+      $("#errorMessage").text(data.message);
     }
 }
 
-$(document).ready(function() {
-  $('#changePasswordForm').validate({
-    rules: {
-      oldpassword: {
-        required: true
-      },
-      password: {
-        required: true,
-        rangelength:[8,40]
-      },
-      spam: "required"
-    },     
-    messages:  {
-      oldpassword: {
-        required: '- Ingresá tu contraseña actual - '
-      },
-      password: {
-        required: '- Ingresá una nueva contraseña - ',
-        rangelength: ''
-      },
-      newpassword2: {
-        required: '- Ingresá la confirmación de la contraseña nueva - ',
-        equalTo: '- Las contraseñas deben coincidir -'
-      },
-    },  
-    submitHandler: updatePass,
-    errorLabelContainer: '#errors2'
-  });
-}); 
+function updatePassword() {
+    var baseUrl = "http://local-api.partypic.com/api/users/passwordUpdate/";
 
-function updatePass() {
-  var base_url = "../endpoints/UpdateUserPassword.php";
-  var datos = $('#changePasswordForm').serialize();
-  $.ajax({
-    url: base_url,
-    dataType: "json",
-    type:'POST',
-    data:datos,
-    success:UpdatePassOK,
-    error: function(xhr,status,error) {   
-      $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
-    }
-  });
+    var userId = parseInt($.cookie("userId"));
+
+    var data = {
+        password: $("#password").val(),
+        userId: userId
+    };
+
+    $.ajax({
+        url: baseUrl,
+        dataType: "json",
+        type:'POST',
+        data: JSON.stringify(data),
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
+        success: UpdatePasswordHandler,
+        error: function(xhr,status,error) {   
+            $("#modalError").modal('show');
+            $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+        }
+    });
   
   return false; 
 }
  
-function UpdatePassOK(data) {
-  if(data.success) {
-    $("#modalContrasenia").modal('hide');
-    $("#nombre_usuario").attr('disabled','disabled');    
-    $("#domicilio_usuario").attr('disabled','disabled'); 
-    $("#celular_usuario").attr('disabled','disabled'); 
-    $("#telefono_usuario").attr('disabled','disabled'); 
-    $("#cuil_usuario").attr('disabled','disabled'); 
-    $("#email").attr('disabled','disabled'); 
-    $("#btnSave").attr('disabled','disabled'); 
-    $("#modalSuccess").modal('show');
-  }
-  else {
-    $("#modalError").modal('show');
-    $("#errorMessage").text(data.mensaje);
-  }
+function UpdatePasswordHandler(data) {
+    if (data.success) {
+        $("#passwordModal").modal('hide');
+        $("#userEmailField").attr('disabled','disabled');    
+        $("#userNameField").attr('disabled','disabled'); 
+        $("#userAddressField").attr('disabled','disabled'); 
+        $("#userPhoneField").attr('disabled','disabled'); 
+        $("#userCuilField").attr('disabled','disabled'); 
+        $("#userMobilePhoneField").attr('disabled','disabled'); 
+        $("#btnSave").attr('disabled','disabled'); 
+        $("#modalSuccess").modal('show');
+    } else {
+        $("#modalError").modal('show');
+        $("#errorMessage").text(data.message);
+    }
 }
 
-
-/*
- * jQuery Password Strength plugin for Twitter Bootstrap
- *
- * Copyright (c) 2008-2013 Tane Piper
- * Copyright (c) 2013 Alejandro Blanco
- * Dual licensed under the MIT and GPL licenses.
- */
 
 jQuery(document).ready(function() {
   "use strict";
@@ -256,10 +258,6 @@ jQuery(document).ready(function() {
 
 (function (jQuery) {
 // Source: src/rules.js
-
-
-
-
 var rulesEngine = {};
 
 try {

@@ -1,129 +1,87 @@
 $(document).ready(function () {
-  var trigger = $('.hamburger'),
-  overlay = $('.overlay'),
-  isClosed = false;
-  trigger.click(function () {
-    hamburger_cross();      
-  });
-
-  function hamburger_cross() {
-    if (isClosed == true) {          
-      overlay.hide();
-      trigger.removeClass('is-open');
-      trigger.addClass('is-closed');
-      isClosed = false;
-    } else {   
-      overlay.show();
-      trigger.removeClass('is-closed');
-      trigger.addClass('is-open');
-      isClosed = true;
+  var grid = $("#grid-command-buttons").bootgrid({
+    ajaxSettings: {
+      method: "GET",
+      cache: false
+    },
+    ajax: true,
+    url: "http://local-api.partypic.com/api/roles/grid",
+    formatters: {
+        "IDColumn": function(column, row) {
+          return "<div class=\"text-center\">" + row.roleId + "</div>";
+        },
+        "descriptionColumn": function(column, row) {
+          return "<div class=\"text-center\">" + row.description + "</div>";
+        },
+        "createdDatetimeColumn": function(column, row) {
+          return "<div class=\"text-center\">" + formatStartDatetime(row.createdDatetime) + "</div>";
+        },
+        "commands": function(column, row) {
+          return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar rol\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.roleId + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+                "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar rol\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.roleId + "\"><span class=\"fa fa-trash-o\"></span></button></div>";
+        },
     }
-  }
-
-  $('[data-toggle="offcanvas"]').click(function () {
-    $('#wrapper').toggleClass('toggled');
+  }).on("loaded.rs.jquery.bootgrid", function() {
+  
+    grid.find(".command-edit").on("click", function(e) {
+      $.removeCookie("roleId");
+      var roleId = $(this).data("row-id");
+      $.cookie("roleId", roleId);
+      $("#editModal").modal('show');
+  
+      $.ajax({
+        url: 'http://local-api.partypic.com/api/roles/ ' + roleId,
+        type: 'GET',
+        dataType: 'json',
+        data: { roleId: roleId },
+        success: function(result) {
+          $("#roleDescriptionEdit").val(result.description);
+          $("#roleId").val(result.roleId).change(); 
+        },
+        error: function(xhr, status, error) {
+          $("#modalError").modal('show');
+          $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+        } 
+      }); 
+    }).end().find(".command-delete").on("click", function(e) {
+      $.removeCookie("roleId");
+      var roleId= $(this).data("row-id");
+      $.cookie("roleId", roleId);
+      $("#deleteModal").modal('show');
+    });
   });
-});  
 
-$(document).ready(function(){
-  $('[data-tooltip="tooltip"]').tooltip(); 
-});
-
-var grid = $("#grid-command-buttons").bootgrid({
-  ajaxSettings: {
-    method: "GET",
-    cache: false
-  },
-  ajax: true,
-  url: "http://local-api.partypic.com/api/roles/grid",
-  formatters: {
-      "IDColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.roleId + "</div>";
-      },
-      "descriptionColumn": function(column, row) {
-        return "<div class=\"text-center\">" + row.description + "</div>";
-      },
-      "createdDatetimeColumn": function(column, row) {
-        return "<div class=\"text-center\">" + formatStartDatetime(row.createdDatetime) + "</div>";
-      },
-      "commands": function(column, row) {
-        return "<div class=\"text-center\"> <button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Editar rol\" data-toggle=\"modal\" data-target=\"#gridSystemModal\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.roleId + "\"><span class=\"fa fa-pencil\"></span></button> " + 
-              "<button type=\"button\" data-tooltip=\"tooltip\" data-placement=\"top\" title=\"Eliminar rol\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.roleId + "\"><span class=\"fa fa-trash-o\"></span></button></div>";
-      },
-  }
-}).on("loaded.rs.jquery.bootgrid", function() {
-
-  grid.find(".command-edit").on("click", function(e) {
+  var button = $('<button id="addRoleBtn" class="btn btn-default pull-left" type="button" title="Agregar un nuevo rol"><span class="glyphicon glyphicon-plus"></span>   Agregar Rol</button>');
+  $('.col-sm-12.actionBar').append(button);
+  $("#addRoleBtn").on("click", function() { 
+    $('#addForm').trigger("reset");
+    $('#addingModal').modal('show');
+  });
+  
+  $("#btnCancelDelete").on("click", function() {
     $.removeCookie("roleId");
-    var roleId = $(this).data("row-id");
-    $.cookie("roleId", roleId);
-    $("#editModal").modal('show');
-
+  });
+  
+  $("#btnConfirmDelete").on("click", function() {
+  
+    var roleId = parseFloat($.cookie("roleId"));
+    var baseUrl = 'http://local-api.partypic.com/api/roles/' + roleId;
+    roleId = parseFloat($.cookie("roleId"));
+    $("#loadingDivContainer").show();
     $.ajax({
-      url: 'http://local-api.partypic.com/api/roles/ ' + roleId,
-      type: 'GET',
-      dataType: 'json',
-      data: { roleId: roleId },
-      success: function(result) {
-        $("#roleDescriptionEdit").val(result.description);
-        $("#roleId").val(result.roleId).change(); 
-      },
-      error: function(xhr, status, error) {
+      url: baseUrl,
+      dataType: "json",
+      type:'DELETE',
+      data:{ roleId: roleId },
+      success: deleteRoleHandler,
+      error: function(xhr,status,error) {   
+        $("#loadingDivContainer").hide();
         $("#modalError").modal('show');
         $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
-      } 
-    }); 
-  }).end().find(".command-delete").on("click", function(e) {
-    $.removeCookie("roleId");
-    var roleId= $(this).data("row-id");
-    $.cookie("roleId", roleId);
-    $("#deleteModal").modal('show');
+      }
+    });
   });
-});
-
-$("#loadingDivContainer").hide();
-
-$("#btnCancelDelete").on("click", function() {
-  $.removeCookie("roleId");
-});
-
-$("#btnConfirmDelete").on("click", function() {
-
-  var roleId = parseFloat($.cookie("roleId"));
-  var baseUrl = 'http://local-api.partypic.com/api/roles/' + roleId;
-  roleId = parseFloat($.cookie("roleId"));
-  $("#loadingDivContainer").show();
-  $.ajax({
-    url: baseUrl,
-    dataType: "json",
-    type:'DELETE',
-    data:{ roleId: roleId },
-    success: deleteRoleHandler,
-    error: function(xhr,status,error) {   
-      $("#loadingDivContainer").hide();
-      $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
-    }
-  });
-
-  function deleteRoleHandler(data) {
-    if (data.success) {
-      $.removeCookie("roleId");
-      $('#deleteModal').modal('hide');
-      $("#grid-command-buttons").bootgrid('reload');
-      $("#loadingDivContainer").hide();
-      $("#modalSuccess").modal('show');
-    } else {
-      $.removeCookie("roleId");
-      $('#deleteModal').modal('hide');
-      $("#loadingDivContainer").hide();
-      $("#modalError").modal('show');
-      $("#errorMessage").text(data.mensaje);
-    }    
-  }
-});
-
-$(document).ready(function() {  
+  
   $('#editForm').validate({
     rules: {
       roleDescriptionEdit: {
@@ -140,8 +98,42 @@ $(document).ready(function() {
 
     submitHandler: UpdateRole,
     errorLabelContainer: '#errorsEditContainer'
-  });   
-}); 
+  });
+
+  $('#addForm').validate({
+    rules: {
+      roleDescriptionAdd: {
+        required: true
+      },
+      spam: "required"
+    },     
+    messages:  {
+      roleDescriptionAdd: {
+        required: '- Ingresá un nombre de role - '
+      },
+    },  
+    submitHandler: AddRole,
+    errorLabelContainer: '#errorsAddContainer'
+  });
+
+  $("#loadingDivContainer").hide();
+});
+
+function deleteRoleHandler(data) {
+  if (data.success) {
+    $.removeCookie("roleId");
+    $('#deleteModal').modal('hide');
+    $("#grid-command-buttons").bootgrid('reload');
+    $("#loadingDivContainer").hide();
+    $("#modalSuccess").modal('show');
+  } else {
+    $.removeCookie("roleId");
+    $('#deleteModal').modal('hide');
+    $("#loadingDivContainer").hide();
+    $("#modalError").modal('show');
+    $("#errorMessage").text(data.mensaje);
+  }    
+}
 
 function UpdateRole() {
   var roleId = parseFloat($.cookie("roleId"));
@@ -182,33 +174,6 @@ function updateRoleHandler(data) {
     $("#errorMessage").text(data.mensaje);
   }
 }
-
-$(document).ready(function(){
-  var button = $('<button id="addRoleBtn" class="btn btn-default pull-left" type="button" title="Agregar un nuevo rol"><span class="glyphicon glyphicon-plus"></span>   Agregar Rol</button>');
-  $('.col-sm-12.actionBar').append(button);
-  $("#addRoleBtn").on("click", function() { 
-    $('#addForm').trigger("reset");
-    $('#addingModal').modal('show');
-  });
-});
-
-$(document).ready(function() {
-  $('#addForm').validate({
-    rules: {
-      roleDescriptionAdd: {
-        required: true
-      },
-      spam: "required"
-    },     
-    messages:  {
-      roleDescriptionAdd: {
-        required: '- Ingresá un nombre de role - '
-      },
-    },  
-    submitHandler: AddRole,
-    errorLabelContainer: '#errorsAddContainer'
-  });
-}); 
 
 
 function AddRole() {
