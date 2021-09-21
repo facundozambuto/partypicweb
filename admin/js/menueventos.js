@@ -163,7 +163,6 @@ $(document).ready(function () {
   });
   
   $("#btnConfirmDelete").on("click", function() {
-      
     var eventId = parseFloat($.cookie("eventId"));
     var baseUrl = 'http://local-api.partypic.com/api/events/' + eventId;
     $("#loadingDivContainer").show();
@@ -283,7 +282,6 @@ $(document).ready(function () {
     submitHandler: UpdateEvento,
     errorLabelContainer: '#errors'
   });
-
 });
 
 function successDeleteHandler(data) {

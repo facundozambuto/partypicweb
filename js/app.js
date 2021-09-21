@@ -8,6 +8,7 @@ angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination', 'ngCookies'])
     $scope.loadingGif = true;
     $scope.showLoginError = false;
     $scope.showRecoveryMessage = false;
+    $scope.showSuccessMessage = false;
 
     $timeout( function() {
       $scope.loadingGif = false;
@@ -15,7 +16,7 @@ angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination', 'ngCookies'])
     
     $scope.login = function(loginEmail, loginPassword) {
       $scope.loadingGif = true;
-      
+
       loginService.login(loginEmail, loginPassword)
         .then(function (response) {
           if (response.success) {
@@ -35,24 +36,18 @@ angular.module('myApp', ['ui.bootstrap', 'dataGrid', 'pagination', 'ngCookies'])
     $scope.downloadAlbum = function(code) {
       $scope.loadingGif = true;
 
-      loginService.downloadAlbum(code)
-        .then(function (response) {
-          if (response.success) {
-            $scope.loadingGif = false;
-            window.location = '../verFotosEvento.html?id_evento='+response.id_evento;
-          } else { 
-            $scope.loadingGif = false;
-            $scope.showLoginError = true;
-          }
-        }, function (error) {
-          $scope.loadingGif = false;
-          $scope.showLoginError = true;
-        });
+      if (loginService.downloadAlbum(code)) {
+        $scope.showSuccessMessage = true;
+      } else { 
+        $scope.showLoginError = true;
+      }
+      $scope.loadingGif = false; 
     };
     
     $scope.goBack = function() {
       $scope.showLoginError = false;
       $scope.showRecoveryMessage = false;
+      $scope.showSuccessMessage = false;
     }
     
     $scope.recoverPassword = function(recoveryEmail) {

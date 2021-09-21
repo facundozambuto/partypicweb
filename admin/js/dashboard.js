@@ -4986,8 +4986,6 @@ function View(element, calendar, viewName) {
 
 		return segments;
 	}
-	
-
 }
 
 ;;
@@ -5250,11 +5248,8 @@ function DayEventRenderer() {
 		// of the event object (`backgroundColor`, `borderColor` and such)
 		var skinCss = getSkinCss(event, opt);
 
-		if (url) {
-			html += "<a target=\"_blank\" href='" + htmlEscape(url) + "'";
-		}else{
-			html += "<div";
-		}
+		html += "<a target=\"_blank\" href='" + htmlEscape('http://local-web.partypic.com/admin/menueventos.html?eventId='+event.eventId) + "'";
+		
 		html +=
 			" class='" + classNames.join(' ') + "'" +
 			" style=" +
@@ -6022,37 +6017,3 @@ function HorizontalPositionCache(getElement) {
 ;;
 
 })(jQuery);
-
-
-  $(document).ready(function () {
-    var trigger = $('.hamburger'),
-    overlay = $('.overlay'),
-    isClosed = false;
-    trigger.click(function () {
-      hamburger_cross();      
-    });
-
-    function hamburger_cross() {
-      if(isClosed == true) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } 
-      else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-    }
-
-    $('[data-toggle="offcanvas"]').click(function () {
-      $('#wrapper').toggleClass('toggled');
-    });
-  
-  });  
-
-  $(document).ready(function(){
-    $('[data-tooltip="tooltip"]').tooltip(); 
-  });

@@ -1,14 +1,5 @@
-function getUrlParameter(name, url) {
-	if (!url) url = location.href
-	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-	var regexS = "[\\?&]"+name+"=([^&#]*)";
-	var regex = new RegExp( regexS );
-	var results = regex.exec( url );
-	return results == null ? null : results[1];
-}
-
-
-$(document).ready(function(){
+$(document).ready(function() {
+	getAuthHeader();
 	getImagesByEventId();
 });
 	
@@ -27,6 +18,17 @@ function getImagesByEventId() {
 		}
 	});
 }
+
+function getUrlParameter(name, url) {
+	if (!url) url = location.href
+	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	var regexS = "[\\?&]"+name+"=([^&#]*)";
+	var regex = new RegExp( regexS );
+	var results = regex.exec( url );
+	return results == null ? null : results[1];
+}
+
+
 
 function bindImages(data) {
 	if (data.length) {

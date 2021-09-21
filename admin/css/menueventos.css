@@ -101,7 +101,7 @@ th:hover {
 }
 
 .table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .div-errores {
@@ -113,15 +113,15 @@ th:hover {
 }
 
 .command-delete {
-    margin-right: 3px;
+  margin-right: 3px;
 }
 
 table#grid-command-buttons > tbody {
-   border: 2px solid black !important;
+  border: 2px solid black !important;
 }
 
 table#grid-command-buttons > tbody > tr {
-   border: 2px solid black !important;
+  border: 2px solid black !important;
 }
 
 .actions.btn-group > button {
@@ -129,7 +129,7 @@ table#grid-command-buttons > tbody > tr {
 }
 
 .bootgrid-header .actionBar .btn-group>.btn-group .dropdown-menu .dropdown-item  {
-   font-size:15px;
+  font-size:15px;
 }
 
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
@@ -140,25 +140,26 @@ table#grid-command-buttons > tbody > tr {
   margin-left: 3px;
 }
 
-.navbar-login
-{
-    width: 305px;
-    padding: 10px;
-    padding-bottom: 0px;
+.navbar-login {
+  width: 305px;
+  padding: 10px;
+  padding-bottom: 0px;
 }
 
-.navbar-login-session
-{
-    padding: 10px;
-    padding-bottom: 0px;
-    padding-top: 0px;
+.navbar-login-session {
+  padding: 10px;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }
 
-.icon-size
-{
-    font-size: 87px;
+.icon-size {
+  font-size: 87px;
 }
 
- .btn-cerrar-sesion:hover{
-   background-color: #ef7b68;
-  }
+.btn-cerrar-sesion:hover {
+  background-color: #ef7b68;
+}
+
+.btn.btn-default {
+  height: 2.3em !important;
+}

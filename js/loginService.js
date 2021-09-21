@@ -40,18 +40,12 @@ angular.module('myApp').service('loginService', loginService);
 		}
 		
 		function downloadAlbum(eventCode) {
-			var url = 'http://local-api.partypic.com/api/images/downloadByEventCode?eventCode=' + eventCode;
+            window.open(
+				'http://local-api.partypic.com/api/images/downloadByEventCode?eventCode=' + eventCode,
+				'_blank'
+			);
 
-            return $http({ 
-					method: 'GET',
-					url: url
-			    }).then(function (response) {
-					if (response.data.success) {
-						return response.data;
-					} else {
-						return response.data;
-					}
-            });
+			return true;
 		}
 
 		return self;		
