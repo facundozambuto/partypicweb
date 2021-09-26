@@ -166,9 +166,6 @@ $(document).ready(function () {
   });
 
   $("#loadingDivContainer").hide();
-
-  
-
 });  
 
 function deleteVenueHandler(data) {

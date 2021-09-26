@@ -6,16 +6,14 @@ $(document).ready(function() {
     imageId = parseFloat($.cookie("imageId"));
     profileId = $.cookie("profileId");
     profileName = $.cookie("profileName");
-    var blockUser = false;
+    var blockProfile = false;
     var eventId = gup("eventId", document.URL);
-    
     var baseUrl = "http://local-api.partypic.com/api/images/download?eventId=" + eventId;
-  
     $.ajax({
       url: baseUrl,
       dataType: "json",
       type:'GET',
-      data:{ imageId:imageId, blockUser: blockUser, eventId: eventId, profileId: profileId, profileName: profileName},
+      data: { imageId:imageId, blockProfile: blockProfile, eventId: eventId, profileId: profileId, profileName: profileName },
       success: downloadSuccessHandler,
       error: function(xhr,status,error) {   
         if (xhr.status === 200) {
@@ -33,16 +31,19 @@ $(document).ready(function() {
   });
     
   $("#btnConfirmDelete").on("click", function() {
-    var baseUrl = "http://local-api.partypic.com/api/images/";
-    imageId = parseFloat($.cookie("imageId"));
-    var blockUser = false;
-    var eventId = gup("eventId", document.URL);
-
+    var baseUrl = "http://local-api.partypic.com/api/images/delete";
+    var imageId = parseInt($.cookie("imageId"));
+    var blockProfile = false;
+    var eventId = parseInt(gup("eventId", document.URL));
     $.ajax({
       url: baseUrl,
       dataType: "json",
-      type:'DELETE',
-      data: { imageId: imageId, blockUser: blockUser, eventId: eventId},
+      type: 'POST',
+      data: JSON.stringify({ imageId: imageId, blockProfile: blockProfile, eventId: eventId }),
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+      },
       success: deleteImageHandler,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
@@ -59,20 +60,24 @@ $(document).ready(function() {
   
   $("#btnConfirmDeleteBlock").on("click", function() {
     
-    imageId = parseFloat($.cookie("imageId"));
-    profileId = $.cookie("profileId");
-    profileName = $.cookie("profileName");
-    var blockUser = false;
-    var eventId = gup("eventId", document.URL);
+    var imageId = parseFloat($.cookie("imageId"));
+    var profileId = $.cookie("profileId");
+    var profileName = $.cookie("profileName");
+    var blockProfile = true;
+    var eventId = parseInt(gup("eventId", document.URL));
     
-    var baseUrl = "http://local-api.partypic.com/api/images/";
+    var baseUrl = "http://local-api.partypic.com/api/images/delete";
   
     $.ajax({
       url: baseUrl,
       dataType: "json",
-      type:'DELETE',
-      data:{ imageId:imageId, blockUser: blockUser, eventId: eventId, profileId: profileId, profileName: profileName},
-      success: blockUserHandler,
+      type:'POST',
+      data: JSON.stringify({ imageId: imageId, blockProfile: blockProfile, eventId: eventId, profileId: profileId, profileName: profileName }),
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+      },
+      success: blockProfileHandler,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
         $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
@@ -137,9 +142,9 @@ function getMeta(pictureURL, data) {
       dataImg.height = this.height;
       dataImg.width = this.width;
       if (dataImg.height > dataImg.width) {
-        $("#images-container").append('<div data-profile-img-url="'+data.profileImageUrl+'" data-nombre-perfil="'+data.profileName+'" data-id-profile="'+data.profileId+'" data-id-imagen="'+data.imageId+'" class="gallery-item text-center" onclick="abrirGaleria(this)"><img width="auto" height="185" style="zoom:1.75" src="'+pictureURL+'" alt="'+data.comment+'" title="'+data.comment+'"/></div>');
+        $("#images-container").append('<div data-profile-img-url="'+data.profileImageUrl+'" data-profile-name="'+data.profileName+'" data-id-profile="'+data.profileId+'" data-id-image="'+data.imageId+'" class="gallery-item text-center" onclick="openGallery(this)"><img width="auto" height="185" style="zoom:1.75" src="'+pictureURL+'" alt="'+data.comment+'" title="'+data.comment+'"/></div>');
       } else {
-        $("#images-container").append('<div data-profile-img-url="'+data.profileImageUrl+'" data-nombre-perfil="'+data.profileName+'" data-id-profile="'+data.profileId+'" data-id-imagen="'+data.imageId+'" class="gallery-item text-center" onclick="abrirGaleria(this)"><img width="185" height="auto" style="zoom:1.75" src="'+pictureURL+'" alt="'+data.comment+'" title="'+data.comment+'"/></div>');
+        $("#images-container").append('<div data-profile-img-url="'+data.profileImageUrl+'" data-profile-name="'+data.profileName+'" data-id-profile="'+data.profileId+'" data-id-image="'+data.imageId+'" class="gallery-item text-center" onclick="openGallery(this)"><img width="185" height="auto" style="zoom:1.75" src="'+pictureURL+'" alt="'+data.comment+'" title="'+data.comment+'"/></div>');
       }
     },
     src: pictureURL
@@ -159,26 +164,26 @@ function deleteImageHandler(data) {
     $.removeCookie("imageId");
     $('#deleteModal').modal('hide');
     $("#images-container").html("");
-    getImagenesByIdEvento();
+    getImagesByEventId();
     $("#modalSuccess").modal('show');
   }    
 }
   
-function blockUser() {
+function blockProfile() {
   $('#myModal').modal('hide');
   $.removeCookie("imageId");
   $.removeCookie("profileId");
   $.removeCookie("profileName");
-  var imageId = $("#btnBlockUser").data("image-id");
-  var profileId = $("#btnBlockUser").data("user-id");
-  var profileName = $("#btnBlockUser").data("nombre-usuario");
+  var imageId = $("#btnBlockProfile").data("image-id");
+  var profileId = $("#btnBlockProfile").data("user-id");
+  var profileName = $("#btnBlockProfile").data("nombre-usuario");
   $.cookie("imageId", imageId);
   $.cookie("profileId", profileId);
   $.cookie("profileName", profileName);
   $("#modalBlock").modal('show');
 }
 
-function blockUserHandler(data) {
+function blockProfileHandler(data) {
   if (data.success) {
     $.removeCookie("imageId");
     $('#modalBlock').modal('hide');

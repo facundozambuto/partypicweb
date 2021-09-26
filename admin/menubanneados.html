@@ -139,26 +139,24 @@
           <div class="btn-group btn-breadcrumb pull-left">
             <a href="../admin/dashboard.html" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
             <a href="../admin/dashboard.html" class="btn btn-primary">Menú Principal</a>
-            <a href="../admin/menubanneados.html" class="btn btn-primary">Menú Usuarios Banneados</a>
+            <a href="../admin/menubanneados.html" class="btn btn-primary">Menú Perfiles Banneados</a>
           </div>
         </div>
       </div>
       
       <div class="animationload" id="loadingDivContainer">
-       	   <img src="../images/animacionLogo.gif" style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic"/>
+       	<img src="../images/animacionLogo.gif" style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic"/>
       </div>
       
       <div class="container container-ppal-2">
-        <table id="grid-command-buttons" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="../endpoints/BackMenuBanneados.html">
+        <table id="grid-command-buttons" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="http://local-api.partypic.com/api/bannedProfiles/grid">
           <thead style="border: 2px solid black;">
             <tr>
-              <th data-column-id="id_profile" data-formatter="IDProfileColumn" data-type="numeric" data-header-css-class="IDProfileColumn">ID</th>
-              <th data-column-id="nombre_banneado" data-formatter="NombreBanneadoColumn" data-header-css-class="NombreBanneadoColumn" data-sortable="true">Usuario Bloqueado</th>
-              <th data-column-id="nombre_usuario" data-formatter="nameColumn" data-header-css-class="nameColumn" data-identifier="true" data-sortable="true">Encargado/Admin</th>
-              <th data-column-id="rol" data-formatter="RolColumn" data-header-css-class="RolColumn" data-sortable="true">Rol</th>
-              <th data-column-id="fecha_ban" data-formatter="FechaColumn" data-header-css-class="FechaColumn" data-sortable="true">Fecha del bloqueo</th>
-              <th data-column-id="nombre_salon" data-formatter="NombreSalonColumn" data-header-css-class="NombreSalonColumn" data-sortable="true">Salón</th>
-              <th data-column-id="nombre_evento" data-formatter="NombreEventoColumn" data-header-css-class="NombreEventoColumn" data-sortable="true">Evento</th>
+              <th data-column-id="profileId" data-formatter="IDProfileColumn" data-type="numeric" data-header-css-class="IDProfileColumn">ID</th>
+              <th data-column-id="bannedName" data-formatter="BannedProfileNameColumn" data-header-css-class="NombreBanneadoColumn" data-sortable="true">Usuario Bloqueado</th>
+              <th data-column-id="userName" data-formatter="NameColumn" data-header-css-class="NameColumn" data-identifier="true" data-sortable="true">Encargado/Admin</th>
+              <th data-column-id="banDatetime" data-formatter="BanDatetimeColumn" data-header-css-class="BanDatetimeColumn" data-sortable="true">Fecha del bloqueo</th>
+              <th data-column-id="eventName" data-formatter="NombreEventoColumn" data-header-css-class="NombreEventoColumn" data-sortable="true">Evento</th>
               <th data-column-id="commands" data-formatter="commands" data-header-css-class="CommandColumn" data-sortable="false">Opciones</th>
             </tr>
           </thead>

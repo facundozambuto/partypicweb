@@ -305,7 +305,6 @@ function envioOK(data) {
   }    
 }
 
-
 function UpdateEvento() { 
   var eventId = parseFloat($.cookie("eventId"));
   var baseUrl = 'http://local-api.partypic.com/api/events/' + eventId;
@@ -356,7 +355,6 @@ function successUpdateHandler(data) {
     $("#errorMessage").text(data.mensaje);
   }
 }
-
 
 function addEvento() {
   var baseUrl = 'http://local-api.partypic.com/api/events/';

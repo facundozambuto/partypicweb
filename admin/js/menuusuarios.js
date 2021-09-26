@@ -1,8 +1,8 @@
 $(document).ready(function () {
   var grid = $("#grid-command-buttons").bootgrid({
     ajaxSettings: {
-        method: "GET",
-        cache: false
+      method: "GET",
+      cache: false
     },
     crossDomain: true,
     ajax: true,
@@ -19,11 +19,10 @@ $(document).ready(function () {
           return "<div class=\"text-center\">" + row.name + "</div>";
         },
         "RolColumn": function(column, row) {
-          if(row.roleId == 1) {
+          if (row.roleId == 1) {
           row.rol = "Administrador";
-          }
-          else {
-          row.rol = "Encargado de Salón";
+          }  else {
+            row.rol = "Encargado de Salón";
           }
           return "<div class=\"text-center\">" + row.rol + "</div>";
         },
@@ -51,8 +50,7 @@ $(document).ready(function () {
         "ActivoColumn": function(column, row) {
           if (row.isActive == true) {
             return "<div data-status=\"activo\" class=\"text-center\">Activo</div>";
-          }
-          else {
+          } else {
             return "<div data-status=\"no-activo\" class=\"text-center\">Inactivo</div>";
           }
         }
@@ -259,9 +257,6 @@ $(document).ready(function () {
 
   $("#loadingDivContainer").hide();
 });  
-
-
-
 
 function deleteUserSuccessHandler(data) {
   if (data.success) {
