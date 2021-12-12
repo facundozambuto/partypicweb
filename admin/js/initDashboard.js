@@ -16,6 +16,28 @@
         });
         
       });
+
+      $.ajax({
+	      url: 'http://local-api.partypic.com/api/reports/',
+        type: 'GET',
+        dataType: 'json',
+        data: { },
+	      success: dashboardReportHandler,
+	      error: function(xhr,status,error) {   
+          $("#loadingDivContainer").hide();
+	        $("#modalError").modal('show');
+	        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+	      }
+	    });
+
+      function dashboardReportHandler(data) {
+        if (data) {
+          $("#newVenues").text(data.amountOfNewVenues);
+          $("#newEvents").text(data.amountOfNewEvents);
+          $("#newUploadedImages").text(data.amountOfUploadedImages);
+          $("#newVenueManagers").text(data.amountOfNewVenuesManagers);
+        }
+      }
     
 	    $.ajax({
 	      url: 'http://local-api.partypic.com/api/events/',
