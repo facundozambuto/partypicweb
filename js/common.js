@@ -20,6 +20,11 @@ function loadModals() {
     }).fail(function() {
         console.error('Error al cargar el archivo navbar.html');
     });
+    $.get('../admin/common/modalSuccess.html', function(data) {
+        $('body').append(data);
+    }).fail(function() {
+        console.error('Error al cargar el archivo navbar.html');
+    });
 }
 
 function handlerBurgerBehaviour() {
