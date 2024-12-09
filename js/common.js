@@ -1,8 +1,17 @@
 $(document).ready(function () {
+    loadNavBar();
     getAuthHeader();
-    handlerBurgerBehaviour();
     getUserSession();
 });
+
+function loadNavBar() {
+    $.get('../admin/common/navbar.html', function(data) {
+        $('body').prepend(data);
+        handlerBurgerBehaviour();
+    }).fail(function() {
+        console.error('Error al cargar el archivo navbar.html');
+    });
+}
 
 function handlerBurgerBehaviour() {
     var trigger = $('.hamburger'),
@@ -59,6 +68,7 @@ function bindUserData(data) {
         $("#menuUsuariosLi").hide();
         $("#menuCategoriasLi").hide();
         $("#menuRolesLi").hide();
+        $("#menuPlanesLi").hide();
     }
 }
 
@@ -70,7 +80,7 @@ function logOutUser() {
         success: logOutHandler,
         error: function(xhr, status, error) {
           $("#modalError").modal('show');
-          $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+          $("#errorMessage").text("Ocurri�� un error. Comunicalo al administrador.");
         }     
     });
 }

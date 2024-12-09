@@ -54,6 +54,7 @@ $(document).ready(function () {
                         $("#activeSubContainer").show();
                         $("#subscriptionEndDate").text(formatStartDatetime(activeSub.endDate));
                         $("#viewSubscriptionDetailButton").attr("data-id", activeSub.subscriptionId);
+                        $("#viewSubscriptionDetailButton").attr("data-isAutoRenew", activeSub.isAutoRenew);
                         if (activeSub.renewalDate != "0001-01-01T00:00:00") {
                             $("#subscriptionEndDate").text(formatStartDatetime(activeSub.renewalDate));
                             $("#subscriptionSpanRenewalDate").show();
@@ -67,12 +68,12 @@ $(document).ready(function () {
                 }
             } else {
                 $("#modalError").modal('show');
-                $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+                $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
             }
         },
         error: function (xhr, status, error) {
             $("#modalError").modal('show');
-            $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+            $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         }
     });
 
@@ -146,14 +147,14 @@ function handleNoActiveSubscriptions() {
                     error: function (xhr, status, error) {
                         $("#loadingDivContainer").hide();
                         $("#modalError").modal('show');
-                        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+                        $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
                     }
                 });
             });
         },
         error: function (xhr, status, error) {
           $("#modalError").modal('show');
-          $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+          $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         }
       });
     $("#noSubscriptionMessage").show();
@@ -187,6 +188,32 @@ function handleNoActiveSubscriptions() {
             $("#backButton").on("click", function () {
                 $("#suscriptionDetail").hide();
                 $("#allSubscriptions").show();
+            });
+
+            $("#toggleRenewalButton").on("click", function () {
+
+                var subId = $("#viewSubscriptionDetailButton").attr("data-id");
+                var subIsAutoRenew = $("#viewSubscriptionDetailButton").attr("data-isAutoRenew");
+
+                $.ajax({
+                    url: `http://local-api.partypic.com/api/subscriptions/toggle-renewal?subscriptionId=${subId}`,
+                    type: "PUT",
+                    data: { subscriptionId:subId },
+                    success: function (response) {
+                        var text = subIsAutoRenew ? "La renovación automática de tu suscripción fue desactivada exitosamente. No se realizarán más cobros y podrás utilizar la aplicación hasta su vencimiento" : "Se ha activado correctamente la renovación automática. El próximo cobro se efectuará en la fecha de vencimiento."
+                        $("#modalToggleRenewal").text(text)
+                        $("#suscriptionDetail").hide();
+                        $("#allSubscriptions").show();
+                        $("#modalSuccess").modal('show');
+
+                        setTimeout(function() {
+                            location.reload();
+                        }, 5000)
+                    },
+                    error: function () {
+                        $("#modalError").show();
+                    }
+                });
             });
         },
         error: function (xhr, status, error) {

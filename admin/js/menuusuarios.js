@@ -83,7 +83,7 @@ $(document).ready(function () {
         },
         error: function(xhr, status, error) {
           $("#modalError").modal('show');
-          $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+          $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         } 
       }); 
     }).end().find(".command-delete").on("click", function(e) {
@@ -119,7 +119,7 @@ $(document).ready(function () {
       error: function(xhr,status,error) {
         $("#loadingDivContainer").hide();   
         $("#modalError").modal('show');
-        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
       }
     });
   });
@@ -309,7 +309,7 @@ function UpdateUser() {
     error: function(xhr,status,error) {
       $("#loadingDivContainer").hide();   
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
   }); 
   return false;
@@ -357,7 +357,7 @@ function addUser() {
     error: function (xhr,status,error) {  
       $("#loadingDivContainer").hide(); 
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
   });
 

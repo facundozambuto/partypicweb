@@ -52,7 +52,7 @@ $(document).ready(function () {
         },
         error: function(xhr, status, error) {
           $("#modalError").modal('show');
-          $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+          $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         } 
       }); 
     }).end().find(".command-delete").on("click", function(e) {
@@ -83,7 +83,7 @@ $(document).ready(function () {
       error: function(xhr,status,error) {   
         $("#loadingDivContainer").hide();
         $("#modalError").modal('show');
-        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
       }
     });
   });
@@ -207,7 +207,7 @@ function UpdateVenue() {
     error: function(xhr,status,error) {   
       $("#loadingDivContainer").hide();
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
   }); 
   return false;
@@ -249,7 +249,7 @@ function AddVenue() {
     error: function(xhr,status,error) {
       $("#loadingDivContainer").hide();   
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
   });
 
@@ -293,7 +293,7 @@ function loadVenueUsersToSelect() {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     } 
   }); 
 }
@@ -316,7 +316,7 @@ function showVenueManager(userId) {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.")
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.")
     }   
   });
 }

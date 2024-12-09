@@ -121,7 +121,7 @@ function loadFormData() {
                 $("#userMobilePhoneField").val(result.mobilePhone);
             } else {
                 $("#modalError").modal('show');
-                $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+                $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
             }
             
             $("#loadingDivContainer").hide();
@@ -129,7 +129,7 @@ function loadFormData() {
         error: function(xhr, status, error) {
             $("#loadingDivContainer").hide();
             $("#modalError").modal('show');
-            $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+            $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         } 
     }); 
 }
@@ -162,7 +162,7 @@ function updateUser() {
         success: UpdateUserHandler,
         error: function(xhr,status,error) {   
             $("#modalError").modal('show');
-            $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+            $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         }
     });
 
@@ -211,7 +211,7 @@ function updatePassword() {
         success: UpdatePasswordHandler,
         error: function(xhr,status,error) {   
             $("#modalError").modal('show');
-            $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+            $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         }
     });
   

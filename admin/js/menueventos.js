@@ -99,7 +99,7 @@ $(document).ready(function () {
         },
         error: function(xhr, status, error) {
           $("#modalError").modal('show');
-          $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+          $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         } 
       }); 
     }).end().find(".command-delete").on("click", function(e) {
@@ -153,7 +153,7 @@ $(document).ready(function () {
       success:envioOK,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
-        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
       }
     });
   });
@@ -179,7 +179,7 @@ $(document).ready(function () {
         if (xhr && xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors[0] && xhr.responseJSON.errors[0].description === 'ExistingAsociatedImagesToEventException') {
           $("#errorMessage").text("Existen imágenes asociadas a este evento y por tal razón no se puede eliminar el mismo. Comuníquese con el administrador.");
         } else {
-          $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+          $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
         }
         $("#modalError").modal('show');
         $("#loadingDivContainer").hide();
@@ -334,7 +334,7 @@ function UpdateEvento() {
     error: function(xhr,status,error) {
       $("#loadingDivContainer").hide();   
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
   }); 
   
@@ -380,7 +380,7 @@ function addEvento() {
     error: function(xhr,status,error) {
       $("#loadingDivContainer").hide();   
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
   });
 
@@ -407,7 +407,7 @@ function successAddHandler(data) {
       success: successInstructionsSendingHandler,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
-        $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
       }
     });
   } else {
@@ -456,7 +456,7 @@ function loadVenues() {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
   }); 
 }
@@ -486,7 +486,7 @@ function loadCategories() {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
   }); 
 }
@@ -528,7 +528,7 @@ function openVenue(venueId) {
     },
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.")
+      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.")
     }   
   });
 }

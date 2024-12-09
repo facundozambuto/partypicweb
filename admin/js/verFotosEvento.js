@@ -20,7 +20,7 @@ $(document).ready(function() {
           $("#modalSuccess").modal('show');
         } else {
           $("#modalError").modal('show');
-          $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+          $("#errorMessage").text("Ocurri�� un error. Comunicalo al administrador.");
         }
       }
     });
@@ -47,7 +47,7 @@ $(document).ready(function() {
       success: deleteImageHandler,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
-        $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurri�� un error. Comunicalo al administrador.");
       }
     });
   });
@@ -80,7 +80,7 @@ $(document).ready(function() {
       success: blockProfileHandler,
       error: function(xhr,status,error) {   
         $("#modalError").modal('show');
-        $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+        $("#errorMessage").text("Ocurri�� un error. Comunicalo al administrador.");
       }
     });
   });
@@ -110,7 +110,7 @@ function getImagesByEventId() {
     success: bindImages,
     error: function(xhr, status, error) {
       $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+      $("#errorMessage").text("Ocurri�� un error. Comunicalo al administrador.");
     }     
   }); 
     

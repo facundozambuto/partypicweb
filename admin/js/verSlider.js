@@ -14,7 +14,7 @@ function getImagesByEventId() {
 		success: bindImages,
 		error: function(xhr, status, error) {
 		  $("#modalError").modal('show');
-		  $("#errorMessage").text("Ocurri�� un error. Comunicalo al desarrollador.");
+		  $("#errorMessage").text("Ocurri�� un error. Comunicalo al administrador.");
 		}
 	});
 }
@@ -156,7 +156,7 @@ function loadMore(){
 		success: bindImages,
 		error: function(xhr, status, error) {
 		    $("#modalError").modal('show');
-		    $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+		    $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
 		}
 	});
 }
@@ -172,7 +172,7 @@ function checkRemovedImages() {
 		success: removeImages,
 		error: function(xhr, status, error) {
 		    $("#modalError").modal('show');
-		    $("#errorMessage").text("Ocurrió un error. Comunicalo al desarrollador.");
+		    $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
 		}
 	});
 }

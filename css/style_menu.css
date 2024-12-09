@@ -123,6 +123,19 @@ html { height: 100%;}
 .sidebar-nav li:nth-child(9):before {
     background-color: #35acdf;   
 }
+
+#menuSuscripcionesLi:before {
+  background-color: #209e59;   
+}
+
+#menuMisDatosLi:before {
+  background-color: #6c51b8;   
+}
+
+#salirLi:before {
+  background-color: #be172d;   
+}
+
 .sidebar-nav li:hover:before,
 .sidebar-nav li.open:hover:before {
     width: 100%;
