@@ -87,7 +87,7 @@ $(document).ready(function () {
     },     
     messages:  {
       categoryDescriptionAdd: {
-        required: '- Ingresá un nombre de salón - '
+        required: '- Ingresá un nombre para la categoría - '
       },
     },  
     submitHandler: AddCategory,

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="no-js" lang="es"><!--<![endif]-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Party Pic App - Mi Suscripción</title>
+    <link rel="shortcut icon" href="../images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style_menu.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" type="text/css" href="../admin/css/misdatos.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="../js/modernizr.custom.86080.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../js/moderniz.2.8.1.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/modernizr.custom.63321.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/jquery.bootgrid.js"></script>
+    <script type="text/javascript" src="../js/jquery.bootgrid.fa.js"></script>
+    <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.datetimepicker.full.js"></script>
+    <script type="text/javascript" src="../js/authorizationService.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../admin/js/suscripcion-exitosa.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top text-center" style="height: 50px; background-color: #1A1A1A">
+        <div class="container-fluid" style="background-color:white">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                    <span style="background-color:white" class="hamb-top"></span>
+                    <span style="background-color:white" class="hamb-middle"></span>
+                    <span style="background-color:white" class="hamb-bottom"></span>
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+        <div style="margin:0 auto; color:white; display:inline-block; width:20%; margin-top:5px">
+            <img src="../images/favicon.png" class="img-responsive"
+                style="margin:0 auto; width:10%; display: inline-block;">
+            <img src="../images/logotipoGrisNav.png" class="img-responsive"
+                style="margin:0 auto; display: inline-block;">
+        </div>
+        <ul class="nav navbar-nav navbar-right" style="margin-right: 15px;">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <span id="mainSpanUserName"></span>
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" style="margin-top: 5px;">
+                    <li>
+                        <div class="navbar-login">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <p class="text-center">
+                                        <span class="glyphicon glyphicon-user icon-size"></span>
+                                    </p>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="text-left" id="navUserName"></p>
+                                    <p class="text-left small" id="navUserEmail"></p>
+                                    <p class="text-left small" id="navUserRole"></p>
+                                    <p class="text-left">
+                                        <a href="../admin/misdatos.html"
+                                            class="btn btn-primary btn-block btn-sm">Actualizar
+                                            Datos</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="navbar-login navbar-login-session">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p>
+                                        <a href="#" class="btn btn-danger btn-block btn-cerrar-sesion"
+                                            onclick="logOutUser()">Salir <span
+                                                class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="wrapper">
+        <div class="overlay"></div>
+        <!-- Sidebar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand" style="line-height: 20px;">
+                    <span id="spanUserName" style="margin-left:1.5em; color:white"></span>
+                    <span id="spanUserRole" style="margin-left:4.5em; font-size:14px; color:white"></span>
+                </li>
+                <li>
+                    <a href="../admin/dashboard.html">
+                        Inicio
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../admin/menueventos.html">
+                        Menú Eventos
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon-calendar"></span>
+                    </a>
+                </li>
+                <li id="menuSalonesLi">
+                    <a href="../admin/menusalones.html">
+                        Menú Salones
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon-modal-window"></span>
+                    </a>
+                </li>
+                <li id="menuUsuariosLi">
+                    <a href="../admin/menuusuarios.html">
+                        Menú Usuarios
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon-user"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../admin/menubanneados.html">
+                        Menú Banneados
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon-ban-circle"></span>
+                    </a>
+                </li>
+                <li id="menuCategoriasLi">
+                    <a href="../admin/menucategorias.html">
+                        Menú Categorías
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon glyphicon-tasks"></span>
+                    </a>
+                </li>
+                <li id="menurolesLi">
+                    <a href="../admin/menuroles.html">
+                        Menú Roles
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon-certificate"></span>
+                    </a>
+                </li>
+                <li id="menuplanesLi">
+                    <a href="../admin/menuplanes.html">
+                        Menú Planes <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon glyphicon-list-alt"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../admin/misdatos.html">
+                        Mi Perfil
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon-align-justify"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="logOutUser()">
+                        Salir
+                        <span style="font-size:16px;"
+                            class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- Page Content -->
+    <div id="page-content-wrapper" style="padding-top:40px">
+        <div class="container container-ppal" style="margin-top:40px; margin-bottom:40px">
+            <div class="row">
+                <div class="btn-group btn-breadcrumb pull-left">
+                    <a href="../admin/dashboard.html" class="btn btn-primary"><i
+                            class="glyphicon glyphicon-home"></i></a>
+                    <a href="../admin/dashboard.html" class="btn btn-primary">Menú Principal</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="animationload" id="loadingDivContainer" sytle="display:none">
+            <p class="lead">Procesando tu suscripción... Por favor espera un momento.</p>
+            <img src="../images/animacionLogo.gif"
+                style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic" />
+        </div>
+
+        <div class="container" id="myDataContent">
+
+            <div class="container mt-5">
+                <div id="successMessage" style="display: none;">
+                    <div class="text-center">
+                        <h1 class="display-5">Suscripción Exitosa</h1>
+                    </div>
+                
+                    <div class="alert alert-success text-center" role="alert">
+                        <h2>¡Gracias!</h2>
+                        <p style="font-size: 2rem;">Tu suscripción fue realizada con éxito. Ahora puedes disfrutar de todos los beneficios de PartyPic.</p>
+                        <p style="font-size: 2rem;">Podrás gestionar tus suscripciones desde la siguiente página:</p>
+                        <a href="../admin/misuscripcion.html" class="btn btn-primary mt-3" style="margin-top: 5rem;">Ir a la Gestión de Suscripciones</a>
+                    </div>
+                </div>
+                
+                <div id="errorMessage" class="alert alert-danger text-center" role="alert" style="display: none;">
+                    <h2>¡Ups! Algo salió mal</h2>
+                    <p style="font-size: 2rem;">No pudimos confirmar tu suscripción. Por favor, contacta al administrador para resolver el problema.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- /#page-content-wrapper -->
+    <!-- /#wrapper -->
+</body>
+
+</html>
