@@ -1,5 +1,6 @@
 $(document).ready(function () {
     loadNavBar();
+    loadModals();
     getAuthHeader();
     getUserSession();
 });
@@ -8,6 +9,14 @@ function loadNavBar() {
     $.get('../admin/common/navbar.html', function(data) {
         $('body').prepend(data);
         handlerBurgerBehaviour();
+    }).fail(function() {
+        console.error('Error al cargar el archivo navbar.html');
+    });
+}
+
+function loadModals() {
+    $.get('../admin/common/modalError.html', function(data) {
+        $('body').append(data);
     }).fail(function() {
         console.error('Error al cargar el archivo navbar.html');
     });
