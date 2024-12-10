@@ -58,27 +58,29 @@ function handlerBurgerBehaviour() {
 
 function getUserSession() {
     $.ajax({
-        url:'http://local-api.partypic.com/api/session/',
+        url: 'http://local-api.partypic.com/api/session/',
         type: 'GET',
-        data: { },
-        success: bindUserData,
+        data: {},
+        success: function(data) {
+            bindUserData(data);
+            saveUserDataToLocalStorage(data);
+        },
         error: function(xhr, status, error) {
-          window.location.href = 'http://local-web.partypic.com/login.html';
-        }     
-    }); 
+            window.location.href = 'http://local-web.partypic.com/login.html';
+        }
+    });
 }
 
 function bindUserData(data) {
-    $("#spanUserName").append('<strong>'+data.name+'</strong>');
-    $("#navUserName").append('<strong>'+data.name+'</strong>');
-    $("#navUserEmail").append('<strong>'+data.email+'</strong> <br>');
-    $("#mainSpanUserName").append('<strong>'+data.name+'</strong>');
+    $("#spanUserName").append('<strong>' + data.name + '</strong>');
+    $("#navUserName").append('<strong>' + data.name + '</strong>');
+    $("#navUserEmail").append('<strong>' + data.email + '</strong> <br>');
+    $("#mainSpanUserName").append('<strong>' + data.name + '</strong>');
 
     if (data.roleId == 1) {
         $("#spanUserRole").append('<strong>Administrador</strong>');
     } else if (data.roleId == 2) {
         $("#spanUserRole").append('<strong>Gerente de Salón</strong>');
-        $("#menuSalonesLi").hide();
         $("#menuUsuariosLi").hide();
         $("#menuCategoriasLi").hide();
         $("#menuRolesLi").hide();
@@ -88,18 +90,48 @@ function bindUserData(data) {
 
 function logOutUser() {
     $.ajax({
-        url:'http://local-api.partypic.com/api/login/',
+        url: 'http://local-api.partypic.com/api/login/',
         type: 'DELETE',
-        data: { },
+        data: {},
         success: logOutHandler,
         error: function(xhr, status, error) {
-          $("#modalError").modal('show');
-          $("#errorMessage").text("Ocurri�� un error. Comunicalo al administrador.");
-        }     
+            $("#modalError").modal('show');
+            $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
+        }
     });
 }
 
 function logOutHandler() {
     $.cookie('AppSessionId', '', { path: '/' });
+
+    localStorage.removeItem('userData');
     window.location.href = 'http://local-web.partypic.com/login.html';
+}
+
+function saveUserDataToLocalStorage(data) {
+    const userData = {
+        userId: data.userId,
+        name: data.name,
+        email: data.email,
+        roleId: data.roleId,
+        roleName: getRoleName(data.roleId)
+    };
+
+    localStorage.setItem('userData', JSON.stringify(userData));
+}
+
+function getUserDataFromLocalStorage() {
+    const userData = localStorage.getItem('userData');
+    return userData ? JSON.parse(userData) : null;
+}
+
+function getRoleName(roleId) {
+    switch (roleId) {
+        case 1:
+            return 'Administrador';
+        case 2:
+            return 'Gerente de Salón';
+        default:
+            return 'Usuario';
+    }
 }

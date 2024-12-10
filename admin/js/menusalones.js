@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  
+
   var grid = $("#grid-command-buttons").bootgrid({
     ajaxSettings: {
       method: "GET",
@@ -99,9 +99,6 @@ $(document).ready(function () {
       domicilio_salon: {
         required: true
       },
-      userId: {
-        required: true
-      },
       spam: "required"
     },     
 
@@ -114,10 +111,7 @@ $(document).ready(function () {
         },
         venueAddressEdit: {
           required: '- Ingresá un domicilio para el salón - '
-        },
-        userId: {
-          required: '- Seleccioná un encargado para el salón - '
-        },
+        }
     },  
 
     submitHandler: UpdateVenue,
@@ -142,9 +136,6 @@ $(document).ready(function () {
       venueAddressAdd: {
         required: true
       },
-      userIdDDLAdd: {
-        required: true
-      },
       spam: "required"
     },     
     messages:  {
@@ -156,10 +147,7 @@ $(document).ready(function () {
         },
         venueAddressAdd: {
           required: '- Ingresá un domicilio para el salón - '
-        },
-        userIdDDLAdd: {
-          required: '- Seleccioná un encargado para el salón - '
-        },
+        }
     },  
     submitHandler: AddVenue,
     errorLabelContainer: '#errorsAddContainer'
@@ -185,13 +173,15 @@ function deleteVenueHandler(data) {
 }
 
 function UpdateVenue() {
+  var userSession = getUserDataFromLocalStorage();
+
   var venueId = parseFloat($.cookie("venueId"));
   var baseUrl = 'http://local-api.partypic.com/api/venues/' + venueId;
   var datos = {
     name: $("#venueNameEdit").val(),
     address: $("#venueAddressEdit").val(),
     phone: $("#venuePhoneEdit").val(),
-    userId: parseInt($("#userIdDDLEdit").val())
+    userId: isNaN(parseInt($("#userIdDDLEdit").val())) ? userSession.userId : parseInt($("#userIdDDLEdit").val())
   };
   $("#loadingDivContainer").show();
   $.ajax({
@@ -228,12 +218,14 @@ function updateVenueHandler(data) {
 }
 
 function AddVenue() {
+  var userSession = getUserDataFromLocalStorage();
+
   var baseUrl = 'http://local-api.partypic.com/api/venues/';
   var datos = {
     name: $("#venueNameAdd").val(),
     address: $("#venueAddressAdd").val(),
     phone: $("#venuePhoneAdd").val(),
-    userId: parseInt($("#userIdDDLAdd").val())
+    userId: isNaN(parseInt($("#userIdDDLAdd").val())) ? userSession.userId : parseInt($("#userIdDDLAdd").val())
   };
   $("#loadingDivContainer").show();
   $.ajax({
@@ -270,32 +262,38 @@ function addVenueHandler(data) {
 }
 
 function loadVenueUsersToSelect() { 
-  $.ajax({
-    url:'http://local-api.partypic.com/api/users/venueUsers',
-    type: 'GET',
-    dataType: 'json',
-    data: {},
-    success: function(result) {
-      for(i=0;i<result.users.length;i++) {
-        $("#userIdDDLEdit").append(
-          $("<option>" , {
-            text: result.users[i].name,
-            value: result.users[i].userId
-          })
-        );
-        $("#userIdDDLAdd").append(
-          $("<option>" , {
-            text: result.users[i].name,
-            value: result.users[i].userId
-          })
-        );
+  var userSession = getUserDataFromLocalStorage();
+
+  if (userSession.roleId == 1) {
+    $("#venueManagerDDLAddContainer").show();
+    $("#venueManagerDDLEditContainer").show();
+    $.ajax({
+      url:'http://local-api.partypic.com/api/users/venueUsers',
+      type: 'GET',
+      dataType: 'json',
+      data: {},
+      success: function(result) {
+        for(i=0;i<result.users.length;i++) {
+          $("#userIdDDLEdit").append(
+            $("<option>" , {
+              text: result.users[i].name,
+              value: result.users[i].userId
+            })
+          );
+          $("#userIdDDLAdd").append(
+            $("<option>" , {
+              text: result.users[i].name,
+              value: result.users[i].userId
+            })
+          );
+        } 
+      },
+      error: function(xhr, status, error) {
+        $("#modalError").modal('show');
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
       } 
-    },
-    error: function(xhr, status, error) {
-      $("#modalError").modal('show');
-      $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
-    } 
-  }); 
+    }); 
+  }
 }
 
 function showVenueManager(userId) {

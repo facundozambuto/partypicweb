@@ -127,8 +127,6 @@ $(document).ready(function () {
     $('#addingModal').modal('show');
   });
   
-  $("#loadingDivContainer").hide();
-  
   $("#btnCancelSend").on("click", function() {
     $.removeCookie("eventId");
   });
@@ -282,6 +280,11 @@ $(document).ready(function () {
     submitHandler: UpdateEvento,
     errorLabelContainer: '#errors'
   });
+
+  checkSubscriptionStatus();
+  
+  $("#loadingDivContainer").hide();
+
 });
 
 function successDeleteHandler(data) {
@@ -458,7 +461,7 @@ function loadVenues() {
       $("#modalError").modal('show');
       $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
     }
-  }); 
+  });
 }
 
 function loadCategories() {
@@ -531,6 +534,35 @@ function openVenue(venueId) {
       $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.")
     }   
   });
+}
+
+function checkSubscriptionStatus() {
+  var userSession = getUserDataFromLocalStorage();
+
+  if (userSession && userSession.roleId == 2) {
+    $.ajax({
+      url:'http://local-api.partypic.com/api/Subscriptions/mysubs',
+      type: 'GET',
+      dataType: 'json',
+      data: {},
+      success: function(result) {
+        if (result && result.success && result.subscriptions && result.subscriptions.filter(subscription => subscription.isActive).length > 0) {
+            return;
+        } else {
+          $("#noSubscriptionBanner").show();
+          $("#addEventBtn").prop("disabled", true);
+          $('button.command-edit').prop("disabled", true);
+          $('button.command-delete').prop("disabled", true);
+          $('button.command-send').prop("disabled", true);
+          $('button.command-play-slider').prop("disabled", true);
+        }
+      },
+      error: function(xhr, status, error) {
+        $("#modalError").modal('show');
+        $("#errorMessage").text("Ocurrió un error. Comunicalo al administrador.");
+      }
+    });
+  }
 }
 
 function gup(name, url) {

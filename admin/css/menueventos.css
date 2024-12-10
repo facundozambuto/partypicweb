@@ -163,3 +163,26 @@ table#grid-command-buttons > tbody > tr {
 .btn.btn-default {
   height: 2.3em !important;
 }
+
+.subscription-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  text-align: center;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  top: 50px;
+  z-index: 1000;
+}
+
+.subscription-alert a.alert-link {
+  color: #721c24;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.subscription-alert a.alert-link:hover {
+  color: #491217;
+  text-decoration: none;
+}
