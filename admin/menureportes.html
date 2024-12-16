@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html class="no-js" lang="es"><!--<![endif]-->
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <title>Party Pic App - Menú de Categorías</title>
+  <link rel="shortcut icon" href="../images/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/style_menu.css" />
+  <link rel="stylesheet" type="text/css" href="../css/jquery.bootgrid.min.css" />
+  <link rel="stylesheet" type="text/css" href="../admin/css/menucategorias.css" />
+  <link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oswald">
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin-top: 2rem;
+    }
+    .container {
+        max-width: 800px;
+    }
+    .form-section {
+        margin-bottom: 2rem;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+    .btn-primary {
+        font-size: 1.2rem;
+    }
+    .message {
+        display: none;
+        margin-top: 2rem;
+    }
+    .loading-spinner {
+        display: none;
+        text-align: center;
+        margin-top: 2rem;
+    }
+</style>
+
+  <script type="text/javascript" src="../js/modernizr.custom.86080.js"></script>
+  <script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="../js/moderniz.2.8.1.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/modernizr.custom.63321.js"></script>
+  <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="../js/jquery.bootgrid.js"></script>
+  <script type="text/javascript" src="../js/jquery.bootgrid.fa.js"></script>
+  <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.datetimepicker.full.js"></script>
+  <script type="text/javascript" src="../js/bootswatch.js"></script>
+  <script type="text/javascript" src="../js/authorizationService.js"></script>
+  <script type="text/javascript" src="../js/common.js"></script>
+</head>
+
+<body>
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper" style="padding-top:40px">
+    <div class="container container-ppal" style="margin-top:40px; margin-bottom:40px">
+      <div class="row">
+        <div class="btn-group btn-breadcrumb pull-left">
+          <a href="../admin/dashboard.html" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i></a>
+          <a href="../admin/dashboard.html" class="btn btn-primary">Menú Principal</a>
+          <a href="../admin/menucategorias.html" class="btn btn-primary">Menú Reportes</a>
+          <!--<a href="#" class="btn btn-primary">Primary</a>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="animationload" id="loadingDivContainer">
+      <img src="../images/animacionLogo.gif"
+        style="margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;" alt="partypic" />
+    </div>
+
+    <h1 class="text-center mb-4">Generar Reporte Mensual de Suscripciones</h1>
+
+        <!-- Formulario para seleccionar el mes y año -->
+        <div class="form-section">
+            <form id="reportForm">
+                <div class="form-group">
+                    <label for="monthSelect" class="form-label">Seleccionar Mes</label>
+                    <select id="monthSelect" class="form-control" required>
+                        <option value="">-- Seleccionar Mes --</option>
+                        <option value="01">Enero</option>
+                        <option value="02">Febrero</option>
+                        <option value="03">Marzo</option>
+                        <option value="04">Abril</option>
+                        <option value="05">Mayo</option>
+                        <option value="06">Junio</option>
+                        <option value="07">Julio</option>
+                        <option value="08">Agosto</option>
+                        <option value="09">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="yearInput" class="form-label">Ingresar Año</label>
+                    <input type="number" id="yearInput" class="form-control" placeholder="Ej: 2024" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Generar Reporte</button>
+            </form>
+        </div>
+
+        <!-- Mensajes -->
+        <div class="message alert alert-success" id="successMessage">
+            <strong>¡Reporte generado con éxito!</strong> Puedes descargarlo desde el siguiente enlace:
+            <a href="#" id="downloadLink" class="btn btn-link">Descargar Reporte</a>
+        </div>
+
+        <div class="message alert alert-danger" id="errorMessage">
+            <strong>Ocurrió un error.</strong> Por favor, intenta nuevamente más tarde.
+        </div>
+
+        <!-- Spinner de carga -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+            <p>Generando reporte, por favor espera...</p>
+        </div>
+
+  </div>
+  <script>
+    $(document).ready(function () {
+        $("#reportForm").on("submit", function (e) {
+            e.preventDefault();
+
+            // Mostrar el spinner de carga
+            $("#loadingSpinner").show();
+            $("#successMessage, #errorMessage").hide();
+
+            // Capturar los valores seleccionados
+            const month = $("#monthSelect").val();
+            const year = $("#yearInput").val();
+
+            // Validación básica en el cliente
+            if (!month || !year) {
+                alert("Por favor, completa todos los campos.");
+                $("#loadingSpinner").hide();
+                return;
+            }
+
+            // Llamada AJAX para generar el reporte
+            $.ajax({
+                url: "http://local-api.partypic.com/api/reports/generate",
+                type: "POST",
+                data: JSON.stringify({ month, year }),
+                contentType: "application/json",
+                success: function (response) {
+                    $("#loadingSpinner").hide();
+                    $("#successMessage").show();
+                    $("#downloadLink").attr("href", response.reportUrl); // Enlace para descargar el reporte
+                },
+                error: function () {
+                    $("#loadingSpinner").hide();
+                    $("#errorMessage").show();
+                }
+            });
+        });
+    });
+</script>
+</body>
+
+</html>
