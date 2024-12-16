@@ -8,7 +8,7 @@ function getImagesByEventId() {
 	var requestTime = null;
 
 	$.ajax({
-		url:'http://local-api.partypic.com/api/images?eventId='+eventId+'&firstRequest='+true+'&requestTime='+requestTime,
+		url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images?eventId='+eventId+'&firstRequest='+true+'&requestTime='+requestTime,
 		type: 'GET',
 		dataType: 'json',
 		success: bindImages,
@@ -150,7 +150,7 @@ function loadMore(){
 	var requestTime = $.cookie('requestTime');
 	
 	return $.ajax({
-		url:'http://local-api.partypic.com/api/images/removed?eventId='+eventId+'&firstRequest='+false+'&requestTime='+requestTime,
+		url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images/removed?eventId='+eventId+'&firstRequest='+false+'&requestTime='+requestTime,
 		type: 'GET',
 		dataType: 'json',
 		success: bindImages,
@@ -166,7 +166,7 @@ function checkRemovedImages() {
 	var requestTime = $.cookie('requestTime');
 	
 	return $.ajax({
-		url: 'http://local-api.partypic.com/api/images?eventId='+eventId+'&requestTime='+requestTime,
+		url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images?eventId='+eventId+'&requestTime='+requestTime,
 		type: 'GET',
 		dataType: 'json',
 		success: removeImages,

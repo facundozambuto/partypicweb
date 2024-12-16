@@ -5,7 +5,7 @@ $(document).ready(function () {
       cache: false
     },
     ajax: true,
-    url: "http://local-api.partypic.com/api/categories/grid",
+    url: "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/categories/grid",
     formatters: {
         "IDColumn": function(column, row) {
           return "<div class=\"text-center\">" + row.categoryId + "</div>";
@@ -30,7 +30,7 @@ $(document).ready(function () {
       $("#editModal").modal('show');
   
       $.ajax({
-        url: 'http://local-api.partypic.com/api/categories/ ' + categoryId,
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/categories/ ' + categoryId,
         type: 'GET',
         dataType: 'json',
         headers: getAuthHeader(),
@@ -61,7 +61,7 @@ $(document).ready(function () {
   $("#btnConfirmDelete").on("click", function() {
   
     var categoryId = parseFloat($.cookie("categoryId"));
-    var baseUrl = 'http://local-api.partypic.com/api/categories/' + categoryId;
+    var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/categories/' + categoryId;
     categoryId = parseFloat($.cookie("categoryId"));
     $("#loadingDivContainer").show();
     $.ajax({
@@ -123,7 +123,7 @@ $(document).ready(function () {
 
 function UpdateCategory() {
   var categoryId = parseFloat($.cookie("categoryId"));
-  var baseUrl = 'http://local-api.partypic.com/api/categories/' + categoryId;
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/categories/' + categoryId;
   var datos = {
     description: $("#categoryDescriptionEdit").val()
   };
@@ -178,7 +178,7 @@ function updateCategoryHandler(data) {
 }
 
 function AddCategory() {
-  var baseUrl = 'http://local-api.partypic.com/api/categories/';
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/categories/';
   var datos = {
     description: $("#categoryDescriptionAdd").val()
   };

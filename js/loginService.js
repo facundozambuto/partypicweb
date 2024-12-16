@@ -10,7 +10,7 @@ angular.module('myApp').service('loginService', loginService);
 		self.downloadAlbum = downloadAlbum;
 
 		function login(loginEmail, loginPassword) {
-			var url = 'http://local-api.partypic.com/api/login?email=' + loginEmail + '&password=' + loginPassword;
+			var url = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/login?email=' + loginEmail + '&password=' + loginPassword;
 
             return $http({ 
 					method: 'GET',
@@ -25,7 +25,7 @@ angular.module('myApp').service('loginService', loginService);
 		}
 		
 		function recoverPassword(recoveryEmail) {
-			var url = 'http://local-api.partypic.com/api/passwordRecover?email=' + recoveryEmail;
+			var url = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/passwordRecover?email=' + recoveryEmail;
 
             return $http({ 
 					method: 'GET',
@@ -41,7 +41,7 @@ angular.module('myApp').service('loginService', loginService);
 		
 		function downloadAlbum(eventCode) {
             window.open(
-				'http://local-api.partypic.com/api/images/downloadByEventCode?eventCode=' + eventCode,
+				'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images/downloadByEventCode?eventCode=' + eventCode,
 				'_blank'
 			);
 

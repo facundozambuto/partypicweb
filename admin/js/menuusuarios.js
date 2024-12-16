@@ -6,7 +6,7 @@ $(document).ready(function () {
     },
     crossDomain: true,
     ajax: true,
-    url: "http://local-api.partypic.com/api/users/grid",
+    url: "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users/grid",
     formatters: {
         "IDColumn": function(column, row) {
           return "<div class=\"text-center\">" + row.userId + "</div>";
@@ -65,7 +65,7 @@ $(document).ready(function () {
       $("#editModal").modal('show');
   
       $.ajax({
-        url:'http://local-api.partypic.com/api/users/' + userId,
+        url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users/' + userId,
         type: 'GET',
         success: function(result) {
           $("#name").val(result.name);
@@ -108,7 +108,7 @@ $(document).ready(function () {
   $("#btnConfirmDelete").on("click", function(){
     
     userId = parseFloat($.cookie("userId"));
-    var baseUrl = "http://local-api.partypic.com/api/users/" + userId;
+    var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users/" + userId;
     $("#loadingDivContainer").show();
   
     $.ajax({
@@ -277,7 +277,7 @@ function deleteUserSuccessHandler(data) {
 
 function UpdateUser() {
   var userId = parseFloat($.cookie("userId"));
-  var baseUrl = "http://local-api.partypic.com/api/users/" + userId;
+  var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users/" + userId;
   var disabled = $("#userId").removeAttr('disabled');
   var datos = {
       name: $("#name").val(),
@@ -331,7 +331,7 @@ function UpdateUserHandler(data) {
 }
 
 function addUser() {
-  var baseUrl = "http://local-api.partypic.com/api/users";
+  var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users";
   var datos = {
       name: $("#name2").val(),
       roleId: parseInt($("#roleId").val()),

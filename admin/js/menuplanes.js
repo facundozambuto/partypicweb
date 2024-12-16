@@ -5,7 +5,7 @@ $(document).ready(function () {
       cache: false
     },
     ajax: true,
-    url: "http://local-api.partypic.com/api/plans/grid",
+    url: "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/plans/grid",
     formatters: {
       "IDColumn": function (column, row) {
         return "<div class=\"text-center\">" + row.id + "</div>";
@@ -37,7 +37,7 @@ $(document).ready(function () {
       $("#editModal").modal('show');
 
       $.ajax({
-        url: 'http://local-api.partypic.com/api/plans/' + id,
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/plans/' + id,
         type: 'GET',
         dataType: 'json',
         data: { id: id },
@@ -66,7 +66,7 @@ $(document).ready(function () {
       $("#historicalPricesModal .modal-content").find(".prices-container").remove();
 
       $.ajax({
-        url: "http://local-api.partypic.com/api/plans/pricehistory/",
+        url: "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/plans/pricehistory/",
         type: "GET",
         dataType: "json",
         data: { planId: id },
@@ -129,7 +129,7 @@ $(document).ready(function () {
   $("#btnConfirmDelete").on("click", function () {
 
     var id = parseFloat($.cookie("id"));
-    var baseUrl = 'http://local-api.partypic.com/api/plans/' + id;
+    var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/plans/' + id;
     id = parseFloat($.cookie("id"));
     $("#loadingDivContainer").show();
     $.ajax({
@@ -224,7 +224,7 @@ function deletePlanHandler(data) {
 
 function UpdatePlan() {
   var id = parseFloat($.cookie("id"));
-  var baseUrl = 'http://local-api.partypic.com/api/plans/' + id;
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/plans/' + id;
   var datos = {
     description: $("#planDescriptionEdit").val(),
     name: $("#planNameEdit").val(),
@@ -265,7 +265,7 @@ function updatePlanHandler(data) {
 }
 
 function AddPlan() {
-  var baseUrl = 'http://local-api.partypic.com/api/plans/';
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/plans/';
   var datos = {
     description: $("#planDescriptionAdd").val(),
     name: $("#planNameAdd").val(),

@@ -18,7 +18,7 @@
       });
 
       $.ajax({
-	      url: 'http://local-api.partypic.com/api/reports/',
+	      url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/reports/',
         type: 'GET',
         dataType: 'json',
         data: { },
@@ -40,7 +40,7 @@
       }
     
 	    $.ajax({
-	      url: 'http://local-api.partypic.com/api/events/',
+	      url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/',
         type: 'GET',
         dataType: 'json',
         data: { },

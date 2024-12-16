@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     $.ajax({
-        url: 'http://local-api.partypic.com/api/Subscriptions/mysubs',
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/Subscriptions/mysubs',
         type: 'GET',
         dataType: 'json',
         success: function (result) {
@@ -100,7 +100,7 @@ function formatStartDatetime(dateTime) {
 
 function handleNoActiveSubscriptions() {
     $.ajax({
-        url: 'http://local-api.partypic.com/api/plans/',
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/plans/',
         type: 'GET',
         dataType: 'json',
         success: function (result) {
@@ -135,7 +135,7 @@ function handleNoActiveSubscriptions() {
                 
                 $("#loadingDivContainer").show();
                 $.ajax({
-                    url: 'http://local-api.partypic.com/api/subscriptions',
+                    url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/subscriptions',
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(payload),
@@ -164,7 +164,7 @@ function handleNoActiveSubscriptions() {
     $("#loadingDivContainer").show();
     var subId = $("#viewSubscriptionDetailButton").attr("data-id");
     $.ajax({
-        url: `http://local-api.partypic.com/api/subscriptions/` + subId,
+        url: `https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/subscriptions/` + subId,
         type: "GET",
         contentType: "application/json",
         success: function (subscription) {
@@ -196,7 +196,7 @@ function handleNoActiveSubscriptions() {
                 var subIsAutoRenew = $("#viewSubscriptionDetailButton").attr("data-isAutoRenew");
 
                 $.ajax({
-                    url: `http://local-api.partypic.com/api/subscriptions/toggle-renewal?subscriptionId=${subId}`,
+                    url: `https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/subscriptions/toggle-renewal?subscriptionId=${subId}`,
                     type: "PUT",
                     data: { subscriptionId:subId },
                     success: function (response) {

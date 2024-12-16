@@ -6,7 +6,7 @@
         cache: false
       },
       ajax: true,
-      url: "http://local-api.partypic.com/api/bannedProfiles/grid",
+      url: "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/bannedProfiles/grid",
       formatters: {
           "IDColumn": function(column, row) {
             return "<div class=\"text-center\">" + row.profileId + "</div>";
@@ -51,7 +51,7 @@
       
       profileId = $.cookie("profileId");
   
-      var baseUrl = "http://local-api.partypic.com/api/bannedProfiles/" + profileId;
+      var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/bannedProfiles/" + profileId;
   
       $("#loadingDivContainer").show();
   

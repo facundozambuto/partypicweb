@@ -9,7 +9,7 @@ $(document).ready(function () {
         $("#successMessage, #errorMessage").hide();
 
         $.ajax({
-            url: `http://local-api.partypic.com/api/subscriptions/confirm?externalReference=` + externalRef,
+            url: `https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/subscriptions/confirm?externalReference=` + externalRef,
             type: "GET",
             contentType: "application/json",
             data: { externalReference: externalRef },

@@ -5,7 +5,7 @@ $(document).ready(function () {
       cache: false
     },
     ajax: true,
-    url: "http://local-api.partypic.com/api/roles/grid",
+    url: "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/roles/grid",
     formatters: {
         "IDColumn": function(column, row) {
           return "<div class=\"text-center\">" + row.roleId + "</div>";
@@ -30,7 +30,7 @@ $(document).ready(function () {
       $("#editModal").modal('show');
   
       $.ajax({
-        url: 'http://local-api.partypic.com/api/roles/ ' + roleId,
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/roles/ ' + roleId,
         type: 'GET',
         dataType: 'json',
         data: { roleId: roleId },
@@ -65,7 +65,7 @@ $(document).ready(function () {
   $("#btnConfirmDelete").on("click", function() {
   
     var roleId = parseFloat($.cookie("roleId"));
-    var baseUrl = 'http://local-api.partypic.com/api/roles/' + roleId;
+    var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/roles/' + roleId;
     roleId = parseFloat($.cookie("roleId"));
     $("#loadingDivContainer").show();
     $.ajax({
@@ -137,7 +137,7 @@ function deleteRoleHandler(data) {
 
 function UpdateRole() {
   var roleId = parseFloat($.cookie("roleId"));
-  var baseUrl = 'http://local-api.partypic.com/api/roles/' + roleId;
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/roles/' + roleId;
   var datos = {
     description: $("#roleDescriptionEdit").val()
   };
@@ -177,7 +177,7 @@ function updateRoleHandler(data) {
 
 
 function AddRole() {
-  var baseUrl = 'http://local-api.partypic.com/api/roles/';
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/roles/';
   var datos = {
     description: $("#roleDescriptionAdd").val()
   };

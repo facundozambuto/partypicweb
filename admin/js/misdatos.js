@@ -106,7 +106,7 @@ function getAuthHeader() {
 
 function loadFormData() {   
     $.ajax({
-        url: 'http://local-api.partypic.com/api/session',
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/session',
         type: 'GET',
         dataType: 'json',
         data: {},
@@ -136,7 +136,7 @@ function loadFormData() {
 
 function updateUser() {
     var userId = $.cookie('userId');
-    var baseUrl = "http://local-api.partypic.com/api/users/currentUser/" + userId;
+    var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users/currentUser/" + userId;
     
     var datos = {
         name: $("#userNameField").val(),
@@ -190,7 +190,7 @@ function UpdateUserHandler(data) {
 }
 
 function updatePassword() {
-    var baseUrl = "http://local-api.partypic.com/api/users/passwordUpdate/";
+    var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users/passwordUpdate/";
 
     var userId = parseInt($.cookie("userId"));
 

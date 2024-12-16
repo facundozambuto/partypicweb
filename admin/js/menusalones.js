@@ -6,7 +6,7 @@ $(document).ready(function () {
       cache: false
     },
     ajax: true,
-    url: "http://local-api.partypic.com/api/venues/grid",
+    url: "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/venues/grid",
     formatters: {
         "IDColumn": function(column, row) {
           return "<div class=\"text-center\">" + row.venueId+ "</div>";
@@ -40,7 +40,7 @@ $(document).ready(function () {
       $("#editModal").modal('show');
   
       $.ajax({
-        url: 'http://local-api.partypic.com/api/venues/' + parseInt(venueId),
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/venues/' + parseInt(venueId),
         type: 'GET',
         dataType: 'json',
         success: function(result) {
@@ -71,7 +71,7 @@ $(document).ready(function () {
 
   $("#btnConfirmDelete").on("click", function() {
     var venueId = parseFloat($.cookie("venueId"));
-    var baseUrl = 'http://local-api.partypic.com/api/venues/' + venueId;
+    var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/venues/' + venueId;
     venueId = parseFloat($.cookie("venueId"));
     $("#loadingDivContainer").show();
     $.ajax({
@@ -176,7 +176,7 @@ function UpdateVenue() {
   var userSession = getUserDataFromLocalStorage();
 
   var venueId = parseFloat($.cookie("venueId"));
-  var baseUrl = 'http://local-api.partypic.com/api/venues/' + venueId;
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/venues/' + venueId;
   var datos = {
     name: $("#venueNameEdit").val(),
     address: $("#venueAddressEdit").val(),
@@ -220,7 +220,7 @@ function updateVenueHandler(data) {
 function AddVenue() {
   var userSession = getUserDataFromLocalStorage();
 
-  var baseUrl = 'http://local-api.partypic.com/api/venues/';
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/venues/';
   var datos = {
     name: $("#venueNameAdd").val(),
     address: $("#venueAddressAdd").val(),
@@ -268,7 +268,7 @@ function loadVenueUsersToSelect() {
     $("#venueManagerDDLAddContainer").show();
     $("#venueManagerDDLEditContainer").show();
     $.ajax({
-      url:'http://local-api.partypic.com/api/users/venueUsers',
+      url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users/venueUsers',
       type: 'GET',
       dataType: 'json',
       data: {},
@@ -299,7 +299,7 @@ function loadVenueUsersToSelect() {
 function showVenueManager(userId) {
   $("#venueManagerModal").modal('show');  
   $.ajax({
-    url:'http://local-api.partypic.com/api/users/' + userId,
+    url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/users/' + userId,
     type: 'GET',
     dataType: 'json',
     data: { userId: userId},

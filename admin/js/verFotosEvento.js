@@ -8,7 +8,7 @@ $(document).ready(function() {
     profileName = $.cookie("profileName");
     var blockProfile = false;
     var eventId = gup("eventId", document.URL);
-    var baseUrl = "http://local-api.partypic.com/api/images/download?eventId=" + eventId;
+    var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images/download?eventId=" + eventId;
     $.ajax({
       url: baseUrl,
       dataType: "json",
@@ -31,7 +31,7 @@ $(document).ready(function() {
   });
     
   $("#btnConfirmDelete").on("click", function() {
-    var baseUrl = "http://local-api.partypic.com/api/images/delete";
+    var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images/delete";
     var imageId = parseInt($.cookie("imageId"));
     var blockProfile = false;
     var eventId = parseInt(gup("eventId", document.URL));
@@ -66,7 +66,7 @@ $(document).ready(function() {
     var blockProfile = true;
     var eventId = parseInt(gup("eventId", document.URL));
     
-    var baseUrl = "http://local-api.partypic.com/api/images/delete";
+    var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images/delete";
   
     $.ajax({
       url: baseUrl,
@@ -103,7 +103,7 @@ function getImagesByEventId() {
   var requestTime = '';
 
   $.ajax({
-    url:'http://local-api.partypic.com/api/images?eventId='+ eventId +'&firstRequest='+ firstRequest +'&requestTime='+ requestTime,
+    url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images?eventId='+ eventId +'&firstRequest='+ firstRequest +'&requestTime='+ requestTime,
     type: 'GET',
     dataType: 'json',
     data: { eventId: eventId },
@@ -117,7 +117,7 @@ function getImagesByEventId() {
   function bindImages(data) {
     if (data.length > 0) {
       $("#eventName").html(data[0].nombre_evento);
-      $("#btnDownload").attr('href', 'http://local-api.partypic.com/api/images/download?eventId=' + data[0].eventId);
+      $("#btnDownload").attr('href', 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/images/download?eventId=' + data[0].eventId);
       for(i=0;i<data.length;i++) {
         var pictureURL = data[i].path;
         getMeta(pictureURL, data[i]);

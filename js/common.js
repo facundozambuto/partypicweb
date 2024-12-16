@@ -58,7 +58,7 @@ function handlerBurgerBehaviour() {
 
 function getUserSession() {
     $.ajax({
-        url: 'http://local-api.partypic.com/api/session/',
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/session/',
         type: 'GET',
         data: {},
         success: function(data) {
@@ -66,7 +66,7 @@ function getUserSession() {
             saveUserDataToLocalStorage(data);
         },
         error: function(xhr, status, error) {
-            window.location.href = 'http://local-web.partypic.com/login.html';
+            window.location.href = 'https://www.partypic.com/login.html';
         }
     });
 }
@@ -90,7 +90,7 @@ function bindUserData(data) {
 
 function logOutUser() {
     $.ajax({
-        url: 'http://local-api.partypic.com/api/login/',
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/login/',
         type: 'DELETE',
         data: {},
         success: logOutHandler,
@@ -105,7 +105,7 @@ function logOutHandler() {
     $.cookie('AppSessionId', '', { path: '/' });
 
     localStorage.removeItem('userData');
-    window.location.href = 'http://local-web.partypic.com/login.html';
+    window.location.href = 'https://www.partypic.com/login.html';
 }
 
 function saveUserDataToLocalStorage(data) {

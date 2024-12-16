@@ -8,15 +8,15 @@ $(document).ready(function () {
 
   if (window.location.href.indexOf("?venueId=") > -1) {
     var venueId = gup("venueId", document.URL);
-    var url = "http://local-api.partypic.com/api/events/grid?venueId=" + venueId;
+    var url = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/grid?venueId=" + venueId;
     $.cookie('venueId', venueId);
   } else {
     if (window.location.href.indexOf("?eventId=") > -1) {
       var eventId = gup("eventId", document.URL);
-      var url = "http://local-api.partypic.com/api/events/grid?eventId=" + eventId;
+      var url = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/grid?eventId=" + eventId;
       $.cookie('eventId', eventId);
     } else {
-      var url = "http://local-api.partypic.com/api/events/grid";
+      var url = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/grid";
     }
   }
   
@@ -78,7 +78,7 @@ $(document).ready(function () {
       $("#editModal").modal('show');
   
       $.ajax({
-        url: 'http://local-api.partypic.com/api/events/' + eventId,
+        url: 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/' + eventId,
         type: 'GET',
         dataType: 'json',
         data: { eventId: eventId },
@@ -114,7 +114,7 @@ $(document).ready(function () {
       $("#sendModal").modal('show');
     }).end().find(".command-play-slider").on("click", function(e) {
       var eventId = $(this).data("row-id");
-      var win = window.open("http://local-web.partypic.com/admin/verSlider.html?eventId="+eventId, '_blank');
+      var win = window.open("https://www.partypic.com/admin/verSlider.html?eventId="+eventId, '_blank');
       win.focus();
     });
   });
@@ -132,7 +132,7 @@ $(document).ready(function () {
   });
   
   $("#btnConfirmSend").on("click", function(){
-    var baseUrl = "http://local-api.partypic.com/api/events/sendInstructions";
+    var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/sendInstructions";
     eventId = parseInt($.cookie("eventId"));
   
     var datos = {
@@ -162,7 +162,7 @@ $(document).ready(function () {
   
   $("#btnConfirmDelete").on("click", function() {
     var eventId = parseFloat($.cookie("eventId"));
-    var baseUrl = 'http://local-api.partypic.com/api/events/' + eventId;
+    var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/' + eventId;
     $("#loadingDivContainer").show();
     $.ajax({
       url: baseUrl,
@@ -310,7 +310,7 @@ function envioOK(data) {
 
 function UpdateEvento() { 
   var eventId = parseFloat($.cookie("eventId"));
-  var baseUrl = 'http://local-api.partypic.com/api/events/' + eventId;
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/' + eventId;
   var disabled = $("#eventId").removeAttr('disabled');
   var datos = {
     name: $("#eventName").val(),
@@ -360,7 +360,7 @@ function successUpdateHandler(data) {
 }
 
 function addEvento() {
-  var baseUrl = 'http://local-api.partypic.com/api/events/';
+  var baseUrl = 'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/';
   var datos = {
     name: $("#eventNameAdd").val(),
     description: $("#descriptionAdd").val(),
@@ -392,7 +392,7 @@ function addEvento() {
 
 function successAddHandler(data) {
   if (data.success) {
-    var baseUrl = "http://local-api.partypic.com/api/events/sendInstructions";
+    var baseUrl = "https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/events/sendInstructions";
     var eventId = data.eventId;
     var datos = {
       eventId: eventId
@@ -436,7 +436,7 @@ function successInstructionsSendingHandler(data) {
 
 function loadVenues() {
   $.ajax({
-    url:'http://local-api.partypic.com/api/venues',
+    url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/venues',
     type: 'GET',
     dataType: 'json',
     data: {},
@@ -466,7 +466,7 @@ function loadVenues() {
 
 function loadCategories() {
   $.ajax({
-    url:'http://local-api.partypic.com/api/categories',
+    url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/categories',
     type: 'GET',
     dataType: 'json',
     data: {},
@@ -513,7 +513,7 @@ function changeRowColor() {
 function openVenue(venueId) {
   $("#modalSalon").modal('show');  
   $.ajax({
-    url:'http://local-api.partypic.com/api/venues/venueManager/' + venueId,
+    url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/venues/venueManager/' + venueId,
     type: 'GET',
     dataType: 'json',
     data: {},
@@ -541,7 +541,7 @@ function checkSubscriptionStatus() {
 
   if (userSession && userSession.roleId == 2) {
     $.ajax({
-      url:'http://local-api.partypic.com/api/Subscriptions/mysubs',
+      url:'https://partypic-gyd2dcbgdxd8heaa.brazilsouth-01.azurewebsites.net/api/Subscriptions/mysubs',
       type: 'GET',
       dataType: 'json',
       data: {},
