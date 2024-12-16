@@ -5248,7 +5248,7 @@ function DayEventRenderer() {
 		// of the event object (`backgroundColor`, `borderColor` and such)
 		var skinCss = getSkinCss(event, opt);
 
-		html += "<a target=\"_blank\" href='" + htmlEscape('https://www.partypic.com/admin/menueventos.html?eventId='+event.eventId) + "'";
+		html += "<a target=\"_blank\" href='" + htmlEscape('http://www.partypic.fun/admin/menueventos.html?eventId='+event.eventId) + "'";
 		
 		html +=
 			" class='" + classNames.join(' ') + "'" +

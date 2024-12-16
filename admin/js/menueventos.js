@@ -114,7 +114,7 @@ $(document).ready(function () {
       $("#sendModal").modal('show');
     }).end().find(".command-play-slider").on("click", function(e) {
       var eventId = $(this).data("row-id");
-      var win = window.open("https://www.partypic.com/admin/verSlider.html?eventId="+eventId, '_blank');
+      var win = window.open("http://www.partypic.fun/admin/verSlider.html?eventId="+eventId, '_blank');
       win.focus();
     });
   });

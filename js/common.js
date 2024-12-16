@@ -66,7 +66,7 @@ function getUserSession() {
             saveUserDataToLocalStorage(data);
         },
         error: function(xhr, status, error) {
-            window.location.href = 'https://www.partypic.com/login.html';
+            window.location.href = 'http://www.partypic.fun/login.html';
         }
     });
 }
@@ -105,7 +105,7 @@ function logOutHandler() {
     $.cookie('AppSessionId', '', { path: '/' });
 
     localStorage.removeItem('userData');
-    window.location.href = 'https://www.partypic.com/login.html';
+    window.location.href = 'http://www.partypic.fun/login.html';
 }
 
 function saveUserDataToLocalStorage(data) {
